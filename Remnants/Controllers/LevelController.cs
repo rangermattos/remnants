@@ -10,7 +10,6 @@ namespace Remnants
         Level currentLevel;
         public bool levelOpen;
         protected Camera2D camera;
-        protected UI ui;
 
         public LevelController(bool isOpen)
         {

@@ -9,6 +9,7 @@ namespace Remnants
 {
     class Level
     {
+        UI ui;
         Texture2D backGround;
         protected Map map;
         public Vector2 mapSize;
