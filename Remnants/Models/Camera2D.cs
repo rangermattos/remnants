@@ -27,14 +27,14 @@ namespace Remnants
         public Matrix GetViewMatrix()
         {
             //so the camera can't go off map
-            if (Position.X < 0)
-                Position = new Vector2(0, Position.Y);
-            if(Position.X > mapSize.X - (Origin.X * 2f))
-                Position = new Vector2(mapSize.X - (Origin.X * 2f), Position.Y);
-            if (Position.Y < 0)
-                Position = new Vector2(Position.X, 0);
-            if (Position.Y > mapSize.Y - (Origin.Y * 2f))
-                Position = new Vector2(Position.X, mapSize.Y - (Origin.Y * 2f));
+            if ((Position.X + Origin.X) - Origin.X / Zoom < 0)
+                Position = new Vector2(0 - Origin.X + (Origin.X / Zoom), Position.Y);
+            if(Position.X > mapSize.X - (Origin.X * 2f) / Zoom)
+                Position = new Vector2(mapSize.X - (Origin.X * 2f) / Zoom, Position.Y);
+            if (Position.Y + Origin.Y - Origin.Y / Zoom < 0)
+                Position = new Vector2(Position.X, 0 - Origin.Y + (Origin.Y / Zoom));
+            if (Position.Y > mapSize.Y - (Origin.Y * 2f) / Zoom)
+                Position = new Vector2(Position.X, mapSize.Y - (Origin.Y * 2f) / Zoom);
 
 
             return

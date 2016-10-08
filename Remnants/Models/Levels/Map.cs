@@ -19,8 +19,9 @@ namespace Remnants
         {
             xTiles = 70;
             yTiles = 40;
-            xOffset = (mapSize.X - (xTiles * 64)) / 2;
-            yOffset = (mapSize.Y - (yTiles * 64)) / 2;
+            //offsets are divided by 64, rounded down, and then scaled back up to keep them in line with 64x64 grid
+            xOffset = 64 * (float)Math.Floor(((mapSize.X - (xTiles * 64)) / 2)/64);
+            yOffset = 64 * (float)Math.Floor(((mapSize.Y - (yTiles * 64)) / 2)/64);
             tiles = new Tile[xTiles][];
         }
 
@@ -46,21 +47,19 @@ namespace Remnants
             var cameraPos = camera.Position;
             var width = camera.Origin.X * 2;
             var height = camera.Origin.Y * 2;
-            var zoom = camera.Zoom;
+            var z = camera.Zoom;
             for (int i = 0; i < xTiles; i++)
             {
                 for (int j = 0; j < yTiles; j++)
                 {
                     //so we don't draw tiles that arent visible in camera
-                    /*
-                    if (tiles[i][j].Position.X > (cameraPos.X - 64)
-                        && tiles[i][j].Position.X < (cameraPos.X + width)
-                        && tiles[i][j].Position.Y > (cameraPos.Y - 64)
-                        && tiles[i][j].Position.Y < (cameraPos.Y + height))
+                    if (tiles[i][j].Position.X > (cameraPos.X - 3 * (64 / z))
+                        && tiles[i][j].Position.X < (cameraPos.X + width / z)
+                        && tiles[i][j].Position.Y > (cameraPos.Y - 3 * (64 / z))
+                        && tiles[i][j].Position.Y < (cameraPos.Y + height / z))
                     {
-                    */
                         tiles[i][j].Draw(spriteBatch);
-                    //}
+                    }
                 }
             }
         }
@@ -79,8 +78,7 @@ namespace Remnants
                         tiles[i][j] = new MetalFloor(Content);
                     else if (ind >= 80)
                         tiles[i][j] = new Water(Content);
-                    tiles[i][j].Position = new Vector2((64f * i), (64f * j));
-                    //tiles[i][j].Position = new Vector2((64f * i) + xOffset, (64f * j) + yOffset);
+                    tiles[i][j].Position = new Vector2((64f * i) + xOffset, (64f * j) + yOffset);
                 }
             }
         }
