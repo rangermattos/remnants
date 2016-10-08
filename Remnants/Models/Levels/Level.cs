@@ -22,12 +22,16 @@ namespace Remnants
         SpriteFont font;
         int x = 0;
         int y = 0;
+        int power;
+        int metal;
 
         public Level(SpriteFont f)
         {
             font = f;
             mapSize = new Vector2(5760, 3240);
             map = new Map(mapSize);
+            power = 1000;
+            metal = 1000;
         }
 
         public void LoadContent(Game1 game)
@@ -50,8 +54,8 @@ namespace Remnants
                 //gets the mouses position in the world and sets it in p
                 Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(camera.GetViewMatrix()));
                 //get the tile x and y position
-                x = (int)Math.Floor(p.X / 64);
-                y = (int)Math.Floor(p.Y / 64);
+                int x = (int)Math.Floor(p.X / 64);
+                int y = (int)Math.Floor(p.Y / 64);
                 //scale back up, p will now be in line with the tiles
                 p = new Vector2(x*64f, y*64);
                 buildings.Add(new SolarPanel(Content, p));
@@ -73,7 +77,6 @@ namespace Remnants
                 b.Draw(spriteBatch);
             }
             spriteBatch.DrawString(font, x.ToString(), new Vector2(camera.Position.X, camera.Position.Y), Color.Black);
-            spriteBatch.DrawString(font, y.ToString(), new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Black);
             spriteBatch.End();
 
             //map.Draw(graphics);
