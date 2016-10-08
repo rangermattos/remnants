@@ -6,26 +6,28 @@ namespace Remnants
 {
     class Tile
     {
-        protected Texture2D texture;
+        public Texture2D texture;
 
-        protected virtual void LoadContent(ContentManager Content)
+        public Vector2 Position { get; set; }
+
+        public virtual void LoadContent(ContentManager Content)
         {
 
         }
 
-        protected virtual void UnloadContent()
+        public virtual void UnloadContent()
         {
 
         }
 
-        protected virtual void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
 
         }
 
-        protected virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(texture, Position);
         }
     }
 }

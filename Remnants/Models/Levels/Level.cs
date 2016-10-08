@@ -12,7 +12,7 @@ namespace Remnants
         public Level(SpriteFont font)
         {
             mapSize = new Vector2(5760, 3240);
-            map = new Map();
+            map = new Map(mapSize);
         }
 
         public void LoadContent(Game1 game)

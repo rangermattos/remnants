@@ -15,23 +15,23 @@ namespace Remnants
         {
             LoadContent(Content);
         }
-        protected override void LoadContent(ContentManager Content)
+        public override void LoadContent(ContentManager Content)
         {
             texture = Content.Load<Texture2D>("mtlFloor");
             base.LoadContent(Content);
         }
 
-        protected override void UnloadContent()
+        public override void UnloadContent()
         {
             base.UnloadContent();
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
         }
 
-        protected override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
         }
