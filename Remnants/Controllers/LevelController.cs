@@ -45,7 +45,7 @@ namespace Remnants
             if (keyboardState.IsKeyDown(Keys.D))
                 camera.Position += new Vector2(250, 0) * deltaTime;
 
-            currentLevel.Update(gameTime, Content, keyboardState);
+            currentLevel.Update(gameTime, Content, keyboardState, camera);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -63,6 +63,7 @@ namespace Remnants
             camera.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
             //set zoom
             camera.Zoom = 0.8f;
+            //camera.Zoom = 1f;
             levelOpen = true;
         }
     }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using System;
 
 namespace Remnants
 {
@@ -16,9 +17,14 @@ namespace Remnants
         MouseState prevMouseState;
         MouseState mouseState;
         Vector2 mousePosition;
+        string mp;
+        SpriteFont font;
+        int x = 0;
+        int y = 0;
 
-        public Level(SpriteFont font)
+        public Level(SpriteFont f)
         {
+            font = f;
             mapSize = new Vector2(5760, 3240);
             map = new Map(mapSize);
         }
@@ -34,17 +40,23 @@ namespace Remnants
             game.Content.Unload();
         }
 
-        public void Update(GameTime gameTime, ContentManager Content, KeyboardState keyboardState)
+        public void Update(GameTime gameTime, ContentManager Content, KeyboardState keyboardState, Camera2D camera)
         {
             mouseState = Mouse.GetState();
             mousePosition = new Vector2(mouseState.X, mouseState.Y);
             if (prevKeyState.IsKeyDown(Keys.Space) && keyboardState.IsKeyUp(Keys.Space))
             {
-                buildings.Add(new SolarPanel(Content, mousePosition));
+                //gets the mouses position in the world and sets it in p
+                Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(camera.GetViewMatrix()));
+                //get the tile x and y position
+                x = (int)Math.Floor(p.X / 64);
+                y = (int)Math.Floor(p.Y / 64);
+                //scale back up, p will now be in line with the tiles
+                p = new Vector2(x*64f, y*64);
+                buildings.Add(new SolarPanel(Content, p));
             }
 
-
-
+            
             prevKeyState = keyboardState;
             prevMouseState = mouseState;
         }
@@ -59,6 +71,8 @@ namespace Remnants
             {
                 b.Draw(spriteBatch);
             }
+            spriteBatch.DrawString(font, x.ToString(), new Vector2(camera.Position.X, camera.Position.Y), Color.Black);
+            spriteBatch.DrawString(font, y.ToString(), new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Black);
             spriteBatch.End();
 
             //map.Draw(graphics);

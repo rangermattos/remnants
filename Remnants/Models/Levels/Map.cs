@@ -79,10 +79,17 @@ namespace Remnants
                         tiles[i][j] = new MetalFloor(Content);
                     else if (ind >= 80)
                         tiles[i][j] = new Water(Content);
-                    tiles[i][j].Position = new Vector2((64f * i) + xOffset, (64f * j) + yOffset);
+                    tiles[i][j].Position = new Vector2((64f * i), (64f * j));
+                    //tiles[i][j].Position = new Vector2((64f * i) + xOffset, (64f * j) + yOffset);
                 }
             }
+        }
 
+        public Tile GetTile(Vector2 location)
+        {
+            Tile t;
+            t = tiles[0][0];
+            return t;
         }
     }
 }
