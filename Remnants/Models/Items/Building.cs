@@ -9,12 +9,15 @@ namespace Remnants
         public Texture2D texture;
         public int tilesWide;
         public int tilesHigh;
-        public float buildTime;
         public int metalCost;
-        public int powerCost;
-        public int deltaPower;
+        public int energyCost;
+        protected int deltaEnergy;
+        public int produced;
+        public int energyChange;
         public float alpha = 0f;
-        public bool constructed;
+        public float buildTime;
+        public float elapsedTime = 0f;
+        public bool operational;
         public Vector2 Position { get; set; }
 
         public virtual void LoadContent(ContentManager Content)
@@ -37,7 +40,17 @@ namespace Remnants
                     alpha = 1f;
             }
             else
-                constructed = true;
+                operational = true;
+
+            if (operational)
+            {
+                elapsedTime += deltaT;
+                if (elapsedTime >= 1f)
+                {
+                    energyChange += deltaEnergy;
+                    elapsedTime -= 1f;
+                }
+            }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)

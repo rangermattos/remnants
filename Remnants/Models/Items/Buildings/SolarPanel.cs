@@ -12,9 +12,9 @@ namespace Remnants
             tilesHigh = 1;
             Position = pos;
             buildTime = 10f;
-            deltaPower = 20;
+            deltaEnergy = 10;
             metalCost = 100;
-            powerCost = 100;
+            energyCost = 100;
             LoadContent(Content);
         }
         public override void LoadContent(ContentManager Content)
@@ -36,6 +36,11 @@ namespace Remnants
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+        }
+
+        public override void Place()
+        {
+            base.Place();
         }
     }
 }
