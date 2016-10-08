@@ -61,6 +61,10 @@ namespace Remnants
                 buildings.Add(new SolarPanel(Content, p));
             }
 
+            foreach(Building b in buildings)
+            {
+                b.Update(gameTime);
+            }
             
             prevKeyState = keyboardState;
             prevMouseState = mouseState;

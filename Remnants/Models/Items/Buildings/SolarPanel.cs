@@ -15,7 +15,6 @@ namespace Remnants
             deltaPower = 20;
             metalCost = 100;
             powerCost = 100;
-            alpha = 0f;
             LoadContent(Content);
         }
         public override void LoadContent(ContentManager Content)
@@ -36,7 +35,6 @@ namespace Remnants
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, Color.White * alpha);
             base.Draw(spriteBatch);
         }
     }

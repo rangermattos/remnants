@@ -10,11 +10,10 @@ namespace Remnants
         public int tilesWide;
         public int tilesHigh;
         public float buildTime;
-        public float elapsedBuildTime;
         public int metalCost;
         public int powerCost;
         public int deltaPower;
-        public float alpha;
+        public float alpha = 0f;
         public bool constructed;
         public Vector2 Position { get; set; }
 
@@ -30,23 +29,20 @@ namespace Remnants
 
         public virtual void Update(GameTime gameTime)
         {
-        }
-
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-            /*
             var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (alpha < 1f)
             {
-                elapsedBuildTime += deltaT;
-                alpha = (elapsedBuildTime / buildTime);
+                alpha += deltaT / buildTime;
                 if (alpha > 1f)
                     alpha = 1f;
             }
             else
                 constructed = true;
-            */
-            spriteBatch.Draw(texture, Position);
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, Position, Color.White * alpha);
         }
 
         public virtual void Place()
