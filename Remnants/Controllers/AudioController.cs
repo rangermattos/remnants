@@ -28,7 +28,7 @@ namespace Remnants
         {
             //song = Content.Load<Song>("In_Light_Of_Darkness");
             soundEffects.Add(Content.Load<SoundEffect>("gates_ofmydian"));
-            soundEffects.Add(Content.Load<SoundEffect>("drone_pulsing_darkness"));
+            //soundEffects.Add(Content.Load<SoundEffect>("drone_pulsing_darkness"));
         }
 
         public void UnloadContent()
