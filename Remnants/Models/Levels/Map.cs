@@ -41,13 +41,23 @@ namespace Remnants
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
         {
+            var cameraPos = camera.Position;
+            var width = camera.Origin.X * 2;
+            var height = camera.Origin.Y * 2;
             for (int i = 0; i < xTiles; i++)
             {
                 for (int j = 0; j < yTiles; j++)
                 {
-                    tiles[i][j].Draw(spriteBatch);
+                    //so we don't draw tiles that arent visible in camera
+                    if (tiles[i][j].Position.X > (cameraPos.X - 64)
+                        && tiles[i][j].Position.X < (cameraPos.X + width)
+                        && tiles[i][j].Position.Y > (cameraPos.Y - 64)
+                        && tiles[i][j].Position.Y < (cameraPos.Y + height))
+                    {
+                        tiles[i][j].Draw(spriteBatch);
+                    }
                 }
             }
         }

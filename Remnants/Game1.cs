@@ -29,10 +29,10 @@ namespace Remnants
             graphics.IsFullScreen = false;
 
             //fixed time step is a fixed update speed
-            IsFixedTimeStep = true;
+            //IsFixedTimeStep = true;
             //target elapsed time sets the time between updates 16ms is roughly 60 updates per second
             //this also means roughly 60 frame draws per second
-            TargetElapsedTime = TimeSpan.FromMilliseconds(16);
+            //TargetElapsedTime = TimeSpan.FromMilliseconds(16);
             graphics.SynchronizeWithVerticalRetrace = true;
 
             center.X = graphics.PreferredBackBufferWidth / 2;

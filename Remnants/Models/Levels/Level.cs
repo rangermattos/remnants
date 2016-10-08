@@ -38,11 +38,12 @@ namespace Remnants
             //ui.Update(cameraController.GetCamPosition(), cameraController.GetCamTarget());
         }
 
-        public void Draw(SpriteBatch spriteBatch, Matrix viewMatrix)
+        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
         {
+            var viewMatrix = camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
-            spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
-            map.Draw(spriteBatch);
+            //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
+            map.Draw(spriteBatch, camera);
             spriteBatch.End();
 
             //map.Draw(graphics);

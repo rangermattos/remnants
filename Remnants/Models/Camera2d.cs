@@ -18,7 +18,7 @@ namespace Remnants
             Position = Vector2.Zero;
             mapSize = ms;
         }
-
+        
         public Vector2 Position { get; set; }
         public float Rotation { get; set; }
         public float Zoom { get; set; }
@@ -26,6 +26,7 @@ namespace Remnants
 
         public Matrix GetViewMatrix()
         {
+            //so the camera can't go off map
             if (Position.X < 0)
                 Position = new Vector2(0, Position.Y);
             if(Position.X > mapSize.X - (Origin.X * 2f))

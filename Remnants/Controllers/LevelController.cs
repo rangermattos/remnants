@@ -49,8 +49,7 @@ namespace Remnants
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Matrix viewMatrix = camera.GetViewMatrix();
-            currentLevel.Draw(spriteBatch, viewMatrix);
+            currentLevel.Draw(spriteBatch, camera);
         }
 
         public void LoadLevel(Game1 game, SpriteFont font)
@@ -59,6 +58,8 @@ namespace Remnants
             currentLevel = new Level(font);
             currentLevel.LoadContent(game);
             camera = new Camera2D(game.GraphicsDevice.Viewport, currentLevel.mapSize);
+            //set camera to center of map
+            camera.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
             levelOpen = true;
         }
     }
