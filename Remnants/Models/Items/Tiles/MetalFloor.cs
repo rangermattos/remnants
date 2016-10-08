@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -18,6 +13,8 @@ namespace Remnants
         public override void LoadContent(ContentManager Content)
         {
             texture = Content.Load<Texture2D>("mtlFloor");
+            canBuild = true;
+            canWalk = true;
             base.LoadContent(Content);
         }
 

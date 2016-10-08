@@ -7,8 +7,9 @@ namespace Remnants
     class Tile
     {
         public Texture2D texture;
-
         public Vector2 Position { get; set; }
+        public bool canBuild = false;
+        public bool canWalk = false;
 
         public virtual void LoadContent(ContentManager Content)
         {

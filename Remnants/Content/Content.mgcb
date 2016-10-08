@@ -31,18 +31,6 @@
 /processorParam:TextureFormat=Color
 /build:StarsBasic.png
 
-#begin In_Light_Of_Darkness.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:In_Light_Of_Darkness.mp3
-
-#begin drone_pulsing_darkness.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:drone_pulsing_darkness.wav
-
 #begin gates_ofmydian.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -60,4 +48,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:mtlFloor.png
+
+#begin water.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:water.png
+
+#begin solarPanel.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:solarPanel.png
 

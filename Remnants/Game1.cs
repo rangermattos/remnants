@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
 using System;
 
 namespace Remnants
@@ -86,7 +85,7 @@ namespace Remnants
             //only update levelcontroller if there is a level active
             if (levelController.levelOpen)
             {
-                levelController.Update(gameTime, graphics);
+                levelController.Update(gameTime, Content);
             }
             base.Update(gameTime);
         }

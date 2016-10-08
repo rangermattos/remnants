@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace Remnants
 {
@@ -26,7 +27,7 @@ namespace Remnants
             levelOpen = false;
         }
 
-        public void Update(GameTime gameTime, GraphicsDeviceManager graphics)
+        public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             var keyboardState = Keyboard.GetState();
@@ -44,7 +45,7 @@ namespace Remnants
             if (keyboardState.IsKeyDown(Keys.D))
                 camera.Position += new Vector2(250, 0) * deltaTime;
 
-            currentLevel.Update(gameTime, graphics);
+            currentLevel.Update(gameTime, Content, keyboardState);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -60,6 +61,8 @@ namespace Remnants
             camera = new Camera2D(game.GraphicsDevice.Viewport, currentLevel.mapSize);
             //set camera to center of map
             camera.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
+            //set zoom
+            camera.Zoom = 0.8f;
             levelOpen = true;
         }
     }

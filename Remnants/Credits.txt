@@ -1,0 +1,2 @@
+metalFloor: http://opengameart.org/content/metalstone-textures CC-BY 3.0
+font: http://www.fontspace.com/astigmatic-one-eye-typographic-institute/audiowide SIL Open Font License

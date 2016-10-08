@@ -43,9 +43,12 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\Camera2D.cs" />
+    <Compile Include="Models\Items\Building.cs" />
+    <Compile Include="Models\Items\Buildings\SolarPanel.cs" />
     <Compile Include="Models\Items\MenuItem.cs" />
     <Compile Include="Models\Items\Tile.cs" />
     <Compile Include="Models\Items\Tiles\MetalFloor.cs" />
+    <Compile Include="Models\Items\Tiles\Water.cs" />
     <Compile Include="Models\Items\UIItem.cs" />
     <Compile Include="Models\Levels\Level.cs" />
     <Compile Include="Models\Levels\Map.cs" />

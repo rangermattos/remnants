@@ -27,7 +27,7 @@ namespace Remnants
         public void LoadContent(ContentManager Content)
         {
             tileList.Add(new MetalFloor(Content));
-
+            tileList.Add(new Water(Content));
             GenerateMap(Content);
         }
 
@@ -46,18 +46,21 @@ namespace Remnants
             var cameraPos = camera.Position;
             var width = camera.Origin.X * 2;
             var height = camera.Origin.Y * 2;
+            var zoom = camera.Zoom;
             for (int i = 0; i < xTiles; i++)
             {
                 for (int j = 0; j < yTiles; j++)
                 {
                     //so we don't draw tiles that arent visible in camera
+                    /*
                     if (tiles[i][j].Position.X > (cameraPos.X - 64)
                         && tiles[i][j].Position.X < (cameraPos.X + width)
                         && tiles[i][j].Position.Y > (cameraPos.Y - 64)
                         && tiles[i][j].Position.Y < (cameraPos.Y + height))
                     {
+                    */
                         tiles[i][j].Draw(spriteBatch);
-                    }
+                    //}
                 }
             }
         }
@@ -71,8 +74,11 @@ namespace Remnants
                 tiles[i] = new Tile[yTiles];
                 for(int j = 0; j < yTiles; j++)
                 {
-                    int ind = r.Next(1);
-                    tiles[i][j] = new MetalFloor(Content);
+                    int ind = r.Next(100);
+                    if (ind < 80)
+                        tiles[i][j] = new MetalFloor(Content);
+                    else if (ind >= 80)
+                        tiles[i][j] = new Water(Content);
                     tiles[i][j].Position = new Vector2((64f * i) + xOffset, (64f * j) + yOffset);
                 }
             }

@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
 
 namespace Remnants
 {
@@ -8,6 +11,11 @@ namespace Remnants
         Texture2D backGround;
         protected Map map;
         public Vector2 mapSize;
+        List<Building> buildings = new List<Building>();
+        KeyboardState prevKeyState;
+        MouseState prevMouseState;
+        MouseState mouseState;
+        Vector2 mousePosition;
 
         public Level(SpriteFont font)
         {
@@ -26,24 +34,31 @@ namespace Remnants
             game.Content.Unload();
         }
 
-        public void Update(GameTime gameTime, GraphicsDeviceManager graphics)
+        public void Update(GameTime gameTime, ContentManager Content, KeyboardState keyboardState)
         {
-            //cameraController must be updated before everything else so that the Matrices are up to date
-            //cameraController.Update(gameTime);
-            //these bassicEffect updates must take place in order to draw properly
-            //map.Update(worldMatrix, cameraController.GetProjection(), cameraController.GetView());
-            
+            mouseState = Mouse.GetState();
+            mousePosition = new Vector2(mouseState.X, mouseState.Y);
+            if (prevKeyState.IsKeyDown(Keys.Space) && keyboardState.IsKeyUp(Keys.Space))
+            {
+                buildings.Add(new SolarPanel(Content, mousePosition));
+            }
 
-            //ui currently only has a readout for the camera position and target. these updates are called here
-            //ui.Update(cameraController.GetCamPosition(), cameraController.GetCamTarget());
+
+
+            prevKeyState = keyboardState;
+            prevMouseState = mouseState;
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera2D camera)
         {
             var viewMatrix = camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
-            //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
             map.Draw(spriteBatch, camera);
+            foreach (Building b in buildings)
+            {
+                b.Draw(spriteBatch);
+            }
             spriteBatch.End();
 
             //map.Draw(graphics);
