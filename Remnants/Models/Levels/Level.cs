@@ -22,23 +22,45 @@ namespace Remnants
         SpriteFont font;
         int x = 0;
         int y = 0;
+
         int energy;
         int metal;
+        int pop;
+        int food;
+        int water;
+        int antimatter;
+        int wood;
+        int nuclear;
+        List<int> resourceList = new List<int>();
 
         public Level(SpriteFont f)
         {
             font = f;
             mapSize = new Vector2(5760, 3240);
             map = new Map(mapSize);
-            energy = 1000;
-            metal = 1000;
+            food = 10000;
+            resourceList.Add(food);
+            water = 10000;
+            resourceList.Add(water);
+            energy = 10000;
+            resourceList.Add(energy);
+            antimatter = 10000;
+            resourceList.Add(antimatter);
+            nuclear = 10000;
+            resourceList.Add(nuclear);
+            wood = 10000;
+            resourceList.Add(wood);
+            metal = 10000;
+            resourceList.Add(metal);
+            pop = 10000;
+            resourceList.Add(pop);
         }
 
         public void LoadContent(Game1 game, Matrix vm, Vector2 vpDimensions)
         {
             backGround = game.Content.Load<Texture2D>("StarsBasic");
             map.LoadContent(game.Content);
-            ui = new UI(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions);
+            ui = new UI(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions, resourceList);
         }
 
         public void UnloadContent(Game1 game)
@@ -75,7 +97,7 @@ namespace Remnants
                 //if (b.GetType().Name == "SolarPanel") ;
             }
 
-            ui.Update(gameTime, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)));
+            ui.Update(gameTime, resourceList);
             
             prevKeyState = keyboardState;
             prevMouseState = mouseState;
@@ -91,14 +113,11 @@ namespace Remnants
             {
                 b.Draw(spriteBatch);
             }
-            spriteBatch.DrawString(font, "Energy: " + energy.ToString(), Vector2.Transform(Vector2.Zero, Matrix.Invert(camera.GetViewMatrix())), Color.Black);
-
-            ui.Draw(spriteBatch);
-
             spriteBatch.End();
 
-            //map.Draw(graphics);
-
+            spriteBatch.Begin();
+            ui.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }
