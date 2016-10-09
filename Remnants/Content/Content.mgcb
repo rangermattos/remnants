@@ -73,7 +73,7 @@
 /processorParam:TextureFormat=Color
 /build:solarPanel.png
 
-#begin solar_panel_no_base_test.png
+#begin construct.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -83,7 +83,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:solar_panel_no_base_test.png
+/build:construct.png
 
 #begin bullet_icon.png
 /importer:TextureImporter
