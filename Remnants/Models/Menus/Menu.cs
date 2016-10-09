@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace Remnants
@@ -23,6 +24,14 @@ namespace Remnants
             return 1;
         }
 
+        protected int AddItem(string text, SpriteFont font, Vector2 position, System.Func<string> menuItemAction)
+        {
+            MenuItem item = new MenuItem(text, font, position, menuItemAction);
+            menuItemList.Add(item);
+            menuHeight += item.GetSize().Y;
+            return 1;
+        }
+
         protected int AddItem(string text, SpriteFont font, Vector2 position, System.Func<Game1, int> menuItemAction)
         {
             MenuItem item = new MenuItem(text, font, position, menuItemAction);
@@ -39,13 +48,6 @@ namespace Remnants
             return 1;
         }
         /*/
-        protected int AddItem(float scale, string text, SpriteFont font, Vector2 position)
-        {
-            MenuItem item = new MenuItem(scale, text, font, position);
-            menuItemList.Add(item);
-            menuHeight += item.GetSize().Y;
-            return 1;
-        }
 
         protected int AddItem(string text, SpriteFont font, Vector2 position, System.Func<Game1, MenuController, int> menuItemAction)
         {
@@ -83,6 +85,11 @@ namespace Remnants
         public List<MenuItem> GetMenu()
         {
             return menuItemList;
+        }
+
+        public virtual string Update(MouseState state, MouseState prevState)
+        {
+            return "";
         }
     }
 }

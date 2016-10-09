@@ -44,6 +44,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Models\Camera2D.cs" />
     <Compile Include="Models\Items\Building.cs" />
+    <Compile Include="Models\Items\Buildings\ShockTrap.cs" />
     <Compile Include="Models\Items\Buildings\SolarPanel.cs" />
     <Compile Include="Models\Items\MenuItem.cs" />
     <Compile Include="Models\Items\Tile.cs" />

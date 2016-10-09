@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
 
 namespace Remnants
 {
@@ -10,9 +11,11 @@ namespace Remnants
     {
         public List<UIItem> UIItemList = new List<UIItem>();
         Vector2 topLeft = new Vector2();
+        public string buildingSelected { get; set; }
 
         public UI(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport, List<int> resourceList)
         {
+            buildingSelected = "";
             topLeft = Vector2.Zero;
             //UIBar
             AddItem(topLeft, Vector2.Zero, Content.Load<Texture2D>("UIBar1280"), () => { OnClickConstruct(); return 0; });
@@ -39,8 +42,9 @@ namespace Remnants
             
             List<string> l = new List<string>();
             l.Add("Solar Panel");
+            l.Add("Shock Trap");
             position = new Vector2(0, viewport.Y - 32);
-            AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"));
+            AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"), (bool active) => { OnClickConstructMenu(active); return 0; });
             
             SetItemPositions(viewport, resourceList);
         }
@@ -59,7 +63,7 @@ namespace Remnants
                 }
                 else
                 {
-                    i.Update(state, prevState);
+                    i.Update(state, prevState, this);
                 }
                 k++;
             }
@@ -91,18 +95,11 @@ namespace Remnants
             UIItem item = new UIItem(scale, v, font, tl, position, texture, UIItemAction);
             UIItemList.Add(item);
         }
-        /*
-        void AddItem(List<string> stringList, SpriteFont font, Vector2 tl, Vector2 position, Rectangle containerRect, System.Func<int> UIItemAction)
+        
+        void AddItem(List<string> stringList, SpriteFont font, Vector2 tl, Vector2 position, Texture2D texture, System.Func<bool, int> UIItemAction)
         {
             float scale = 0.3f;
-            UIItem item = new UIItem(scale, stringList, font, tl, position, containerRect, UIItemAction);
-            UIItemList.Add(item);
-        }
-        */
-        void AddItem(List<string> stringList, SpriteFont font, Vector2 tl, Vector2 position, Texture2D texture)
-        {
-            float scale = 0.3f;
-            UIItem item = new UIItem(scale, stringList, font, tl, position, texture);
+            UIItem item = new UIItem(scale, stringList, font, tl, position, texture, UIItemAction);
             UIItemList.Add(item);
         }
 
@@ -139,10 +136,15 @@ namespace Remnants
 
         }
 
+        void OnClickConstructMenu(bool active)
+        {
+            UIItemList[10].active = active;
+        }
+
         void ConstructionMenu(bool active)
         {
             UIItemList[10].active = active;
-            
+            buildingSelected = "";
         }
     }
 }

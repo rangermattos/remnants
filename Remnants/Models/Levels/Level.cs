@@ -39,20 +39,21 @@ namespace Remnants
             mapSize = new Vector2(5760, 3240);
             map = new Map(mapSize);
             food = 10000;
-            resourceList.Add(food);
             water = 10000;
-            resourceList.Add(water);
             energy = 10000;
-            resourceList.Add(energy);
             antimatter = 10000;
-            resourceList.Add(antimatter);
             nuclear = 10000;
-            resourceList.Add(nuclear);
             wood = 10000;
-            resourceList.Add(wood);
             metal = 10000;
-            resourceList.Add(metal);
             pop = 10000;
+            
+            resourceList.Add(food);
+            resourceList.Add(water);
+            resourceList.Add(energy);
+            resourceList.Add(antimatter);
+            resourceList.Add(nuclear);
+            resourceList.Add(wood);
+            resourceList.Add(metal);
             resourceList.Add(pop);
         }
 
@@ -74,7 +75,11 @@ namespace Remnants
             mousePosition = new Vector2(mouseState.X, mouseState.Y);
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
             var vm = camera.GetViewMatrix();
-            if (prevKeyState.IsKeyDown(Keys.Space) && keyboardState.IsKeyUp(Keys.Space))
+            string buildingString = ui.buildingSelected;
+
+            if (buildingString != ""
+               && mouseState.LeftButton == ButtonState.Released 
+               && prevMouseState.LeftButton == ButtonState.Pressed)
             {
                 //gets the mouses position in the world and sets it in p
                 Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(vm));
@@ -83,10 +88,38 @@ namespace Remnants
                 int y = (int)Math.Floor(p.Y / 64);
                 //scale back up, p will now be in line with the tiles
                 p = new Vector2(x*64f, y*64);
+
+                if(buildingString == "SolarPanel")
+                {
+                    buildings.Add(new SolarPanel(Content, p));
+                }
+                else if (buildingString == "ShockTrap")
+                {
+                    buildings.Add(new ShockTrap(Content, p));
+                }
+            }
+            else if (buildingString != ""
+               && mouseState.RightButton == ButtonState.Released
+               && prevMouseState.RightButton == ButtonState.Pressed)
+            {
+                ui.buildingSelected = "";
+            }
+            /*/
+            if(mouseState.LeftButton == ButtonState.Released
+               && prevMouseState.LeftButton == ButtonState.Pressed)
+            {
+                //gets the mouses position in the world and sets it in p
+                Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(vm));
+                //get the tile x and y position
+                int x = (int)Math.Floor(p.X / 64);
+                int y = (int)Math.Floor(p.Y / 64);
+                //scale back up, p will now be in line with the tiles
+                p = new Vector2(x * 64f, y * 64);
                 buildings.Add(new SolarPanel(Content, p));
             }
+            /*/
 
-            foreach(Building b in buildings)
+            foreach (Building b in buildings)
             {
                 b.Update(gameTime);
                 if (b.energyChange != 0)
@@ -97,6 +130,7 @@ namespace Remnants
                 //if (b.GetType().Name == "SolarPanel") ;
             }
 
+            SetResources();
             ui.Update(gameTime, mouseState, prevMouseState, resourceList);
             
             prevKeyState = keyboardState;
@@ -118,6 +152,18 @@ namespace Remnants
             spriteBatch.Begin();
             ui.Draw(spriteBatch);
             spriteBatch.End();
+        }
+
+        void SetResources()
+        {
+            resourceList[0] = food;
+            resourceList[1] = water;
+            resourceList[2] = energy;
+            resourceList[3] = antimatter;
+            resourceList[4] = nuclear;
+            resourceList[5] = wood;
+            resourceList[6] = metal;
+            resourceList[7] = pop;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Remnants
         public int sign = -1;
         System.Func<Game1, int> Action1;
         System.Func<Game1, MenuController, int> Action2;
-        System.Func<int> Action3;
+        System.Func<string> Action3;
 
         /*
          * MenuItems take functions as arguments
@@ -66,17 +66,17 @@ namespace Remnants
             Action3 = menuItemAction;
         }
         /*/
-        public MenuItem(float sc, string inctext, SpriteFont incfont, Vector2 incposition)
+        public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition, System.Func<string> menuItemAction)
         {
-            scale = sc;
             text = inctext;
             font = incfont;
-            size = font.MeasureString(text) * scale;
+            size = font.MeasureString(text);
             origin = size * 0.5f;
             font = incfont;
             alpha = 1.0f;
             position = incposition;
             color = Color.White;
+            Action3 = menuItemAction;
         }
 
         public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition, System.Func<Game1, MenuController, int> menuItemAction)
@@ -119,6 +119,32 @@ namespace Remnants
                 alpha = 1.0f;
                 sign = -1;
             }
+        }
+
+        public string Update(MouseState state, MouseState prevState)
+        {
+            //menuItem update method checks if the mouse is over it
+            if (IsItemActive(state))
+            {
+                //pulse effect if hovered over
+                Pulse();
+                //if clicked run the proper function
+                if (state.LeftButton == ButtonState.Released && prevState.LeftButton == ButtonState.Pressed)
+                {
+                    //run through the possible actions and find the one that isn't null. run that one
+                    if (Action3 != null)
+                    {
+                        return Action3();
+                    }
+                }
+            }
+            else
+            {
+                //if the mouse isn't over this menuItem, reset the pulse variables
+                alpha = 1.0f;
+                sign = -1;
+            }
+            return "";
         }
 
         public void Pulse()

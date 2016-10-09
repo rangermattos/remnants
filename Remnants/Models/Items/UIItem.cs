@@ -23,6 +23,8 @@ namespace Remnants
         System.Func<int> Action1;
         //System.Func<Game1, int> Action1;
         System.Func<bool, int> Action2;
+        System.Func<int> Action3;
+        //System.Func<string> Action3;
         public bool active { get; set; }
         Menu popUpMenu;
 
@@ -67,23 +69,8 @@ namespace Remnants
             active = false;
             size = new Vector2((float)texture.Width, (float)texture.Height);
         }
-        /*
-        public UIItem(float s, List<string> stringList, SpriteFont incfont, Vector2 tl, Vector2 incposition, Rectangle containerRect, System.Func<int> UIItemAction)
-        {
-            scale = s;
-            font = incfont;
-            popUpMenu = new ConstructionMenu(scale, font, stringList, incposition);
-
-            size = (font.MeasureString(value.ToString())) * scale;
-            valuePosition = new Vector2(0, (32 - size.Y) / 2);
-
-            position = incposition;
-            topLeft = tl;
-
-            color = Color.White;
-        }
-        /*/
-        public UIItem(float s, List<string> stringList, SpriteFont incfont, Vector2 tl, Vector2 incposition, Texture2D txt)
+        
+        public UIItem(float s, List<string> stringList, SpriteFont incfont, Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<bool, int> UIItemAction)
         {
             scale = s;
             float totHeight = 0f;
@@ -92,8 +79,7 @@ namespace Remnants
             foreach (string st in stringList)
             {
                 Vector2 tempVect = (incfont.MeasureString(st) * scale);
-                //totHeight += (tempVect.Y);
-                totHeight += 20;
+                totHeight += (tempVect.Y);
                 if (tempVect.X > maxWidth)
                 {
                     maxWidth = tempVect.X;
@@ -110,15 +96,17 @@ namespace Remnants
             topLeft = tl;
 
             color = Color.White;
+
+            Action2 = UIItemAction;
             active = false;
-            size = new Vector2((float)texture.Width, (float)texture.Height);
+            size = new Vector2(maxWidth, totHeight);
         }
 
         public void Update(MouseState state, MouseState prevState, int val)
         {
             value = val;
             //menuItem update method checks if the mouse is over it
-            if (state.Position.X > position.X && state.Position.X < position.X + size.X && state.Position.Y > position.Y && state.Position.Y < position.Y + size.Y)
+            if (IsItemHovered(state)) 
             {
                 //if clicked run the proper function
                 if (state.LeftButton == ButtonState.Released)// && prevState.LeftButton == ButtonState.Pressed)
@@ -137,11 +125,17 @@ namespace Remnants
             }
         }
 
-        public void Update(MouseState state, MouseState prevState)
+        public void Update(MouseState state, MouseState prevState, UI ui)
         {
             //menuItem update method checks if the mouse is over it
             if (IsItemHovered(state))
             {
+                string s = "";
+                if(popUpMenu != null && active)
+                {
+                    s = popUpMenu.Update(state, prevState);
+                    ui.buildingSelected = s;
+                }
                 //if clicked run the proper function
                 if (state.LeftButton == ButtonState.Released && prevState.LeftButton == ButtonState.Pressed)
                 {
@@ -154,6 +148,10 @@ namespace Remnants
                     {
                         active = !active;
                         int i = Action2(active);
+                    }
+                    else if (Action3 != null)
+                    {
+                        Action3();
                     }
                 }
             }
