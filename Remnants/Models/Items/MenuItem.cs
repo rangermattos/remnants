@@ -13,9 +13,11 @@ namespace Remnants
         Color color;
         public Vector2 position = new Vector2();
         public float alpha;
+        public float scale { get; set; }
         public int sign = -1;
         System.Func<Game1, int> Action1;
         System.Func<Game1, MenuController, int> Action2;
+        System.Func<int> Action3;
 
         /*
          * MenuItems take functions as arguments
@@ -49,6 +51,32 @@ namespace Remnants
             position = incposition;
             color = Color.White;
             Action1 = menuItemAction;
+        }
+        /*/
+        public MenuItem(float scale, string inctext, SpriteFont incfont, Vector2 incposition, System.Func<int> menuItemAction)
+        {
+            text = inctext;
+            font = incfont;
+            size = font.MeasureString(text);
+            origin = size * scale;
+            font = incfont;
+            alpha = 1.0f;
+            position = incposition;
+            color = Color.White;
+            Action3 = menuItemAction;
+        }
+        /*/
+        public MenuItem(float sc, string inctext, SpriteFont incfont, Vector2 incposition)
+        {
+            scale = sc;
+            text = inctext;
+            font = incfont;
+            size = font.MeasureString(text) * scale;
+            origin = size * 0.5f;
+            font = incfont;
+            alpha = 1.0f;
+            position = incposition;
+            color = Color.White;
         }
 
         public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition, System.Func<Game1, MenuController, int> menuItemAction)

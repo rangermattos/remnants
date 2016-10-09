@@ -97,7 +97,7 @@ namespace Remnants
                 //if (b.GetType().Name == "SolarPanel") ;
             }
 
-            ui.Update(gameTime, resourceList);
+            ui.Update(gameTime, mouseState, prevMouseState, resourceList);
             
             prevKeyState = keyboardState;
             prevMouseState = mouseState;

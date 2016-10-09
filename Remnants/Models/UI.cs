@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace Remnants
@@ -16,7 +17,7 @@ namespace Remnants
             //UIBar
             AddItem(topLeft, Vector2.Zero, Content.Load<Texture2D>("UIBar1280"), () => { OnClickConstruct(); return 0; });
             //construct
-            AddItem(topLeft, position, Content.Load<Texture2D>("construct"), () => { OnClickConstruct(); return 0; });
+            AddItem(topLeft, position, Content.Load<Texture2D>("construct"), (bool active) => { ConstructionMenu(active); return 0; });
             //food
             AddItem(resourceList[0], font, topLeft, position, Content.Load<Texture2D>("food_icon"), () => { OnClickConstruct(); return 0; });
             //water
@@ -34,19 +35,33 @@ namespace Remnants
             //Population
             AddItem(resourceList[7], font, topLeft, position, Content.Load<Texture2D>("pop_icon"), () => { OnClickConstruct(); return 0; });
 
+            //construction popupmenu
+            
+            List<string> l = new List<string>();
+            l.Add("Solar Panel");
+            position = new Vector2(0, viewport.Y - 32);
+            AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"));
+            
             SetItemPositions(viewport, resourceList);
         }
 
-        public void Update(GameTime gameTime, List<int> resourceList)
+        public void Update(GameTime gameTime, MouseState state, MouseState prevState, List<int> resourceList)
         {
             int j = 0;
+            int k = 0;
             foreach (UIItem i in UIItemList)
             {
-                if (i != UIItemList[0] && i != UIItemList[1])
+                //if (i != UIItemList[0] && i != UIItemList[1])
+                if(k > 1 && k < 10)
                 {
-                    i.value = resourceList[j];
+                    i.Update(state, prevState, resourceList[j]);
                     j++;
                 }
+                else
+                {
+                    i.Update(state, prevState);
+                }
+                k++;
             }
         }
 
@@ -64,10 +79,30 @@ namespace Remnants
             UIItemList.Add(item);
         }
 
+        void AddItem(Vector2 tl, Vector2 position, Texture2D texture, System.Func<bool, int> UIItemAction)
+        {
+            UIItem item = new UIItem(tl, position, texture, UIItemAction);
+            UIItemList.Add(item);
+        }
+
         void AddItem(int v, SpriteFont font, Vector2 tl, Vector2 position, Texture2D texture, System.Func<int> UIItemAction)
         {
             float scale = 0.3f;
             UIItem item = new UIItem(scale, v, font, tl, position, texture, UIItemAction);
+            UIItemList.Add(item);
+        }
+        /*
+        void AddItem(List<string> stringList, SpriteFont font, Vector2 tl, Vector2 position, Rectangle containerRect, System.Func<int> UIItemAction)
+        {
+            float scale = 0.3f;
+            UIItem item = new UIItem(scale, stringList, font, tl, position, containerRect, UIItemAction);
+            UIItemList.Add(item);
+        }
+        */
+        void AddItem(List<string> stringList, SpriteFont font, Vector2 tl, Vector2 position, Texture2D texture)
+        {
+            float scale = 0.3f;
+            UIItem item = new UIItem(scale, stringList, font, tl, position, texture);
             UIItemList.Add(item);
         }
 
@@ -80,14 +115,18 @@ namespace Remnants
             UIItemList[1].position = tempVect;
 
             float x = 1280 - (32 + 1 + 64) * 7;
+
+            int k = 0;
             foreach(UIItem i in UIItemList)
             {
-                if (i != UIItemList[0] && i != UIItemList[1] && i != UIItemList[9])
+                //if (i != UIItemList[0] && i != UIItemList[1] && i != UIItemList[9] && i != UIItemList[10])
+                if (k > 1 && k < 9)
                 {
                     i.position = new Vector2(x, 0);
                     i.valuePosition = new Vector2(x + 34, i.valuePosition.Y);
                     x += 32 + 1 + 64;
                 }
+                k++;
             }
 
             tempVect = new Vector2(0, 0);
@@ -98,6 +137,12 @@ namespace Remnants
         void OnClickConstruct()
         {
 
+        }
+
+        void ConstructionMenu(bool active)
+        {
+            UIItemList[10].active = active;
+            
         }
     }
 }
