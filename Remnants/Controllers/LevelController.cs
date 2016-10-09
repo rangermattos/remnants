@@ -56,13 +56,13 @@ namespace Remnants
         {
             //send viewport and mapsize to camera2d
             currentLevel = new Level(font);
-            currentLevel.LoadContent(game);
             camera = new Camera2D(game.GraphicsDevice.Viewport, currentLevel.mapSize);
             //set camera to center of map
             camera.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
             //set zoom
             camera.Zoom = 0.8f;
             //camera.Zoom = 1f;
+            currentLevel.LoadContent(game, camera.GetViewMatrix(), camera.Origin * 2);
             levelOpen = true;
         }
     }
