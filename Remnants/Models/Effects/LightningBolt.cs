@@ -40,21 +40,29 @@ namespace Remnants
         {
             Alpha -= FadeOutRate;
         }
-
+        
 
         public List<Line> CreateBolt(Vector2 source, Vector2 dest, float thickness)
         {
             //var Rand = new Random();
             var results = new List<Line>();
+            /*/
+            double range = 1;
+            double sample = Rand.NextDouble();
+            double scaled = (sample * range) + float.MinValue;
+            float f = (float)scaled;
+            /*/
+
             Vector2 tangent = dest - source;
             Vector2 normal = Vector2.Normalize(new Vector2(tangent.Y, -tangent.X));
             float length = tangent.Length();
+            Console.WriteLine(length.ToString());
 
             List<float> positions = new List<float>();
             positions.Add(0);
 
             for (int i = 0; i < length / 4; i++)
-                positions.Add(Rand.Next(0, 1));
+                positions.Add((float)Rand.NextDouble());
 
             positions.Sort();
 
@@ -68,7 +76,7 @@ namespace Remnants
                 float pos = positions[i];
 
                 // used to prevent sharp angles by ensuring very close positions also have small perpendicular variation.
-                float scale = (length * Jaggedness) * (pos - positions[i - 1]);
+                float scale = (length * Jaggedness) * (pos - positions[i - 1]) ;
 
                 // defines an envelope. Points near the middle of the bolt can be further from the central line.
                 float envelope = pos > 0.95f ? 20 * (1 - pos) : 1;

@@ -20,7 +20,7 @@ namespace Remnants
             metalCost = 100;
             energyCost = 100;
             LoadContent(Content);
-            //lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), Position + new Vector2(50, 50), Color.LightCyan);
+            lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), Position + new Vector2(200, 200), Color.LightCyan);
         }
 
         public override void LoadContent(ContentManager Content)
@@ -38,20 +38,20 @@ namespace Remnants
 
         public override void Update(GameTime gameTime)
         {
-            /*/
+            
             lb.Update();
             if(lb.Alpha <= 0)
             {
-                lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), Position + new Vector2(50, 50), Color.LightCyan);
+                lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), Position + new Vector2(200, 200), Color.LightCyan);
             }
-            /*/
+            
             base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            //lb.Draw(spriteBatch, halfCircle, lightningSegment);
+            lb.Draw(spriteBatch, halfCircle, lightningSegment);
         }
 
         public override void Place()

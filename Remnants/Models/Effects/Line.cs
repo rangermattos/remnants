@@ -29,7 +29,7 @@ namespace Remnants
 
             Vector2 capOrigin = new Vector2(halfCircle.Width, halfCircle.Height / 2f);
             Vector2 middleOrigin = new Vector2(0, lightningSegment.Height / 2f);
-            Vector2 middleScale = new Vector2(tangent.Length(), thicknessScale);
+            Vector2 middleScale = new Vector2(tangent.Length() / 10, thicknessScale);
 
             spriteBatch.Draw(lightningSegment, A, null, color, rotation, middleOrigin, middleScale, SpriteEffects.None, 0f);
             spriteBatch.Draw(halfCircle, A, null, color, rotation, capOrigin, thicknessScale, SpriteEffects.None, 0f);
