@@ -76,13 +76,13 @@ namespace Remnants
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
             var vm = camera.GetViewMatrix();
             string buildingString = ui.buildingSelected;
+            Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(vm));
 
             if (buildingString != ""
                && mouseState.LeftButton == ButtonState.Released 
                && prevMouseState.LeftButton == ButtonState.Pressed)
             {
                 //gets the mouses position in the world and sets it in p
-                Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(vm));
                 //get the tile x and y position
                 int x = (int)Math.Floor(p.X / 64);
                 int y = (int)Math.Floor(p.Y / 64);
@@ -104,24 +104,17 @@ namespace Remnants
             {
                 ui.buildingSelected = "";
             }
-            /*/
-            if(mouseState.LeftButton == ButtonState.Released
-               && prevMouseState.LeftButton == ButtonState.Pressed)
-            {
-                //gets the mouses position in the world and sets it in p
-                Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(vm));
-                //get the tile x and y position
-                int x = (int)Math.Floor(p.X / 64);
-                int y = (int)Math.Floor(p.Y / 64);
-                //scale back up, p will now be in line with the tiles
-                p = new Vector2(x * 64f, y * 64);
-                buildings.Add(new SolarPanel(Content, p));
-            }
-            /*/
 
             foreach (Building b in buildings)
             {
-                b.Update(gameTime);
+                if (b.GetType().Name == "ShockTrap")
+                {
+                    b.Update(gameTime, p);
+                }
+                else
+                {
+                    b.Update(gameTime);
+                }
                 if (b.energyChange != 0)
                 {
                     energy += b.energyChange;

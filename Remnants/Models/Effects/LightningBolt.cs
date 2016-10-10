@@ -46,17 +46,10 @@ namespace Remnants
         {
             //var Rand = new Random();
             var results = new List<Line>();
-            /*/
-            double range = 1;
-            double sample = Rand.NextDouble();
-            double scaled = (sample * range) + float.MinValue;
-            float f = (float)scaled;
-            /*/
 
             Vector2 tangent = dest - source;
             Vector2 normal = Vector2.Normalize(new Vector2(tangent.Y, -tangent.X));
             float length = tangent.Length();
-            Console.WriteLine(length.ToString());
 
             List<float> positions = new List<float>();
             positions.Add(0);

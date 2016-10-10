@@ -53,6 +53,11 @@ namespace Remnants
             }
         }
 
+        public virtual void Update(GameTime gameTime, Vector2 point)
+        {
+
+        }
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Position, Color.White * alpha);
