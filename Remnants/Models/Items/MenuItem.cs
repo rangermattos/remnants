@@ -66,8 +66,9 @@ namespace Remnants
             Action3 = menuItemAction;
         }
         /*/
-        public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition, System.Func<string> menuItemAction)
+        public MenuItem(float sc, string inctext, SpriteFont incfont, Vector2 incposition, System.Func<string> menuItemAction)
         {
+            scale = sc;
             text = inctext;
             font = incfont;
             size = font.MeasureString(text);

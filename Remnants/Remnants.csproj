@@ -43,6 +43,8 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\Camera2D.cs" />
+    <Compile Include="Models\Effects\LightningBolt.cs" />
+    <Compile Include="Models\Effects\Line.cs" />
     <Compile Include="Models\Items\Building.cs" />
     <Compile Include="Models\Items\Buildings\ShockTrap.cs" />
     <Compile Include="Models\Items\Buildings\SolarPanel.cs" />

@@ -95,6 +95,7 @@ namespace Remnants
             position = new Vector2(0f, incposition.Y - totHeight);
             topLeft = tl;
 
+
             color = Color.White;
 
             Action2 = UIItemAction;

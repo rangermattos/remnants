@@ -24,9 +24,9 @@ namespace Remnants
             return 1;
         }
 
-        protected int AddItem(string text, SpriteFont font, Vector2 position, System.Func<string> menuItemAction)
+        protected int AddItem(float scale, string text, SpriteFont font, Vector2 position, System.Func<string> menuItemAction)
         {
-            MenuItem item = new MenuItem(text, font, position, menuItemAction);
+            MenuItem item = new MenuItem(scale, text, font, position, menuItemAction);
             menuItemList.Add(item);
             menuHeight += item.GetSize().Y;
             return 1;
@@ -61,6 +61,19 @@ namespace Remnants
         {
             float avgHeight = menuHeight / itemCount;
             float top = SetTop(avgHeight, center);
+
+            int menuPosition = 0;
+            foreach (MenuItem item in menuItemList)
+            {
+                item.position.Y = top + menuPosition * avgHeight;
+                menuPosition++;
+            }
+        }
+
+        protected void SetPositions(Vector2 center, int x)
+        {
+            float avgHeight = menuHeight / itemCount;
+            float top = center.Y - (menuHeight / 2);
 
             int menuPosition = 0;
             foreach (MenuItem item in menuItemList)
