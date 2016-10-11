@@ -97,6 +97,10 @@ namespace Remnants
                 {
                     buildings.Add(new ShockTrap(Content, p));
                 }
+				else if (buildingString == "WindTurbine")
+				{
+					buildings.Add(new WindTurbine(Content, p));
+				}
             }
             else if (buildingString != ""
                && mouseState.RightButton == ButtonState.Released

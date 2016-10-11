@@ -71,7 +71,7 @@ namespace Remnants
             scale = sc;
             text = inctext;
             font = incfont;
-            size = font.MeasureString(text);
+			size = font.MeasureString(text) * scale;
             origin = size * 0.5f;
             font = incfont;
             alpha = 1.0f;

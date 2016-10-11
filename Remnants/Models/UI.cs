@@ -43,6 +43,7 @@ namespace Remnants
             List<string> l = new List<string>();
             l.Add("Solar Panel");
             l.Add("Shock Trap");
+			l.Add("Wind Turbine");
             position = new Vector2(0, viewport.Y - 32);
             AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"), (bool active) => { OnClickConstructMenu(active); return 0; });
             

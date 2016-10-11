@@ -87,7 +87,7 @@ namespace Remnants
         {
             if (itemCount % 2 == 0)
             {
-                return center.Y - ((itemCount / 2)) * avgHeight + 0.5f * avgHeight;
+				return center.Y - ((itemCount) / 2 ) * avgHeight + 0.5f * avgHeight;
             }
             else
             {
