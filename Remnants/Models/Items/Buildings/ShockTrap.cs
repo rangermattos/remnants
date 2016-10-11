@@ -77,9 +77,9 @@ namespace Remnants
             }
         }
 
-        public override void Place()
+        public override bool Place(Map map)
         {
-            base.Place();
+            return base.Place(map);
         }
 
         bool WithinRange(Vector2 point)

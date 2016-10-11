@@ -11,17 +11,21 @@ namespace Remnants
         public List<Tile> tileList = new List<Tile>();
         int xTiles;
         int yTiles;
-        float xOffset;
-        float yOffset;
+        /*/
+    float xOffset;
+    float yOffset;
+            /*/
         Tile[][] tiles;
 
-        public Map(Vector2 mapSize)
-        {
-            xTiles = 70;
-            yTiles = 40;
-            //offsets are divided by 64, rounded down, and then scaled back up to keep them in line with 64x64 grid
-            xOffset = 64 * (float)Math.Floor(((mapSize.X - (xTiles * 64)) / 2)/64);
+    public Map(Vector2 mapSize)
+    {
+        xTiles = 70;
+        yTiles = 40;
+        //offsets are divided by 64, rounded down, and then scaled back up to keep them in line with 64x64 grid
+        /*/
+        xOffset = 64 * (float)Math.Floor(((mapSize.X - (xTiles * 64)) / 2)/64);
             yOffset = 64 * (float)Math.Floor(((mapSize.Y - (yTiles * 64)) / 2)/64);
+            /*/
             tiles = new Tile[xTiles][];
         }
 
@@ -78,7 +82,7 @@ namespace Remnants
                         tiles[i][j] = new MetalFloor(Content);
                     else if (ind >= 80)
                         tiles[i][j] = new Water(Content);
-                    tiles[i][j].Position = new Vector2((64f * i) + xOffset, (64f * j) + yOffset);
+                    tiles[i][j].Position = new Vector2((64f * i), (64f * j));
                 }
             }
         }
@@ -86,7 +90,7 @@ namespace Remnants
         public Tile GetTile(Vector2 location)
         {
             Tile t;
-            t = tiles[0][0];
+            t = tiles[(int)(location.X / 64)][(int)(location.Y / 64)];
             return t;
         }
     }

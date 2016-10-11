@@ -80,9 +80,30 @@ namespace Remnants
 			}
         }
 
-        public virtual void Place()
+        public virtual bool Place(Map map)
         {
+            //check that all tiles the building will be on can be built on
+            for(int i = 0; i < tilesWide; i++)
+            {
+                for(int j = 0; j < tilesHigh; j++)
+                {
+                    if (!map.GetTile(Position + new Vector2(i * 64, j * 64)).canBuild)
+                    {
+                        return false;
+                    }
+                }
+            }
+            //if they can, set all of these tiles canBuild variable to false so we can't overlap buildings
 
+            for (int i = 0; i < tilesWide; i++)
+            {
+                for (int j = 0; j < tilesHigh; j++)
+                {
+                    map.GetTile(Position + new Vector2(i * 64, j * 64)).canBuild = false;
+                }
+            }
+            //return true so level will build the building
+            return true;
         }
     }
 }

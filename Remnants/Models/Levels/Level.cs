@@ -55,6 +55,7 @@ namespace Remnants
             resourceList.Add(wood);
             resourceList.Add(metal);
             resourceList.Add(pop);
+            
         }
 
         public void LoadContent(Game1 game, Matrix vm, Vector2 vpDimensions)
@@ -91,15 +92,27 @@ namespace Remnants
 
                 if(buildingString == "SolarPanel")
                 {
-                    buildings.Add(new SolarPanel(Content, p));
+                    var tempBuilding = new SolarPanel(Content, p);
+                    if (tempBuilding.Place(map))
+                    {
+                        buildings.Add(new SolarPanel(Content, p));
+                    }
                 }
                 else if (buildingString == "ShockTrap")
                 {
-                    buildings.Add(new ShockTrap(Content, p));
+                    var tempBuilding = new ShockTrap(Content, p);
+                    if (tempBuilding.Place(map))
+                    {
+                        buildings.Add(new ShockTrap(Content, p));
+                    }
                 }
 				else if (buildingString == "WindTurbine")
-				{
-					buildings.Add(new WindTurbine(Content, p));
+                {
+                    var tempBuilding = new WindTurbine(Content, p);
+                    if (tempBuilding.Place(map))
+                    {
+                        buildings.Add(new WindTurbine(Content, p));
+                    }
 				}
             }
             else if (buildingString != ""

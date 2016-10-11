@@ -38,9 +38,9 @@ namespace Remnants
             base.Draw(spriteBatch);
         }
 
-        public override void Place()
+        public override bool Place(Map map)
         {
-            base.Place();
+            return base.Place(map);
         }
     }
 }
