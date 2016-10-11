@@ -29,6 +29,7 @@ namespace Remnants
         {
             tileList.Add(new MetalFloor(Content));
             tileList.Add(new Water(Content));
+			tileList.Add(new Grass(Content));
             GenerateMap(Content);
         }
 
@@ -75,7 +76,8 @@ namespace Remnants
                 {
                     int ind = r.Next(100);
                     if (ind < 80)
-                        tiles[i][j] = new MetalFloor(Content);
+                        //tiles[i][j] = new MetalFloor(Content);
+						tiles[i][j] = new Grass(Content);
                     else if (ind >= 80)
                         tiles[i][j] = new Water(Content);
                     tiles[i][j].Position = new Vector2((64f * i) + xOffset, (64f * j) + yOffset);
