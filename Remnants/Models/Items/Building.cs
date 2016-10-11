@@ -24,7 +24,9 @@ namespace Remnants
 
         public virtual void LoadContent(ContentManager Content)
         {
-			progressBar = new ProgressBar(Content, Position, Position);
+            var p = new Vector2(Position.X + texture.Width / 2, Position.Y);
+			progressBar = new ProgressBar(Content, p, p);
+            progressBar.position = new Vector2(progressBar.position.X - progressBar.container.Width / 2, progressBar.position.Y);
         }
 
         public virtual void UnloadContent()
@@ -34,7 +36,6 @@ namespace Remnants
 
         public virtual void Update(GameTime gameTime)
         {
-			progressBar.position = Position;
 
             var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			if (alpha < 1f) 
