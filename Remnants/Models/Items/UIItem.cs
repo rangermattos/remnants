@@ -167,7 +167,7 @@ namespace Remnants
                     spriteBatch.Draw(texture, position, null, color, 0f, Vector2.Zero, textureScale, SpriteEffects.None, 0f);
                     foreach (MenuItem item in popUpMenu.menuItemList)
                     {
-						spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition() - item.GetSize()*0.5f, item.GetColor() * item.alpha, 0.0f, item.GetOrigin(), scale, SpriteEffects.None, 0.0f);
+						spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition() - item.GetOrigin(), item.GetColor() * item.alpha, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
                     }
                 }
             }

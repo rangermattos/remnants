@@ -13,23 +13,24 @@ namespace Remnants
             {
                 itemCount += AddItem(scale, s, font, center, () => { return s.Replace(" ", ""); });
             }
-            //Align(center, stringList, font, scale);
             SetPositions(center);
+            //Alignx(center, stringList, font, scale);
         }
 
-        void Align(Vector2 center, List<string> stringList, SpriteFont font, float scale)
+        void Alignx(Vector2 center, List<string> stringList, SpriteFont font, float scale)
         {
-            float totHeight = 0f;
+            float maxWidth = 0f;
             foreach (string st in stringList)
             {
                 Vector2 tempVect = (font.MeasureString(st) * scale);
-                totHeight += (tempVect.Y);
+                if(tempVect.X > maxWidth)
+                {
+                    maxWidth = tempVect.X;
+                }
             }
-            float y = center.Y;// - totHeight / 2;
             foreach (MenuItem item in menuItemList)
             {
-                item.position = new Vector2(center.X, y);
-                y += (font.MeasureString(item.GetText()) * scale).Y + 2;
+                item.position = new Vector2(10, item.position.Y);
             }
         }
 
