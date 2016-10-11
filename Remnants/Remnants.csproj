@@ -52,6 +52,7 @@
     <Compile Include="Models\Items\MenuItem.cs" />
     <Compile Include="Models\Items\ProgressBar.cs" />
     <Compile Include="Models\Items\Tile.cs" />
+    <Compile Include="Models\Items\Tiles\Grass.cs" />
     <Compile Include="Models\Items\Tiles\MetalFloor.cs" />
     <Compile Include="Models\Items\Tiles\Water.cs" />
     <Compile Include="Models\Items\UIItem.cs" />

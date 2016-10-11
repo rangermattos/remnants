@@ -49,22 +49,24 @@ namespace Remnants
 
         public override void Update(GameTime gameTime, Vector2 point)
         {
-            if (WithinRange(point))
+            if (operational)
             {
-                if(lb == null)
+                if (WithinRange(point))
                 {
-                    lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), point, Color.LightCyan);
+                    if (lb == null)
+                    {
+                        lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), point, Color.LightCyan);
+                    }
+                }
+                if (lb != null)
+                {
+                    lb.Update();
+                    if (lb.Alpha <= 0)
+                    {
+                        lb = null;
+                    }
                 }
             }
-            if (lb != null)
-            {
-                lb.Update();
-                if (lb.Alpha <= 0)
-                {
-                    lb = null;
-                }
-            }
-
             base.Update(gameTime);
         }
 
