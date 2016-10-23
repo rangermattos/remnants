@@ -21,7 +21,7 @@ namespace Remnants
 
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("wind_turbine");
+			texture = Content.Load<Texture2D>("buildings/wind_turbine");
 			base.LoadContent(Content);
 		}
 

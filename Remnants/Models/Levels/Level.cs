@@ -90,6 +90,8 @@ namespace Remnants
                 //scale back up, p will now be in line with the tiles
                 p = new Vector2(x*64f, y*64);
 
+				Console.Write("buildingString: " + buildingString + "\n");
+
                 if(buildingString == "SolarPanel")
                 {
                     var tempBuilding = new SolarPanel(Content, p);
@@ -113,6 +115,54 @@ namespace Remnants
                     {
                         buildings.Add(new WindTurbine(Content, p));
                     }
+				}
+				else if (buildingString == "SmallBatteryFacility")
+				{
+					var tempBuilding = new BatterySmall(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new BatterySmall(Content, p));
+					}
+				}
+				else if (buildingString == "MediumBatteryFacility")
+				{
+					var tempBuilding = new BatteryMedium(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new BatteryMedium(Content, p));
+					}
+				}
+				else if (buildingString == "LargeBatteryFacility")
+				{
+					var tempBuilding = new BatteryLarge(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new BatteryLarge(Content, p));
+					}
+				}
+				else if (buildingString == "SmallHouse")
+				{
+					var tempBuilding = new HouseSmall(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new HouseSmall(Content, p));
+					}
+				}
+				else if (buildingString == "MediumHouse")
+				{
+					var tempBuilding = new HouseMedium(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new HouseMedium(Content, p));
+					}
+				}
+				else if (buildingString == "LargeHouse")
+				{
+					var tempBuilding = new HouseLarge(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new HouseLarge(Content, p));
+					}
 				}
             }
             else if (buildingString != ""

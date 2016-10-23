@@ -36,7 +36,7 @@ namespace Remnants
 
         public override void LoadContent(ContentManager Content)
         {
-            texture = Content.Load<Texture2D>("ShockTrap");
+            texture = Content.Load<Texture2D>("buildings/ShockTrap");
             halfCircle = Content.Load<Texture2D>("glowLine3");
             lightningSegment = Content.Load<Texture2D>("glowLine2");
             base.LoadContent(Content);

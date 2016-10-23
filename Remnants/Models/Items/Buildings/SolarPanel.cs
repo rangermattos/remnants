@@ -19,7 +19,7 @@ namespace Remnants
         }
         public override void LoadContent(ContentManager Content)
         {
-            texture = Content.Load<Texture2D>("solarPanel");
+            texture = Content.Load<Texture2D>("buildings/solarPanel");
             base.LoadContent(Content);
         }
 

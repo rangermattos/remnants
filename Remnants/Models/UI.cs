@@ -44,6 +44,12 @@ namespace Remnants
             l.Add("Solar Panel");
             l.Add("Shock Trap");
 			l.Add("Wind Turbine");
+			l.Add("Small Battery Facility");
+			l.Add("Medium Battery Facility");
+			l.Add("Large Battery Facility");
+			l.Add("Small House");
+			l.Add("Medium House");
+			l.Add("Large House");
             position = new Vector2(0, viewport.Y - 32);
             AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"), (bool active) => { OnClickConstructMenu(active); return 0; });
             
