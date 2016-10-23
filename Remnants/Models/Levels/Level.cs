@@ -90,6 +90,8 @@ namespace Remnants
                 //scale back up, p will now be in line with the tiles
                 p = new Vector2(x*64f, y*64);
 
+				Console.Write("buildingString: " + buildingString + "\n");
+
                 if(buildingString == "SolarPanel")
                 {
                     var tempBuilding = new SolarPanel(Content, p);
