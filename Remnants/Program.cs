@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Windows;
 namespace Remnants
 {
     /// <summary>
@@ -13,8 +13,16 @@ namespace Remnants
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
-                game.Run();
+            try
+            {
+                using (Game1 game = new Game1())
+                    game.Run();
+            }
+
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.ToString());
+            }
         }
     }
 }

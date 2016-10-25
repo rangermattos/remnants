@@ -14,6 +14,24 @@
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>E:\Users\Brandon\Documents\publish\remnants\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>20</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -24,6 +42,7 @@
     <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,9 +52,25 @@
     <DefineConstants>TRACE;LINUX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>9C59C8B273344C667CCA837209546494A77E3A09</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Remnants_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Remnants.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controllers\AudioController.cs" />
@@ -66,17 +101,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="NVorbis">
-      <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTKWithOpenAL.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +118,102 @@
     </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Content\bin\DesktopGL\ambiantMenu.xnb" />
+    <None Include="Content\bin\DesktopGL\antimatter_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\bullet_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\construct.xnb" />
+    <None Include="Content\bin\DesktopGL\energy_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\font.xnb" />
+    <None Include="Content\bin\DesktopGL\food_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\gates_ofmydian.xnb" />
+    <None Include="Content\bin\DesktopGL\glowLine2.xnb" />
+    <None Include="Content\bin\DesktopGL\glowLine3.xnb" />
+    <None Include="Content\bin\DesktopGL\grass.xnb" />
+    <None Include="Content\bin\DesktopGL\grayDot.xnb" />
+    <None Include="Content\bin\DesktopGL\hammer.xnb" />
+    <None Include="Content\bin\DesktopGL\house_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\metal_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\mtlFloor.xnb" />
+    <None Include="Content\bin\DesktopGL\nuclear_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\pop_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\progress_bar_container.xnb" />
+    <None Include="Content\bin\DesktopGL\progress_bar_pixel.xnb" />
+    <None Include="Content\bin\DesktopGL\ShockTrap.xnb" />
+    <None Include="Content\bin\DesktopGL\solarPanel.xnb" />
+    <None Include="Content\bin\DesktopGL\StarsBasic.xnb" />
+    <None Include="Content\bin\DesktopGL\UIBar1280.xnb" />
+    <None Include="Content\bin\DesktopGL\water.xnb" />
+    <None Include="Content\bin\DesktopGL\water_icon.xnb" />
+    <None Include="Content\bin\DesktopGL\wind_turbine.xnb" />
+    <None Include="Content\bin\DesktopGL\wood_icon.xnb" />
+    <None Include="Content\font.spritefont" />
     <None Include="OpenTK.dll.config" />
+    <None Include="Remnants_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <PublishFile Include="NVorbis">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="OpenTK">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\antimatter_icon.png" />
+    <Content Include="Content\bullet_icon.png" />
+    <Content Include="Content\construct.png" />
+    <Content Include="Content\energy_icon.png" />
+    <Content Include="Content\food_icon.png" />
+    <Content Include="Content\gates_ofmydian.wav" />
+    <Content Include="Content\glowLine2.png" />
+    <Content Include="Content\glowLine3.png" />
+    <Content Include="Content\grass.png" />
+    <Content Include="Content\grayDot.png" />
+    <Content Include="Content\hammer.png" />
+    <Content Include="Content\house_icon.png" />
+    <Content Include="Content\metal_icon.png" />
+    <Content Include="Content\mtlFloor.png" />
+    <Content Include="Content\nuclear_icon.png" />
+    <Content Include="Content\pop_icon.png" />
+    <Content Include="Content\progress_bar_container.png" />
+    <Content Include="Content\progress_bar_pixel.png" />
+    <Content Include="Content\ShockTrap.png" />
+    <Content Include="Content\solarPanel.png" />
+    <Content Include="Content\solar_panel_no_base_test.png" />
+    <Content Include="Content\StarsBasic.png" />
+    <Content Include="Content\UIBar1280.png" />
+    <Content Include="Content\water.png" />
+    <Content Include="Content\water_icon.png" />
+    <Content Include="Content\wind_turbine.png" />
+    <Content Include="Content\wood_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
