@@ -19,9 +19,17 @@ namespace Remnants
 		public int metalStorage = 0;
 		public int energyStorage = 0;
 		public int populationHousing = 0;
+		protected int deltaFood = 0;
+		protected int deltaWater = 0;
         protected int deltaEnergy = 0;
+		protected int deltaWood = 0;
+		protected int deltaMetal = 0;
         public int produced;
+		public int foodChange;
+		public int waterChange;
         public int energyChange;
+		public int woodChange;
+		public int metalChange;
         public float alpha = 0f;
         public float buildTime;
         public float elapsedTime = 0f;
@@ -65,7 +73,11 @@ namespace Remnants
                 elapsedTime += deltaT;
                 if (elapsedTime >= 1f)
                 {
-                    energyChange += deltaEnergy;
+                    foodChange += deltaFood;
+					waterChange += deltaWater;
+					energyChange += deltaEnergy;
+					woodChange += deltaWood;
+					metalChange += deltaMetal;
                     elapsedTime -= 1f;
                 }
             }

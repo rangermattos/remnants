@@ -162,6 +162,54 @@ namespace Remnants
 						buildings.Add(new HouseLarge(Content, p));
 					}
 				}
+				else if (buildingString == "Greenhouse")
+				{
+					var tempBuilding = new Greenhouse(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new Greenhouse(Content, p));
+					}
+				}
+				else if (buildingString == "WaterPurification")
+				{
+					var tempBuilding = new WaterPurificationFacility(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new WaterPurificationFacility(Content, p));
+					}
+				}
+				else if (buildingString == "Mine")
+				{
+					var tempBuilding = new Mine(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new Mine(Content, p));
+					}
+				}
+				else if (buildingString == "Granary")
+				{
+					var tempBuilding = new Granary(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new Granary(Content, p));
+					}
+				}
+				else if (buildingString == "WaterTower")
+				{
+					var tempBuilding = new WaterTower(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new WaterTower(Content, p));
+					}
+				}
+				else if (buildingString == "Warehouse")
+				{
+					var tempBuilding = new Warehouse(Content, p);
+					if (tempBuilding.Place(map))
+					{
+						buildings.Add(new Warehouse(Content, p));
+					}
+				}
             }
             else if (buildingString != ""
                && mouseState.RightButton == ButtonState.Released
@@ -180,11 +228,31 @@ namespace Remnants
                 {
                     b.Update(gameTime);
                 }
-                if (b.energyChange != 0)
+				if (b.foodChange != 0)
+				{
+					food += b.foodChange;
+					b.foodChange = 0;
+				}
+                if (b.waterChange != 0)
                 {
-                    energy += b.energyChange;
-                    b.energyChange = 0;
+                    water += b.waterChange;
+                    b.waterChange = 0;
                 }
+				if (b.energyChange != 0)
+				{
+					energy += b.energyChange;
+					b.energyChange = 0;
+				}
+				if (b.woodChange != 0)
+				{
+					wood += b.woodChange;
+					b.woodChange = 0;
+				}
+				if (b.metalChange != 0)
+				{
+					metal += b.metalChange;
+					b.metalChange = 0;
+				}
                 //if (b.GetType().Name == "SolarPanel") ;
             }
 
