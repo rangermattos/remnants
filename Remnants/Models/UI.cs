@@ -20,23 +20,23 @@ namespace Remnants
             //UIBar
             AddItem(topLeft, Vector2.Zero, Content.Load<Texture2D>("UIBar1280"), () => { OnClickConstruct(); return 0; });
             //construct
-            AddItem(topLeft, position, Content.Load<Texture2D>("construct"), (bool active) => { ConstructionMenu(active); return 0; });
+            AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenu(active); return 0; });
             //food
-            AddItem(resourceList[0], font, topLeft, position, Content.Load<Texture2D>("food_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[0], font, topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
             //water
-            AddItem(resourceList[1], font, topLeft, position, Content.Load<Texture2D>("water_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[1], font, topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
             //energy
-            AddItem(resourceList[2], font, topLeft, position, Content.Load<Texture2D>("energy_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[2], font, topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
             //antimatter
-            AddItem(resourceList[3], font, topLeft, position, Content.Load<Texture2D>("antimatter_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[3], font, topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
             //nuclear
-            AddItem(resourceList[4], font, topLeft, position, Content.Load<Texture2D>("nuclear_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[4], font, topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
             //wood
-            AddItem(resourceList[5], font, topLeft, position, Content.Load<Texture2D>("wood_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[5], font, topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
             //Metal
-            AddItem(resourceList[6], font, topLeft, position, Content.Load<Texture2D>("metal_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[6], font, topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
             //Population
-            AddItem(resourceList[7], font, topLeft, position, Content.Load<Texture2D>("pop_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(resourceList[7], font, topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
 
             //construction popupmenu
             

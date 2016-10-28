@@ -12,7 +12,7 @@ namespace Remnants
         }
         public override void LoadContent(ContentManager Content)
         {
-            texture = Content.Load<Texture2D>("mtlFloor");
+            texture = Content.Load<Texture2D>("tiles/mtlFloor");
             canBuild = true;
             canWalk = true;
             base.LoadContent(Content);

@@ -81,6 +81,8 @@
     <Compile Include="Models\Effects\LightningBolt.cs" />
     <Compile Include="Models\Effects\Line.cs" />
     <Compile Include="Models\Items\Building.cs" />
+    <Compile Include="Models\Items\Buildings\Battery.cs" />
+    <Compile Include="Models\Items\Buildings\Housing.cs" />
     <Compile Include="Models\Items\Buildings\ShockTrap.cs" />
     <Compile Include="Models\Items\Buildings\SolarPanel.cs" />
     <Compile Include="Models\Items\Buildings\WindTurbine.cs" />
@@ -187,33 +189,84 @@
     </PublishFile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\antimatter_icon.png" />
-    <Content Include="Content\bullet_icon.png" />
+    <Content Include="Content\buildings\battery_large.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\battery_medium.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\battery_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\house_large.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\house_medium.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\house_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\ShockTrap.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\solarPanel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\buildings\wind_turbine.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\construct.png" />
-    <Content Include="Content\energy_icon.png" />
-    <Content Include="Content\food_icon.png" />
     <Content Include="Content\gates_ofmydian.wav" />
     <Content Include="Content\glowLine2.png" />
     <Content Include="Content\glowLine3.png" />
-    <Content Include="Content\grass.png" />
     <Content Include="Content\grayDot.png" />
-    <Content Include="Content\hammer.png" />
-    <Content Include="Content\house_icon.png" />
-    <Content Include="Content\metal_icon.png" />
-    <Content Include="Content\mtlFloor.png" />
-    <Content Include="Content\nuclear_icon.png" />
-    <Content Include="Content\pop_icon.png" />
+    <Content Include="Content\icons\antimatter_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\bullet_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\energy_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\food_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\hammer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\house_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\metal_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\nuclear_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\pop_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\water_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\icons\wood_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\progress_bar_container.png" />
     <Content Include="Content\progress_bar_pixel.png" />
-    <Content Include="Content\ShockTrap.png" />
-    <Content Include="Content\solarPanel.png" />
-    <Content Include="Content\solar_panel_no_base_test.png" />
     <Content Include="Content\StarsBasic.png" />
+    <Content Include="Content\tiles\grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tiles\mtlFloor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tiles\water.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\UIBar1280.png" />
-    <Content Include="Content\water.png" />
-    <Content Include="Content\water_icon.png" />
-    <Content Include="Content\wind_turbine.png" />
-    <Content Include="Content\wood_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
