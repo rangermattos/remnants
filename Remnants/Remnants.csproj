@@ -82,9 +82,15 @@
     <Compile Include="Models\Effects\Line.cs" />
     <Compile Include="Models\Items\Building.cs" />
     <Compile Include="Models\Items\Buildings\Battery.cs" />
+    <Compile Include="Models\Items\Buildings\Granary.cs" />
+    <Compile Include="Models\Items\Buildings\Greenhouse.cs" />
     <Compile Include="Models\Items\Buildings\Housing.cs" />
+    <Compile Include="Models\Items\Buildings\Mine.cs" />
     <Compile Include="Models\Items\Buildings\ShockTrap.cs" />
     <Compile Include="Models\Items\Buildings\SolarPanel.cs" />
+    <Compile Include="Models\Items\Buildings\Warehouse.cs" />
+    <Compile Include="Models\Items\Buildings\WaterPurificationFacility.cs" />
+    <Compile Include="Models\Items\Buildings\WaterTower.cs" />
     <Compile Include="Models\Items\Buildings\WindTurbine.cs" />
     <Compile Include="Models\Items\MenuItem.cs" />
     <Compile Include="Models\Items\ProgressBar.cs" />

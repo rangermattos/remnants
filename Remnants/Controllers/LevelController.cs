@@ -10,6 +10,12 @@ namespace Remnants
         Level currentLevel;
         public bool levelOpen;
         protected Camera2D camera;
+        public bool loading;
+        SpriteFont sf;
+        string loadString = "Loading";
+        float loadTime = 5.0f;
+        float elapsedLoadTime = 0.0f;
+        Texture2D backGround;
 
         public LevelController(bool isOpen)
         {
@@ -18,6 +24,7 @@ namespace Remnants
 
         public void LoadContent(Game1 game)
         {
+            backGround = game.Content.Load<Texture2D>("StarsBasic");
         }
 
         public void UnloadContent(Game1 game)
@@ -31,29 +38,60 @@ namespace Remnants
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             var keyboardState = Keyboard.GetState();
 
-            // movement
-            if (keyboardState.IsKeyDown(Keys.W))
-                camera.Position -= new Vector2(0, 250) * deltaTime;
+            if (!loading)
+            {
+                // movement
+                if (keyboardState.IsKeyDown(Keys.W))
+                    camera.Position -= new Vector2(0, 250) * deltaTime;
 
-            if (keyboardState.IsKeyDown(Keys.S))
-                camera.Position += new Vector2(0, 250) * deltaTime;
+                if (keyboardState.IsKeyDown(Keys.S))
+                    camera.Position += new Vector2(0, 250) * deltaTime;
 
-            if (keyboardState.IsKeyDown(Keys.A))
-                camera.Position -= new Vector2(250, 0) * deltaTime;
+                if (keyboardState.IsKeyDown(Keys.A))
+                    camera.Position -= new Vector2(250, 0) * deltaTime;
 
-            if (keyboardState.IsKeyDown(Keys.D))
-                camera.Position += new Vector2(250, 0) * deltaTime;
+                if (keyboardState.IsKeyDown(Keys.D))
+                    camera.Position += new Vector2(250, 0) * deltaTime;
 
-            currentLevel.Update(gameTime, Content, keyboardState, camera);
+                currentLevel.Update(gameTime, Content, keyboardState, camera);
+            }
+            else
+            {
+                elapsedLoadTime += deltaTime;
+                if (elapsedLoadTime >= 1.0f)
+                {
+                    loadString += ".";
+                    loadTime -= 1f;
+                    elapsedLoadTime = 0f;
+                    if (loadTime == 0f)
+                    {
+                        loading = false;
+                    }
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            currentLevel.Draw(spriteBatch, camera);
+            if (loading)
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
+                spriteBatch.DrawString(sf, loadString, Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                spriteBatch.End();
+            }
+            else
+                currentLevel.Draw(spriteBatch, camera);
+        }
+
+        public void LoadScreen()
+        {
         }
 
         public void LoadLevel(Game1 game, SpriteFont font)
         {
+            LoadContent(game);
+            sf = font;
             //send viewport and mapsize to camera2d
             currentLevel = new Level(font);
             camera = new Camera2D(game.GraphicsDevice.Viewport, currentLevel.mapSize);
@@ -64,6 +102,7 @@ namespace Remnants
             //camera.Zoom = 1f;
             currentLevel.LoadContent(game, camera.GetViewMatrix(), camera.Origin * 2);
             levelOpen = true;
+            loading = true;
         }
     }
 }
