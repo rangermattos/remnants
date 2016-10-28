@@ -50,6 +50,12 @@ namespace Remnants
 			l.Add("Small House");
 			l.Add("Medium House");
 			l.Add("Large House");
+			l.Add("Greenhouse");
+			l.Add("Water Purification");
+			l.Add("Mine");
+			l.Add("Granary");
+			l.Add("Water Tower");
+			l.Add("Warehouse");
             position = new Vector2(0, viewport.Y - 32);
             AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"), (bool active) => { OnClickConstructMenu(active); return 0; });
             
