@@ -84,8 +84,9 @@ namespace Remnants
                 currentLevel.Draw(spriteBatch, camera);
         }
 
-        public void LoadScreen()
+        public void SaveGame()
         {
+            currentLevel.SaveGame();
         }
 
         public void LoadLevel(Game1 game, SpriteFont font)
