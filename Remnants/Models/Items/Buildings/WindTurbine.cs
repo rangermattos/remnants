@@ -17,14 +17,14 @@ namespace Remnants
 			metalCost = 100;
 			energyCost = 100;
 			animated = true;
-			frameTime = 0.1f;
-			totalFrames = 10;
+			animation = new Animation(Content, "buildings/wind_turbine_spritesheet", 0.1f, 10, tilesHigh*64, tilesWide*64);
 			LoadContent(Content);
 		}
 
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("buildings/wind_turbine_spritesheet");
+			texture = Content.Load<Texture2D>("buildings/wind_turbine");
+			//animation.LoadContent(Content, "buildings/wind_turbine_spritesheet");
 			base.LoadContent(Content);
 		}
 
