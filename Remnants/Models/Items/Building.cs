@@ -36,22 +36,14 @@ namespace Remnants
         public bool operational;
         public Vector2 Position { get; set; }
 		ProgressBar progressBar;
-		public bool animated = false;
-		protected float frameTime;
-		protected float currFrameTime = 0f;
-		protected int frameIndex = 0;
-		protected int totalFrames;
-		protected int frameWidth, frameHeight;
-		Rectangle frame;
+		protected bool animated = false;
+		protected Animation animation;
 
-        public virtual void LoadContent(ContentManager Content)
+		public virtual void LoadContent(ContentManager Content)
         {
-			frameWidth = tilesWide * 64;
-			frameHeight = tilesHigh * 64;
-			var p = new Vector2(Position.X + frameWidth / 2, Position.Y);
+			var p = new Vector2(Position.X + tilesWide * 32, Position.Y);
 			progressBar = new ProgressBar(Content, p, p);
             progressBar.position = new Vector2(progressBar.position.X - progressBar.container.Width / 2, progressBar.position.Y);
-			frame = new Rectangle(frameIndex * frameWidth, 0, frameWidth, frameHeight);
         }
 
         public virtual void UnloadContent()
@@ -92,19 +84,9 @@ namespace Remnants
                     elapsedProductionTime -= 1f;
                 }
 
-				if(animated)
+				if (animated)
 				{
-					// animation frame changes
-					currFrameTime += deltaT;
-					while (currFrameTime > frameTime)
-					{
-						frameIndex++;
-						//currFrameTime -= frameTime;
-						currFrameTime = 0f;
-					}
-					if (frameIndex > totalFrames-1)
-						frameIndex = 0;
-					frame = new Rectangle(frameIndex * frameWidth, 0, frameWidth, frameHeight);
+					animation.Update(gameTime);
 				}
             }
         }
@@ -118,7 +100,7 @@ namespace Remnants
         {
 			if (animated)
 			{
-				spriteBatch.Draw(texture, Position, frame, Color.White * alpha);
+				animation.Draw(spriteBatch, Position, Color.White * alpha);
 			}
 			else
 			{
