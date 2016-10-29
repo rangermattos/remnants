@@ -16,12 +16,15 @@ namespace Remnants
 			deltaEnergy = 10;
 			metalCost = 100;
 			energyCost = 100;
+			animated = true;
+			frameTime = 0.1f;
+			totalFrames = 10;
 			LoadContent(Content);
 		}
 
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("buildings/wind_turbine");
+			texture = Content.Load<Texture2D>("buildings/wind_turbine_spritesheet");
 			base.LoadContent(Content);
 		}
 
