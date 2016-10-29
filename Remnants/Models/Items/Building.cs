@@ -32,16 +32,26 @@ namespace Remnants
 		public int metalChange;
         public float alpha = 0f;
         public float buildTime;
-        public float elapsedTime = 0f;
+        public float elapsedProductionTime = 0f;
         public bool operational;
         public Vector2 Position { get; set; }
 		ProgressBar progressBar;
+		public bool animated = false;
+		protected float frameTime;
+		protected float currFrameTime = 0f;
+		protected int frameIndex = 0;
+		protected int totalFrames;
+		protected int frameWidth, frameHeight;
+		Rectangle frame;
 
         public virtual void LoadContent(ContentManager Content)
         {
-            var p = new Vector2(Position.X + texture.Width / 2, Position.Y);
+			frameWidth = tilesWide * 64;
+			frameHeight = tilesHigh * 64;
+			var p = new Vector2(Position.X + frameWidth / 2, Position.Y);
 			progressBar = new ProgressBar(Content, p, p);
             progressBar.position = new Vector2(progressBar.position.X - progressBar.container.Width / 2, progressBar.position.Y);
+			frame = new Rectangle(frameIndex * frameWidth, 0, frameWidth, frameHeight);
         }
 
         public virtual void UnloadContent()
@@ -70,16 +80,32 @@ namespace Remnants
 
             if (operational)
             {
-                elapsedTime += deltaT;
-                if (elapsedTime >= 1f)
+				// calculate production/cost
+                elapsedProductionTime += deltaT;
+                if (elapsedProductionTime >= 1f)
                 {
                     foodChange += deltaFood;
 					waterChange += deltaWater;
 					energyChange += deltaEnergy;
 					woodChange += deltaWood;
 					metalChange += deltaMetal;
-                    elapsedTime -= 1f;
+                    elapsedProductionTime -= 1f;
                 }
+
+				if(animated)
+				{
+					// animation frame changes
+					currFrameTime += deltaT;
+					while (currFrameTime > frameTime)
+					{
+						frameIndex++;
+						//currFrameTime -= frameTime;
+						currFrameTime = 0f;
+					}
+					if (frameIndex > totalFrames-1)
+						frameIndex = 0;
+					frame = new Rectangle(frameIndex * frameWidth, 0, frameWidth, frameHeight);
+				}
             }
         }
 
@@ -90,7 +116,14 @@ namespace Remnants
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, Color.White * alpha);
+			if (animated)
+			{
+				spriteBatch.Draw(texture, Position, frame, Color.White * alpha);
+			}
+			else
+			{
+            	spriteBatch.Draw(texture, Position, Color.White * alpha);
+			}
 
 			if (progressBar.progress != 1.0f)
 			{
