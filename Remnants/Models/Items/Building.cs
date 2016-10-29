@@ -5,7 +5,7 @@ using System;
 
 namespace Remnants
 {
-    class Building
+    public class Building
     {
         public Texture2D texture;
         public int tilesWide;

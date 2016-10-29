@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Remnants
 {
-    class Tile
+    public class Tile
     {
         public Texture2D texture;
         public Vector2 Position { get; set; }

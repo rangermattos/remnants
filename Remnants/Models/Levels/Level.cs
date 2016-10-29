@@ -10,7 +10,7 @@ using System;
 
 namespace Remnants
 {
-    class Level
+    public class Level
     {
         [Serializable]
         public struct LevelDetails
@@ -92,6 +92,14 @@ namespace Remnants
             resourceList.Add(metal);
             resourceList.Add(pop);
             
+        }
+
+        //level constructer with loadgame
+        public Level(SpriteFont f, string filename)
+        {
+            font = f;
+            mapSize = new Vector2(5760, 3240);
+            LoadGame(filename);
         }
 
         public void LoadContent(Game1 game, Matrix vm, Vector2 vpDimensions)
@@ -337,6 +345,23 @@ namespace Remnants
             return device;
         }
 
+        public void LoadGame(string filename)
+        {
+            device = getStorageDevice();
+
+            // Open a storage container.
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+        }
         public void SaveGame()
         {
             LevelDetails sg = new LevelDetails(map, buildings, energy, metal, pop, food, water, antimatter, wood, nuclear, resourceList);

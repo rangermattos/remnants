@@ -6,7 +6,7 @@ using System;
 
 namespace Remnants
 {
-    class Map
+    public class Map
     {
         public List<Tile> tileList = new List<Tile>();
         int xTiles;

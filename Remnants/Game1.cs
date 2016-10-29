@@ -77,12 +77,12 @@ namespace Remnants
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                /*
+                
                 if (levelController.levelOpen)
                 {
                     levelController.SaveGame();
                 }
-                */
+                
                 Exit();
             }
             //only update menu if there is a menu active
