@@ -1,15 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace Remnants
 {
     public class Tile
     {
-        public Texture2D texture;
         public Vector2 Position { get; set; }
         public bool canBuild = false;
         public bool canWalk = false;
+        [NonSerialized]
+        public Texture2D texture;
 
         public virtual void LoadContent(ContentManager Content)
         {

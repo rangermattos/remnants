@@ -15,22 +15,22 @@ namespace Remnants
         [Serializable]
         public struct LevelDetails
         {
-            Map map;
-            List<Building> buildings;
-            int energy;
-            int metal;
-            int pop;
-            int food;
-            int water;
-            int antimatter;
-            int wood;
-            int nuclear;
-            List<int> resourceList;
+            public Map map;
+            //public List<Building> buildings;
+            public int energy;
+            public int metal;
+            public int pop;
+            public int food;
+            public int water;
+            public int antimatter;
+            public int wood;
+            public int nuclear;
+            public List<int> resourceList;
 
             public LevelDetails(Map map, List<Building> buildings, int energy, int metal, int pop, int food, int water, int antimatter, int wood, int nuclear, List<int> resourceList)
             {
                 this.map = map;
-                this.buildings = buildings;
+                //this.buildings = buildings;
                 this.energy = energy;
                 this.metal = metal;
                 this.pop = pop;
@@ -361,7 +361,44 @@ namespace Remnants
             // Close the wait handle.
             result.AsyncWaitHandle.Close();
 
+            // Check to see whether the save exists.
+            if (!container.FileExists(filename))
+            {
+                // If not, dispose of the container and return.
+                container.Dispose();
+                return;
+            }
+
+            // Open the file.
+            Stream stream = container.OpenFile(filename, FileMode.Open);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(LevelDetails));
+
+            LevelDetails data = (LevelDetails)serializer.Deserialize(stream);
+
+            // Close the file.
+            stream.Close();
+            // Dispose the container.
+            container.Dispose();
+
+            UnpackLevelDetails(data);
         }
+
+        public void UnpackLevelDetails(LevelDetails data)
+        {
+            map = data.map;
+            //buildings = data.buildings;
+            energy = data.energy;
+            metal = data.metal;
+            pop = data.pop;
+            food = data.food;
+            water = data.water;
+            antimatter = data.antimatter;
+            wood = data.wood;
+            nuclear = data.nuclear;
+            resourceList = data.resourceList;
+        }
+
         public void SaveGame()
         {
             LevelDetails sg = new LevelDetails(map, buildings, energy, metal, pop, food, water, antimatter, wood, nuclear, resourceList);

@@ -7,11 +7,13 @@ namespace Remnants
     class MenuController
     {
         Menu currentMenu;
+        Menu prevMenu;
         Texture2D backGround;
         public bool menuOpen;
         public MenuController(SpriteFont font, Vector2 center, Game1 game)
         {
             currentMenu = new MainMenu(font, center, game, this);
+            prevMenu = currentMenu;
             menuOpen = true;
             backGround = game.Content.Load<Texture2D>("StarsBasic");
         }

@@ -151,7 +151,7 @@ namespace Remnants
 
         void OnClickConstructMenu(bool active)
         {
-            UIItemList[10].active = active;
+            //UIItemList[10].active = active;
         }
 
         void ConstructionMenu(bool active)

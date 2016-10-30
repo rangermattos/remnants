@@ -8,7 +8,7 @@ namespace Remnants
 {
     public class Map
     {
-        public List<Tile> tileList = new List<Tile>();
+        List<Tile> tileList = new List<Tile>();
         int xTiles;
         int yTiles;
         /*/
@@ -17,10 +17,12 @@ namespace Remnants
             /*/
         Tile[][] tiles;
 
-    public Map(Vector2 mapSize)
-    {
-        xTiles = 70;
-        yTiles = 40;
+        Map() { }
+
+        public Map(Vector2 mapSize)
+        {
+            xTiles = 70;
+            yTiles = 40;
         //offsets are divided by 64, rounded down, and then scaled back up to keep them in line with 64x64 grid
         /*/
         xOffset = 64 * (float)Math.Floor(((mapSize.X - (xTiles * 64)) / 2)/64);

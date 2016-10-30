@@ -121,9 +121,14 @@ namespace Remnants
             this.Exit();
         }
 
+        public void LoadNewLevel()
+        {
+            levelController.LoadNewLevel(this, font);
+        }
+
         public void LoadLevel()
         {
-            levelController.LoadLevel(this, font);
+            levelController.LoadLevel(this, font, "savegame.sav");
         }
 
         public void LoadMenu()

@@ -89,7 +89,7 @@ namespace Remnants
             currentLevel.SaveGame();
         }
 
-        public void LoadLevel(Game1 game, SpriteFont font)
+        public void LoadNewLevel(Game1 game, SpriteFont font)
         {
             LoadContent(game);
             sf = font;
@@ -98,6 +98,23 @@ namespace Remnants
             camera = new Camera2D(game.GraphicsDevice.Viewport, currentLevel.mapSize);
             //set camera to center of map
             camera.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
+            //set zoom
+            camera.Zoom = 0.8f;
+            //camera.Zoom = 1f;
+            currentLevel.LoadContent(game, camera.GetViewMatrix(), camera.Origin * 2);
+            levelOpen = true;
+            loading = true;
+        }
+
+        public void LoadLevel(Game1 game, SpriteFont font, string filename)
+        {
+            LoadContent(game);
+            sf = font;
+            //send viewport and mapsize to camera2d
+            currentLevel = new Level(font, filename);
+            camera = new Camera2D(game.GraphicsDevice.Viewport, currentLevel.mapSize);
+            //set camera to center of map
+            camera.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y / 2);
             //set zoom
             camera.Zoom = 0.8f;
             //camera.Zoom = 1f;
