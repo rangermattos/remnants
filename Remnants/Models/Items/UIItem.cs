@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-
+using System;
 
 namespace Remnants
 {
@@ -135,11 +135,13 @@ namespace Remnants
                 ui.buildingSelected = s;
             }
             //menuItem update method checks if the mouse is over it
-            if (IsItemHovered(state))
+			if (IsItemHovered(state) && active)
             {
                 //if clicked run the proper function
                 if (state.LeftButton == ButtonState.Released && prevState.LeftButton == ButtonState.Pressed)
-                {
+				{
+					if (popUpMenu != null)
+						Console.Write("Construction menu clicked\n");
                     //run through the possible actions and find the one that isn't null. run that one
                     if (Action1 != null)
                     {
@@ -147,7 +149,8 @@ namespace Remnants
                     }
                     else if (Action2 != null)
                     {
-                        active = !active;
+                        //active = !active;
+						Console.Write("Active: " + active + "\n");
                         int i = Action2(active);
                     }
                     else if (Action3 != null)

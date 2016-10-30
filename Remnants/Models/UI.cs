@@ -20,7 +20,8 @@ namespace Remnants
             //UIBar
             AddItem(topLeft, Vector2.Zero, Content.Load<Texture2D>("UIBar1280"), () => { OnClickConstruct(); return 0; });
             //construct
-            AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenu(active); return 0; });
+			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenu(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
+			UIItemList[1].active = true;
             //food
             AddItem(resourceList[0], font, topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
             //water
@@ -57,7 +58,7 @@ namespace Remnants
 			l.Add("Water Tower");
 			l.Add("Warehouse");
             position = new Vector2(0, viewport.Y - 32);
-            AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"), (bool active) => { OnClickConstructMenu(active); return 0; });
+			AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"), (bool active) => { Console.Write("Clicking menu\n"); OnClickConstructMenu(active); Console.Write("Menu clicked\n"); return 0; });
             
             SetItemPositions(viewport, resourceList);
         }
@@ -151,14 +152,14 @@ namespace Remnants
 
         void OnClickConstructMenu(bool active)
         {
-            Console.Write("Making construction UI active: " + active + "\n");
-            if (UIItemList[10].active)
-                UIItemList[10].active = false;
+			Console.Write("Making construction UI active: " + active + "\n");
+			if (UIItemList[10].active)
+            	UIItemList[10].active = false;
         }
 
         void ConstructionMenu(bool active)
         {
-            UIItemList[10].active = active;
+			UIItemList[10].active = !UIItemList[10].active;
             buildingSelected = "";
         }
     }
