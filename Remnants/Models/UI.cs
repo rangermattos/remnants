@@ -151,7 +151,9 @@ namespace Remnants
 
         void OnClickConstructMenu(bool active)
         {
-            //UIItemList[10].active = active;
+            Console.Write("Making construction UI active: " + active + "\n");
+            if (UIItemList[10].active)
+                UIItemList[10].active = false;
         }
 
         void ConstructionMenu(bool active)
