@@ -17,7 +17,7 @@ namespace Remnants
 			metalCost = 100;
 			energyCost = 100;
 			animated = true;
-			animation = new Animation(Content, "buildings/wind_turbine_spritesheet", 0.1f, 10, tilesHigh*64, tilesWide*64);
+			animation = new Animation(Content, "buildings/wind_turbine_spritesheet", 0.1f, 10, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);
 		}
 
