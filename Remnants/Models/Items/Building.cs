@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System;
+using Remnants.Models;
 
 namespace Remnants
 {
-    public class Building
+    public class Building : Entity
     {
         public Texture2D texture;
         public int tilesWide;
