@@ -54,7 +54,7 @@ namespace Remnants
 
         public virtual void Update(GameTime gameTime)
         {
-
+            
             var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			if (alpha < 1f) 
 			{

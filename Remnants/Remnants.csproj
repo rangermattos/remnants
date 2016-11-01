@@ -80,6 +80,7 @@
     <Compile Include="Models\Camera2D.cs" />
     <Compile Include="Models\Effects\LightningBolt.cs" />
     <Compile Include="Models\Effects\Line.cs" />
+    <Compile Include="Models\Items\BuildingRegistry.cs" />
     <Compile Include="Models\Items\Entity.cs" />
     <Compile Include="Models\Items\Building.cs" />
     <Compile Include="Models\Items\Buildings\Battery.cs" />
