@@ -15,6 +15,8 @@ namespace Remnants
             deltaEnergy = 10;
             metalCost = 100;
             energyCost = 100;
+			animated = true;
+			animation = new Animation(Content, "buildings/solar_panel_spritesheet", 0.1f, 25, tilesHigh*64, tilesWide*64, true, true);
             LoadContent(Content);
         }
         public override void LoadContent(ContentManager Content)

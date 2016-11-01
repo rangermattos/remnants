@@ -409,6 +409,18 @@
 /processorParam:TextureFormat=Color
 /build:buildings/mine.png
 
+#begin buildings/shock_trap.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:buildings/shock_trap.png
+
 #begin buildings/solarPanel.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -420,6 +432,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:buildings/solarPanel.png
+
+#begin buildings/solar_panel_spritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:buildings/solar_panel_spritesheet.png
 
 #begin buildings/warehouse.png
 /importer:TextureImporter
