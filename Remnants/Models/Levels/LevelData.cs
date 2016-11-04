@@ -55,6 +55,7 @@ namespace Remnants
         public int wood;
         public int nuclear;
 
+        public List<buildingData> buildingList = new List<buildingData>();
         public List<tileData> tileList = new List<tileData>();
         public List<int> resourceList = new List<int>();
         public List<int> resourceLimits = new List<int>();

@@ -40,6 +40,78 @@ namespace Remnants
         {
             map.LoadContent(game.Content);
             UI.Create(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions);
+
+            if(LevelData.Instance.buildingList.Count > 0)
+            {
+                LoadBuildings(game);
+            }
+        }
+
+        void LoadBuildings(Game1 game)
+        {
+            foreach (LevelData.buildingData b in LevelData.Instance.buildingList)
+            {
+                if (b.type == "SolarPanel")
+                {
+                    buildings.Add(new SolarPanel(game.Content, b.Position));
+                }
+                else if (b.type == "ShockTrap")
+                {
+                    buildings.Add(new ShockTrap(game.Content, b.Position));
+                }
+                else if (b.type == "WindTurbine")
+                {
+                    buildings.Add(new WindTurbine(game.Content, b.Position));
+                }
+                else if (b.type == "SmallBatteryFacility")
+                {
+                    buildings.Add(new BatterySmall(game.Content, b.Position));
+                }
+                else if (b.type == "MediumBatteryFacility")
+                {
+                    buildings.Add(new BatteryMedium(game.Content, b.Position));
+                }
+                else if (b.type == "LargeBatteryFacility")
+                {
+                    buildings.Add(new BatteryLarge(game.Content, b.Position));
+                }
+                else if (b.type == "SmallHouse")
+                {
+                    buildings.Add(new HouseSmall(game.Content, b.Position));
+                }
+                else if (b.type == "MediumHouse")
+                {
+                    buildings.Add(new HouseMedium(game.Content, b.Position));
+                }
+                else if (b.type == "LargeHouse")
+                {
+                    buildings.Add(new HouseLarge(game.Content, b.Position));
+                }
+                else if (b.type == "Greenhouse")
+                {
+                    buildings.Add(new Greenhouse(game.Content, b.Position));
+                }
+                else if (b.type == "WaterPurification")
+                {
+                    buildings.Add(new WaterPurificationFacility(game.Content, b.Position));
+                }
+                else if (b.type == "Mine")
+                {
+                    buildings.Add(new Mine(game.Content, b.Position));
+                }
+                else if (b.type == "Granary")
+                {
+                    buildings.Add(new Granary(game.Content, b.Position));
+                }
+                else if (b.type == "WaterTower")
+                {
+                    buildings.Add(new WaterTower(game.Content, b.Position));
+                }
+                else if (b.type == "Warehouse")
+                {
+                    buildings.Add(new Warehouse(game.Content, b.Position));
+                }
+            }
         }
 
         public void UnloadContent(Game1 game)
@@ -294,6 +366,10 @@ namespace Remnants
 
         public void SaveGame()
         {
+            foreach(Building b in buildings)
+            {
+                LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
+            }
             device = getStorageDevice();
 
             // Open a storage container.
