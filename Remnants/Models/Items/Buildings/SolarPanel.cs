@@ -22,6 +22,7 @@ namespace Remnants
 			animation = new Animation(Content, "buildings/solar_panel_spritesheet", 0.1f, 25, tilesHigh*64, tilesWide*64, true, true);
             LoadContent(Content);
         }
+
         public override void LoadContent(ContentManager Content)
         {
             texture = Content.Load<Texture2D>("buildings/solarPanel");

@@ -11,12 +11,12 @@ namespace Remnants
         public Texture2D texture;
         public int tilesWide;
         public int tilesHigh;
+        public int populationHousing = 0;
         public int[] resourceCost;
         public int[] resourceStorage;
-        public int populationHousing = 0;
         protected int[] deltas;
         public int[] resourceChanges;
-        public float alpha = 0f;
+        public float alpha;
         public float buildTime;
         public float elapsedProductionTime = 0f;
         public bool operational;
