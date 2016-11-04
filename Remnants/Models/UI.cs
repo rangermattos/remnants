@@ -84,7 +84,7 @@ namespace Remnants
                 }
                 else
                 {
-                    i.Update(state, prevState, this);
+                    i.Update(state, prevState);
                 }
                 k++;
             }
@@ -159,8 +159,12 @@ namespace Remnants
         void OnClickConstructMenu(bool active)
         {
 			Console.Write("Making construction UI active: " + active + "\n");
-			if (UIItemList[10].active)
-            	UIItemList[10].active = false;
+			
+            UIItemList[10].active = !UIItemList[10].active;
+            if (!UIItemList[10].active)
+            {
+                MenuController.Instance.UnloadContent();
+            }
         }
 
         void ConstructionMenus(bool active)
@@ -175,8 +179,9 @@ namespace Remnants
             else
             {
                 MenuController.Instance.UnloadContent();
+                Console.WriteLine("buildingSelected: " + buildingSelected);
             }
-            buildingSelected = "";
+            //buildingSelected = "";
         }
     }
 }

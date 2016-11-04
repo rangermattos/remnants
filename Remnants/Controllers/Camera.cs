@@ -1,6 +1,7 @@
 ﻿using System;
 using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
+using Microsoft.Xna.Framework;
 
 namespace Remnants
 {
@@ -10,11 +11,14 @@ namespace Remnants
         private static Camera instance;
 
         public Camera2D cam;
+        public Matrix viewportScale;
 
         private Camera() { }
         private Camera(ViewportAdapter viewportAdapter)
         {
             cam = new Camera2D(viewportAdapter);
+            viewportScale = viewportAdapter.GetScaleMatrix();
+            cam.Zoom = 0.75f;
         }
         public static Camera Instance
         {

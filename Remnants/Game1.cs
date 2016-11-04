@@ -54,13 +54,8 @@ namespace Remnants
             backGround = Content.Load<Texture2D>("StarsBasic");
 
             viewportAdapter = new ScalingViewportAdapter(GraphicsDevice, virtualWidth, virtualHeight);
-            
             Camera.Create(viewportAdapter);
             //Camera.Instance.cam.Zoom = 1f;
-            Camera.Instance.cam.Zoom = 0.75f;
-            vpDim = new Vector2(viewportAdapter.ViewportWidth, viewportAdapter.VirtualHeight);
-            camDim = new Vector2(Camera.Instance.cam.Origin.X * 2, Camera.Instance.cam.Origin.Y * 2);
-            virtualDim = new Vector2(viewportAdapter.VirtualWidth, viewportAdapter.VirtualHeight);
 
             AudioController.Instance.LoadContent(Content);
             AudioController.Instance.Play();

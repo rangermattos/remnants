@@ -103,9 +103,11 @@ namespace Remnants
 
         public Tile GetTile(Vector2 location)
         {
-            Tile t;
-            t = tiles[(int)(location.X / 64)][(int)(location.Y / 64)];
-            return t;
+            try
+            {
+                return tiles[(int)(location.X / 64)][(int)(location.Y / 64)];
+            }
+            catch(Exception e) { return null; }
         }
     }
 }

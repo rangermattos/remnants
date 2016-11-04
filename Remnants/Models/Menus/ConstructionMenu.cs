@@ -58,7 +58,7 @@ namespace Remnants
 
             foreach (string s in l)
             {
-                itemCount += AddItem(scale, s, MenuController.Instance.font, center, () => { MenuController.Instance.UnloadContent();  return s.Replace(" ", ""); });
+                itemCount += AddItem(scale, s, MenuController.Instance.font, center, () => {MenuController.Instance.UnloadContent(); return s.Replace(" ", ""); });
             }
             SetPositions(center, 0);
 

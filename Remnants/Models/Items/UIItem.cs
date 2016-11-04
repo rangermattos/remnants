@@ -114,13 +114,13 @@ namespace Remnants
             }
         }
 
-        public void Update(MouseState state, MouseState prevState, UI ui)
+        public void Update(MouseState state, MouseState prevState)
         {
-            string s = "";
+            //string s = "";
             if (popUpMenu != null && active)
             {
-                s = MenuController.Instance.Update();
-                ui.buildingSelected = s;
+                //s = MenuController.Instance.Update();
+                //UI.Instance.buildingSelected = s;
             }
             //menuItem update method checks if the mouse is over it
 			if (IsItemHovered(state) && active)

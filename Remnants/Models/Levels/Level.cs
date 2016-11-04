@@ -115,15 +115,16 @@ namespace Remnants
             mousePosition = new Vector2(mouseState.X, mouseState.Y);
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
             var vm = Camera.Instance.cam.GetViewMatrix();
-            string buildingString = UI.Instance.buildingSelected;
-            Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(vm));
 
-            CheckBuilding(buildingString, p, Content);
+            UI.Instance.Update(gameTime, mouseState, prevMouseState, resourceList);
 
+            Vector2 p = Camera.Instance.cam.ScreenToWorld(mousePosition);
+            
             UpdateBuildings(gameTime, p);
 
+            CheckBuilding(p, Content);
+
             SetResources();
-            UI.Instance.Update(gameTime, mouseState, prevMouseState, resourceList);
             
             prevKeyState = keyboardState;
             prevMouseState = mouseState;
@@ -134,13 +135,13 @@ namespace Remnants
 
             spriteBatch.Begin(transformMatrix: Camera.Instance.cam.GetViewMatrix());
             map.Draw(spriteBatch);
+            spriteBatch.End();
+
+            spriteBatch.Begin();
             foreach (Building b in buildings)
             {
                 b.Draw(spriteBatch);
             }
-            spriteBatch.End();
-
-            spriteBatch.Begin();
             UI.Instance.Draw(spriteBatch);
             spriteBatch.End();
         }
@@ -185,12 +186,14 @@ namespace Remnants
             }
         }
 
-        public void CheckBuilding(string buildingString, Vector2 p, ContentManager Content)
+        public void CheckBuilding(Vector2 p, ContentManager Content)
         {
+            string buildingString = UI.Instance.buildingSelected;
             if (buildingString != ""
                && mouseState.LeftButton == ButtonState.Released
                && prevMouseState.LeftButton == ButtonState.Pressed)
             {
+                Console.WriteLine(buildingString);
                 //gets the mouses position in the world and sets it in p
                 //get the tile x and y position
                 int x = (int)Math.Floor(p.X / 64);

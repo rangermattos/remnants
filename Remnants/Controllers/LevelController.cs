@@ -51,6 +51,12 @@ namespace Remnants
                     Camera.Instance.cam.Position += new Vector2(250, 0) * deltaTime;
 
                 currentLevel.Update(gameTime, Content, keyboardState);
+
+                if (Camera.Instance.cam.Position.X < 0)
+                    Camera.Instance.cam.Position = new Vector2(0, Camera.Instance.cam.Position.Y);
+
+                if (Camera.Instance.cam.Position.Y < 0 - (32 * Camera.Instance.viewportScale.Scale.Y))
+                    Camera.Instance.cam.Position = new Vector2(Camera.Instance.cam.Position.X, 0 - (32 * Camera.Instance.viewportScale.Scale.Y));
             }
             else
             {

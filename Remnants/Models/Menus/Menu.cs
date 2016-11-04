@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
 
 namespace Remnants
 {
@@ -113,6 +114,8 @@ namespace Remnants
                 s = item.Update(state, game, mc);
                 if (s != "")
                 {
+                    UI.Instance.buildingSelected = s;
+                    Console.WriteLine("buildingSelected: " + UI.Instance.buildingSelected);
                     return s;
                 }
             }

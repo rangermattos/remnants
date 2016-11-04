@@ -122,6 +122,10 @@ namespace Remnants
             {
                 for(int j = 0; j < tilesHigh; j++)
                 {
+                    if(map.GetTile(Position + new Vector2(i * 64, j * 64)) == null)
+                    {
+                        return false;
+                    }
                     if (!map.GetTile(Position + new Vector2(i * 64, j * 64)).canBuild)
                     {
                         return false;
