@@ -5,10 +5,12 @@ namespace Remnants
 {
     class MainMenu : Menu
     {
-        public MainMenu(SpriteFont font, Vector2 center, Game1 game, MenuController mc)
+        public MainMenu(SpriteFont font)
         {
-            itemCount += AddItem("New Game", font, center, (Game1 g, MenuController m) => { g.LoadNewLevel(); m.menuOpen = false; return 0; });
-            itemCount += AddItem("Load Game", font, center, (Game1 g, MenuController m) => { g.LoadLevel(); m.menuOpen = false; return 0; });
+            scale = 1.0f;
+            Vector2 center = Camera.Instance.cam.Origin;
+            itemCount += AddItem("New Game", font, center, (Game1 g, MenuController m) => { g.LoadNewLevel(); m.UnloadContent(); return 0; });
+            itemCount += AddItem("Load Game", font, center, (Game1 g, MenuController m) => { g.LoadLevel(); m.UnloadContent(); return 0; });
             itemCount += AddItem("Options", font, center);
             itemCount += AddItem("Exit", font, center, (Game1 g) => { g.Quit(); return 0; });
             SetPositions(center);

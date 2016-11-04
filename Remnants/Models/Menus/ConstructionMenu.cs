@@ -2,26 +2,95 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
 
 namespace Remnants
 {
     class ConstructionMenu : Menu
     {
-        public ConstructionMenu(float scale, SpriteFont font, List<string> stringList, Vector2 center)
+        private static ConstructionMenu instance;
+        //public static float totHeight { get; set; }
+        //public static float maxWidth { get; set; }
+        public float totHeight { get; set; }
+        public float maxWidth { get; set; }
+        public Vector2 center;
+
+        private ConstructionMenu()
         {
-            foreach(string s in stringList)
+            scale = 0.3f;
+            List<string> l = new List<string>();
+            l.Add("Solar Panel");
+            l.Add("Shock Trap");
+            l.Add("Wind Turbine");
+            l.Add("Small Battery Facility");
+            l.Add("Medium Battery Facility");
+            l.Add("Large Battery Facility");
+            l.Add("Small House");
+            l.Add("Medium House");
+            l.Add("Large House");
+            l.Add("Greenhouse");
+            l.Add("Water Purification");
+            l.Add("Mine");
+            l.Add("Granary");
+            l.Add("Water Tower");
+            l.Add("Warehouse");
+
+            float ftotHeight = 0f;
+            float fmaxWidth = 0f;
+
+            foreach (string st in l)
             {
-                itemCount += AddItem(scale, s, font, center, () => { return s.Replace(" ", ""); });
+                Vector2 tempVect = (MenuController.Instance.font.MeasureString(st) * scale);
+                ftotHeight += (tempVect.Y);
+                if (tempVect.X > fmaxWidth)
+                {
+                    fmaxWidth = tempVect.X;
+                }
             }
-            SetPositions(center);
+            fmaxWidth += 4f;
+
+            totHeight = ftotHeight;
+            maxWidth = fmaxWidth;
+
+            //var v = Vector2.Transform(Vector2.Zero, Matrix.Invert(Camera.Instance.cam.GetViewMatrix()));
+            var v = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
+            center = new Vector2(maxWidth / 2, v.Y - (totHeight / 2));
+
+            foreach (string s in l)
+            {
+                itemCount += AddItem(scale, s, MenuController.Instance.font, center, () => { MenuController.Instance.UnloadContent();  return s.Replace(" ", ""); });
+            }
+            SetPositions(center, 0);
+
+            foreach(MenuItem i in menuItemList)
+            {
+                //i.origin = Vector2.Zero;
+            }
+
+        }
+        private ConstructionMenu(float scale, SpriteFont font, List<string> stringList, Vector2 center)
+        {
         }
 
-        public override string Update(MouseState state, MouseState prevState)
+        public static ConstructionMenu Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new ConstructionMenu();
+                }
+                return instance;
+            }
+        }
+        /*
+        public override string Update(MouseState state, Game1 game, MenuController mc)
         {
             string s = "";
+            var v = new Vector2(state.X, state.Y);
             foreach (MenuItem item in menuItemList)
             {
-                s = item.Update(state, prevState);
+                s = item.Update(state, game, mc);
                 if(s != "")
                 {
                     return s;
@@ -29,5 +98,6 @@ namespace Remnants
             }
             return s;
         }
+        */
     }
 }

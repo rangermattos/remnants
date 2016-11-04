@@ -57,17 +57,13 @@ namespace Remnants
         int nuclear;
         List<int> resourceList = new List<int>();
 
-        UI ui;
-        Texture2D backGround;
+        //UI ui;
         public Vector2 mapSize;
         KeyboardState prevKeyState;
         MouseState prevMouseState;
         MouseState mouseState;
         Vector2 mousePosition;
-        string mp;
         SpriteFont font;
-        int x = 0;
-        int y = 0;
 
         public Level(SpriteFont f)
         {
@@ -104,9 +100,8 @@ namespace Remnants
 
         public void LoadContent(Game1 game, Matrix vm, Vector2 vpDimensions)
         {
-            backGround = game.Content.Load<Texture2D>("StarsBasic");
             map.LoadContent(game.Content);
-            ui = new UI(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions, resourceList);
+            UI.Create(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions, resourceList);
         }
 
         public void UnloadContent(Game1 game)
@@ -114,13 +109,13 @@ namespace Remnants
             game.Content.Unload();
         }
 
-        public void Update(GameTime gameTime, ContentManager Content, KeyboardState keyboardState, Camera2D camera)
+        public void Update(GameTime gameTime, ContentManager Content, KeyboardState keyboardState)
         {
             mouseState = Mouse.GetState();
             mousePosition = new Vector2(mouseState.X, mouseState.Y);
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
-            var vm = camera.GetViewMatrix();
-            string buildingString = ui.buildingSelected;
+            var vm = Camera.Instance.cam.GetViewMatrix();
+            string buildingString = UI.Instance.buildingSelected;
             Vector2 p = Vector2.Transform(mousePosition, Matrix.Invert(vm));
 
             CheckBuilding(buildingString, p, Content);
@@ -128,18 +123,17 @@ namespace Remnants
             UpdateBuildings(gameTime, p);
 
             SetResources();
-            ui.Update(gameTime, mouseState, prevMouseState, resourceList);
+            UI.Instance.Update(gameTime, mouseState, prevMouseState, resourceList);
             
             prevKeyState = keyboardState;
             prevMouseState = mouseState;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            var viewMatrix = camera.GetViewMatrix();
-            spriteBatch.Begin(transformMatrix: viewMatrix);
-            spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
-            map.Draw(spriteBatch, camera);
+
+            spriteBatch.Begin(transformMatrix: Camera.Instance.cam.GetViewMatrix());
+            map.Draw(spriteBatch);
             foreach (Building b in buildings)
             {
                 b.Draw(spriteBatch);
@@ -147,7 +141,7 @@ namespace Remnants
             spriteBatch.End();
 
             spriteBatch.Begin();
-            ui.Draw(spriteBatch);
+            UI.Instance.Draw(spriteBatch);
             spriteBatch.End();
         }
 
@@ -329,7 +323,7 @@ namespace Remnants
                && mouseState.RightButton == ButtonState.Released
                && prevMouseState.RightButton == ButtonState.Pressed)
             {
-                ui.buildingSelected = "";
+                UI.Instance.buildingSelected = "";
             }
         }
 

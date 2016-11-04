@@ -35,7 +35,7 @@ namespace Remnants
             texture = txt;
             textureScale = new Vector2(1f, 1f);
             color = Color.White;
-            active = false;
+            active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
         }
         public UIItem(Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<bool, int> UIItemAction)
@@ -47,7 +47,7 @@ namespace Remnants
             color = Color.White;
 
             Action2 = UIItemAction;
-            active = false;
+            active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
         }
 
@@ -66,41 +66,29 @@ namespace Remnants
             textureScale = new Vector2(1f, 1f);
 
             color = Color.White;
-            active = false;
+            active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
         }
         
-        public UIItem(float s, List<string> stringList, SpriteFont incfont, Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<bool, int> UIItemAction)
+        public UIItem(Vector2 tl, Texture2D txt, System.Func<bool, int> UIItemAction)
         {
-            scale = s;
-            float totHeight = 0f;
-            float maxWidth = 0f;
-            
-            foreach (string st in stringList)
-            {
-                Vector2 tempVect = (incfont.MeasureString(st) * scale);
-                totHeight += (tempVect.Y);
-                if (tempVect.X > maxWidth)
-                {
-                    maxWidth = tempVect.X;
-                }
-            }
-            maxWidth += 4f;
-            Vector2 center = new Vector2(maxWidth / 2, incposition.Y - (totHeight / 2));
-            popUpMenu = new ConstructionMenu(scale, incfont, stringList, center);
-            textureScale = new Vector2(maxWidth, totHeight);
+            textureScale = new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight);
             
             texture = txt;
 
-            position = new Vector2(0f, incposition.Y - totHeight);
-            topLeft = tl;
-
-
+            //position = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
+            //position = new Vector2(0f, position.Y - ConstructionMenu.totHeight);
+            //topLeft = tl;
+            float x = ConstructionMenu.Instance.center.X - (ConstructionMenu.Instance.maxWidth / 2);
+            float y = ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2);
+            position = new Vector2(0, y);
             color = Color.White;
 
             Action2 = UIItemAction;
             active = false;
-            size = new Vector2(maxWidth, totHeight);
+            size = textureScale;
+
+            popUpMenu = MenuController.Instance.currentMenu;
         }
 
         public void Update(MouseState state, MouseState prevState, int val)
@@ -131,7 +119,7 @@ namespace Remnants
             string s = "";
             if (popUpMenu != null && active)
             {
-                s = popUpMenu.Update(state, prevState);
+                s = MenuController.Instance.Update();
                 ui.buildingSelected = s;
             }
             //menuItem update method checks if the mouse is over it
@@ -163,6 +151,15 @@ namespace Remnants
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (active)
+            {
+                spriteBatch.Draw(texture, position, null, color, 0f, Vector2.Zero, textureScale, SpriteEffects.None, 0f);
+                if (font != null)
+                {
+                    spriteBatch.DrawString(font, value.ToString(), valuePosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+                }
+            }
+            /*
             if(popUpMenu != null)
             {
                 if (active)
@@ -182,6 +179,7 @@ namespace Remnants
                     spriteBatch.DrawString(font, value.ToString(), valuePosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
                 }
             }
+            */
         }
 
         bool IsItemHovered(MouseState state)

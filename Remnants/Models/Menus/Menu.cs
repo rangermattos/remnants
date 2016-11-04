@@ -10,6 +10,7 @@ namespace Remnants
         public List<MenuItem> menuItemList = new List<MenuItem>();
         protected int itemCount { get; set; }
         float menuHeight = 0;
+        public float scale;
 
         public Menu()
         {
@@ -78,6 +79,9 @@ namespace Remnants
             int menuPosition = 0;
             foreach (MenuItem item in menuItemList)
             {
+                item.origin.X = 0;
+                item.origin.Y = 0;
+                item.position.X = 2;//center.X - item.GetSize().X / 2;// - item.origin.X;
                 item.position.Y = top + menuPosition * avgHeight;
                 menuPosition++;
             }
@@ -100,9 +104,19 @@ namespace Remnants
             return menuItemList;
         }
 
-        public virtual string Update(MouseState state, MouseState prevState)
+        public virtual string Update(MouseState state, Game1 game, MenuController mc)
         {
-            return "";
+            string s = "";
+            var v = new Vector2(state.X, state.Y);
+            foreach (MenuItem item in menuItemList)
+            {
+                s = item.Update(state, game, mc);
+                if (s != "")
+                {
+                    return s;
+                }
+            }
+            return s;
         }
     }
 }

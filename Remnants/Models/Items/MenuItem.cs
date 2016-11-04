@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Remnants
 {
@@ -8,7 +9,7 @@ namespace Remnants
     {
         string text;
         Vector2 size = new Vector2();
-        Vector2 origin = new Vector2();
+        public Vector2 origin = new Vector2();
         SpriteFont font;
         Color color;
         public Vector2 position = new Vector2();
@@ -18,6 +19,8 @@ namespace Remnants
         System.Func<Game1, int> Action1;
         System.Func<Game1, MenuController, int> Action2;
         System.Func<string> Action3;
+        MouseState prevState;
+        bool offset = true;
 
         /*
          * MenuItems take functions as arguments
@@ -30,11 +33,11 @@ namespace Remnants
 
         public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition)
         {
+            scale = 1f;
             text = inctext;
             font = incfont;
-            size = font.MeasureString(text);
+            size = font.MeasureString(text) * scale;
             origin = size * 0.5f;
-            font = incfont;
             alpha = 1.0f;
             position = incposition;
             color = Color.White;
@@ -42,11 +45,11 @@ namespace Remnants
 
         public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition, System.Func<Game1, int> menuItemAction)
         {
+            scale = 1f;
             text = inctext;
             font = incfont;
-            size = font.MeasureString(text);
+            size = font.MeasureString(text) * scale;
             origin = size * 0.5f;
-            font = incfont;
             alpha = 1.0f;
             position = incposition;
             color = Color.White;
@@ -57,7 +60,7 @@ namespace Remnants
         {
             text = inctext;
             font = incfont;
-            size = font.MeasureString(text);
+            size = font.MeasureString(text) * scale;
             origin = size * scale;
             font = incfont;
             alpha = 1.0f;
@@ -73,35 +76,40 @@ namespace Remnants
             font = incfont;
 			size = font.MeasureString(text) * scale;
             origin = size * 0.5f;
-            font = incfont;
             alpha = 1.0f;
             position = incposition;
             color = Color.White;
             Action3 = menuItemAction;
+            offset = false;
         }
 
         public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition, System.Func<Game1, MenuController, int> menuItemAction)
         {
+            scale = 1f;
             text = inctext;
             font = incfont;
-            size = font.MeasureString(text);
+            size = font.MeasureString(text) * scale;
             origin = size * 0.5f;
             font = incfont;
             alpha = 1.0f;
             position = incposition;
             color = Color.White;
             Action2 = menuItemAction;
+
+            prevState = Mouse.GetState();
         }
 
-        public void Update(MouseState state, Game1 game, MenuController menuController)
+        public string Update(MouseState state, Game1 game, MenuController menuController)
         {
             //menuItem update method checks if the mouse is over it
-            if (IsItemActive(state))
+            Vector2 mousePosition = new Vector2(state.X, state.Y);
+            //mousePosition = mousePosition / game.Scale;
+            if (IsItemActive(mousePosition))
             {
                 //pulse effect if hovered over
                 Pulse();
                 //if clicked run the proper function
-                if (state.LeftButton == ButtonState.Pressed)
+                if (state.LeftButton == ButtonState.Released && prevState.LeftButton == ButtonState.Pressed)
                 {
                     //run through the possible actions and find the one that isn't null. run that one
                     if (Action1 != null)
@@ -112,6 +120,12 @@ namespace Remnants
                     {
                         int i = Action2(game, menuController);
                     }
+                    else if (Action3 != null)
+                    {
+                        string s = Action3();
+                        Console.WriteLine("action 3 returning: " + s);
+                        return s;
+                    }
                 }
             }
             else
@@ -120,12 +134,15 @@ namespace Remnants
                 alpha = 1.0f;
                 sign = -1;
             }
+            prevState = state;
+            return "";
         }
-
-        public string Update(MouseState state, MouseState prevState)
+        /*
+        public string Update(MouseState state)
         {
             //menuItem update method checks if the mouse is over it
-            if (IsItemActive(state))
+            Vector2 mousePosition = new Vector2(state.X, state.Y);
+            if (IsItemActive(mousePosition))
             {
                 //pulse effect if hovered over
                 Pulse();
@@ -145,9 +162,11 @@ namespace Remnants
                 alpha = 1.0f;
                 sign = -1;
             }
+            prevState = state;
             return "";
         }
-
+        */
+        
         public void Pulse()
         {
             alpha += sign * 0.01f;
@@ -157,17 +176,14 @@ namespace Remnants
             }
         }
 
-        bool IsItemActive(MouseState state)
+        bool IsItemActive(Vector2 mousePosition)
         {
             //determine mouse position relative to this item
-            if (state.X > (position.X - (size.X / 2)) && state.X < (position.X + (size.X / 2)) && state.Y > (position.Y - (size.Y / 2)) && state.Y < (position.Y + (size.Y / 2)))
+            if (offset)
             {
-                return true;
+                return (mousePosition.X > (position.X - (size.X / 2)) && mousePosition.X < (position.X + (size.X / 2)) && mousePosition.Y > (position.Y - (size.Y / 2)) && mousePosition.Y < (position.Y + (size.Y / 2)));
             }
-            else
-            {
-                return false;
-            }
+            return (mousePosition.X > position.X && mousePosition.X < position.X + size.X && mousePosition.Y > position.Y && mousePosition.Y < position.Y + size.Y);
         }
 
         public string GetText()
@@ -198,6 +214,21 @@ namespace Remnants
         public Color GetColor()
         {
             return color;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(GetFont(), GetText(), GetPosition(), GetColor() * alpha, 0.0f, GetOrigin(), scale, SpriteEffects.None, 0.0f);
+            /*
+            if (scale == null || scale == 1f)
+            {
+                spriteBatch.DrawString(GetFont(), GetText(), GetPosition(), GetColor() * alpha, 0.0f, GetOrigin(), 1.0f, SpriteEffects.None, 0.0f);
+            }
+            else
+            {
+                spriteBatch.DrawString(GetFont(), GetText(), GetPosition() - GetOrigin(), GetColor() * alpha, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            }
+            */
         }
     }
 }

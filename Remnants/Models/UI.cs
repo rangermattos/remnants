@@ -11,16 +11,20 @@ namespace Remnants
     {
         public List<UIItem> UIItemList = new List<UIItem>();
         Vector2 topLeft = new Vector2();
+        SpriteFont font;
         public string buildingSelected { get; set; }
+        private static UI instance;
 
-        public UI(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport, List<int> resourceList)
+        private UI() { }
+        private UI(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport, List<int> resourceList)
         {
+            this.font = font;
             buildingSelected = "";
             topLeft = Vector2.Zero;
             //UIBar
             AddItem(topLeft, Vector2.Zero, Content.Load<Texture2D>("UIBar1280"), () => { OnClickConstruct(); return 0; });
             //construct
-			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenu(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
+			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenus(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
 			UIItemList[1].active = true;
             //food
             AddItem(resourceList[0], font, topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
@@ -40,27 +44,30 @@ namespace Remnants
             AddItem(resourceList[7], font, topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
 
             //construction popupmenu
-            
-            List<string> l = new List<string>();
-            l.Add("Solar Panel");
-            l.Add("Shock Trap");
-			l.Add("Wind Turbine");
-			l.Add("Small Battery Facility");
-			l.Add("Medium Battery Facility");
-			l.Add("Large Battery Facility");
-			l.Add("Small House");
-			l.Add("Medium House");
-			l.Add("Large House");
-			l.Add("Greenhouse");
-			l.Add("Water Purification");
-			l.Add("Mine");
-			l.Add("Granary");
-			l.Add("Water Tower");
-			l.Add("Warehouse");
-            position = new Vector2(0, viewport.Y - 32);
-			AddItem(l, font, topLeft, position, Content.Load<Texture2D>("grayDot"), (bool active) => { Console.Write("Clicking menu\n"); OnClickConstructMenu(active); Console.Write("Menu clicked\n"); return 0; });
+            AddItem(topLeft, Content.Load<Texture2D>("grayDot"), (bool active) => { Console.Write("Clicking menu\n"); OnClickConstructMenu(active); Console.Write("Menu clicked\n"); return 0; });
             
             SetItemPositions(viewport, resourceList);
+        }
+
+        public static UI Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    throw new Exception("Object not created");
+                }
+                return instance;
+            }
+        }
+
+        public static void Create(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport, List<int> resourceList)
+        {
+            if (instance != null)
+            {
+                throw new Exception("Object already created");
+            }
+            instance = new UI(font, position, Content, viewport, resourceList);
         }
 
         public void Update(GameTime gameTime, MouseState state, MouseState prevState, List<int> resourceList)
@@ -110,10 +117,9 @@ namespace Remnants
             UIItemList.Add(item);
         }
         
-        void AddItem(List<string> stringList, SpriteFont font, Vector2 tl, Vector2 position, Texture2D texture, System.Func<bool, int> UIItemAction)
+        void AddItem(Vector2 tl, Texture2D texture, System.Func<bool, int> UIItemAction)
         {
-            float scale = 0.3f;
-            UIItem item = new UIItem(scale, stringList, font, tl, position, texture, UIItemAction);
+            UIItem item = new UIItem(tl, texture, UIItemAction);
             UIItemList.Add(item);
         }
 
@@ -157,9 +163,19 @@ namespace Remnants
             	UIItemList[10].active = false;
         }
 
-        void ConstructionMenu(bool active)
+        void ConstructionMenus(bool active)
         {
-			UIItemList[10].active = !UIItemList[10].active;
+            UIItemList[10].active = !UIItemList[10].active;
+            if (UIItemList[10].active)
+            {
+                //Menu m = ConstructionMenu.Instance;
+                MenuController.Instance.SetMenu(ConstructionMenu.Instance);
+                //MenuController.Instance.SetMenu(new MainMenu(font));
+            }
+            else
+            {
+                MenuController.Instance.UnloadContent();
+            }
             buildingSelected = "";
         }
     }

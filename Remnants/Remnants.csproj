@@ -76,8 +76,9 @@
     <Compile Include="Controllers\AudioController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\ScalingViewportAdapter.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Models\Camera2D.cs" />
+    <Compile Include="Controllers\Camera.cs" />
     <Compile Include="Models\Effects\LightningBolt.cs" />
     <Compile Include="Models\Effects\Line.cs" />
     <Compile Include="Models\Items\BuildingRegistry.cs" />
@@ -113,6 +114,10 @@
     <Compile Include="Models\Effects\Animation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
@@ -187,6 +192,7 @@
     <None Include="Content\buildings\shock_trap.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

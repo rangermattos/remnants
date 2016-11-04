@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using MonoGame.Extended;
 using System.Collections.Generic;
 using System;
 
@@ -49,21 +50,30 @@ namespace Remnants
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            var cameraPos = camera.Position;
-            var width = camera.Origin.X * 2;
-            var height = camera.Origin.Y * 2;
-            var z = camera.Zoom;
+            var cameraPos = Camera.Instance.cam.Position;
+            var width = Camera.Instance.cam.Origin.X * 2;
+            var height = Camera.Instance.cam.Origin.Y * 2;
+            var z = Camera.Instance.cam.Zoom;
+            var rect = Camera.Instance.cam.GetBoundingRectangle();
             for (int i = 0; i < xTiles; i++)
             {
                 for (int j = 0; j < yTiles; j++)
                 {
+                    //tiles[i][j].Draw(spriteBatch);
                     //so we don't draw tiles that arent visible in camera
+                    /*
                     if (tiles[i][j].Position.X > (cameraPos.X - 3 * (64 / z))
                         && tiles[i][j].Position.X < (cameraPos.X + width / z)
                         && tiles[i][j].Position.Y > (cameraPos.Y - 3 * (64 / z))
                         && tiles[i][j].Position.Y < (cameraPos.Y + height / z))
+                        
+                    */
+                    if(tiles[i][j].Position.X > rect.Left - 2 * 64 * z
+                        && tiles[i][j].Position.X < rect.Right
+                        && tiles[i][j].Position.Y > rect.Top - 2 * 64 * z
+                        && tiles[i][j].Position.Y < rect.Bottom)
                     {
                         tiles[i][j].Draw(spriteBatch);
                     }
