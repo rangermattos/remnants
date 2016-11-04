@@ -135,13 +135,13 @@ namespace Remnants
 
             spriteBatch.Begin(transformMatrix: Camera.Instance.cam.GetViewMatrix());
             map.Draw(spriteBatch);
-            spriteBatch.End();
-
-            spriteBatch.Begin();
             foreach (Building b in buildings)
             {
                 b.Draw(spriteBatch);
             }
+            spriteBatch.End();
+
+            spriteBatch.Begin();
             UI.Instance.Draw(spriteBatch);
             spriteBatch.End();
         }
@@ -193,13 +193,12 @@ namespace Remnants
                && mouseState.LeftButton == ButtonState.Released
                && prevMouseState.LeftButton == ButtonState.Pressed)
             {
-                Console.WriteLine(buildingString);
                 //gets the mouses position in the world and sets it in p
                 //get the tile x and y position
                 int x = (int)Math.Floor(p.X / 64);
                 int y = (int)Math.Floor(p.Y / 64);
                 //scale back up, p will now be in line with the tiles
-                p = new Vector2(x * 64f, y * 64);
+                p = new Vector2(x * 64f, y * 64f);
 
                 if (buildingString == "SolarPanel")
                 {
