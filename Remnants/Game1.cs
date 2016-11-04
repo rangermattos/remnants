@@ -75,6 +75,8 @@ namespace Remnants
                 
                 if (levelController.levelOpen)
                 {
+                    if (UI.Instance.buildingSelected != "")
+                        UI.Instance.buildingSelected = "";
                     levelController.SaveGame();
                 }
                 

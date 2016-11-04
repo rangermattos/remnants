@@ -25,8 +25,10 @@ namespace Remnants
             Position = pos;
             buildTime = 10f;
             deltas[2] = -10;
-            metalCost = 100;
-            energyCost = 100;
+            //metalCost = 100;
+            //energyCost = 100;
+            resourceCost[6] = 100;
+            resourceCost[2] = 100;
             LoadContent(Content);
             range = new Circle();
             range.Center = Position + new Vector2(texture.Width / 2, texture.Height / 2);

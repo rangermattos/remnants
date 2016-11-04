@@ -35,6 +35,7 @@ namespace Remnants
             public bool operational;
             public float buildTime;
             public float elapsedProductionTime;
+            public float alpha;
 
             public buildingData(Building b)
             {
@@ -43,6 +44,7 @@ namespace Remnants
                 this.operational = b.operational;
                 this.buildTime = b.buildTime;
                 this.elapsedProductionTime = b.elapsedProductionTime;
+                this.alpha = b.alpha;
             }
         }
 

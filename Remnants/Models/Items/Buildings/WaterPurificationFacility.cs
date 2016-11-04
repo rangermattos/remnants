@@ -13,8 +13,10 @@ namespace Remnants
 			tilesHigh = 2;
 			Position = pos;
 			buildTime = 10f;
-			metalCost = 100;
-			energyCost = 100;
+            //metalCost = 100;
+            //energyCost = 100;
+            resourceCost[6] = 100;
+            resourceCost[2] = 100;
             deltas[1] = 10;
             deltas[2] = -5;
 			LoadContent(Content);

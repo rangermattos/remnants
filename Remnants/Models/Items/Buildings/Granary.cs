@@ -13,9 +13,11 @@ namespace Remnants
 			tilesHigh = 1;
 			Position = pos;
 			buildTime = 10f;
-			metalCost = 100;
-			energyCost = 100;
-			//foodStorage = 400;
+            //metalCost = 100;
+            //energyCost = 100;
+            resourceCost[6] = 100;
+            resourceCost[2] = 100;
+            //foodStorage = 400;
             resourceStorage[0] = 400;
             deltas[2] = -2;
 
