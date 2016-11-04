@@ -7,16 +7,19 @@ namespace Remnants
 {
 	class Granary : Building
 	{
-		public Granary (ContentManager Content, Vector2 pos)
-		{
+		public Granary (ContentManager Content, Vector2 pos) : base()
+        {
 			tilesWide = 2;
 			tilesHigh = 1;
 			Position = pos;
 			buildTime = 10f;
 			metalCost = 100;
 			energyCost = 100;
-			foodStorage = 400;
-			LoadContent(Content);
+			//foodStorage = 400;
+            resourceStorage[0] = 400;
+            deltas[2] = -2;
+
+            LoadContent(Content);
 		}
 
 		public override void LoadContent(ContentManager Content)

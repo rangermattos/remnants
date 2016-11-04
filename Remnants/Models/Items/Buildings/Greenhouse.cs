@@ -7,15 +7,15 @@ namespace Remnants
 {
 	class Greenhouse : Building
 	{
-		public Greenhouse (ContentManager Content, Vector2 pos)
-		{
+		public Greenhouse (ContentManager Content, Vector2 pos) : base()
+        {
 			tilesWide = 1;
 			tilesHigh = 1;
 			Position = pos;
 			buildTime = 10f;
 			metalCost = 100;
 			energyCost = 100;
-			deltaFood = 10;
+			deltas[0] = 10;
 			LoadContent(Content);
 		}
 

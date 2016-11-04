@@ -10,7 +10,6 @@ namespace Remnants
         public Vector2 Position { get; set; }
         public bool canBuild = false;
         public bool canWalk = false;
-        [NonSerialized]
         public Texture2D texture;
 
         public virtual void LoadContent(ContentManager Content)

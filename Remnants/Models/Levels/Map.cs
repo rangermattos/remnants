@@ -18,18 +18,28 @@ namespace Remnants
             /*/
         Tile[][] tiles;
 
-        Map() { }
-
-        public Map(Vector2 mapSize)
+        public Map()
         {
             xTiles = 70;
             yTiles = 40;
-        //offsets are divided by 64, rounded down, and then scaled back up to keep them in line with 64x64 grid
-        /*/
-        xOffset = 64 * (float)Math.Floor(((mapSize.X - (xTiles * 64)) / 2)/64);
-            yOffset = 64 * (float)Math.Floor(((mapSize.Y - (yTiles * 64)) / 2)/64);
+            LevelData.Instance.mapSize = new Vector2(xTiles, yTiles);
+            //offsets are divided by 64, rounded down, and then scaled back up to keep them in line with 64x64 grid
             /*/
+            xOffset = 64 * (float)Math.Floor(((mapSize.X - (xTiles * 64)) / 2)/64);
+                yOffset = 64 * (float)Math.Floor(((mapSize.Y - (yTiles * 64)) / 2)/64);
+                /*/
             tiles = new Tile[xTiles][];
+        }
+        
+        public Map(Vector2 mapSize)
+        {
+            xTiles = (int)mapSize.X;
+            yTiles = (int)mapSize.Y;
+            tiles = new Tile[xTiles][];
+            for (int i = 0; i < xTiles; i++)
+            {
+                tiles[i] = new Tile[yTiles];
+            }
         }
 
         public void LoadContent(ContentManager Content)
@@ -37,7 +47,12 @@ namespace Remnants
             tileList.Add(new MetalFloor(Content));
             tileList.Add(new Water(Content));
 			tileList.Add(new Grass(Content));
-            GenerateMap(Content);
+            if(LevelData.Instance.tileList.Count == 0)
+                GenerateMap(Content);
+            else
+            {
+                CreateMap(Content);
+            }
         }
 
         public void UnloadContent()
@@ -92,12 +107,24 @@ namespace Remnants
                 {
                     int ind = r.Next(100);
                     if (ind < 80)
-                        //tiles[i][j] = new MetalFloor(Content);
 						tiles[i][j] = new Grass(Content);
                     else if (ind >= 80)
                         tiles[i][j] = new Water(Content);
                     tiles[i][j].Position = new Vector2((64f * i), (64f * j));
+                    LevelData.Instance.tileList.Add(new LevelData.tileData(i, j, tiles[i][j]));
                 }
+            }
+        }
+
+        void CreateMap(ContentManager Content)
+        {
+            foreach (LevelData.tileData tile in LevelData.Instance.tileList)
+            {
+                if (tile.type == "Grass")
+                    tiles[tile.xPosition][tile.yPosition] = new Grass(Content);
+                else if(tile.type == "Water")
+                    tiles[tile.xPosition][tile.yPosition] = new Water(Content);
+                tiles[tile.xPosition][tile.yPosition].Position = new Vector2((64f * tile.xPosition), (64f * tile.yPosition));
             }
         }
 

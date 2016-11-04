@@ -18,13 +18,13 @@ namespace Remnants
         LightningBolt lb;
         Circle range;
 
-        public ShockTrap(ContentManager Content, Vector2 pos)
+        public ShockTrap(ContentManager Content, Vector2 pos) : base()
         {
             tilesWide = 1;
             tilesHigh = 1;
             Position = pos;
             buildTime = 10f;
-            deltaEnergy = -10;
+            deltas[2] = -10;
             metalCost = 100;
             energyCost = 100;
             LoadContent(Content);

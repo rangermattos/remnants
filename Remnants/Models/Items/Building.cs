@@ -11,36 +11,55 @@ namespace Remnants
         public Texture2D texture;
         public int tilesWide;
         public int tilesHigh;
-		public int woodCost = 0;
+        public int[] resourceCost;
+        public int woodCost = 0;
         public int metalCost = 0;
         public int energyCost = 0;
-		public int foodStorage = 0;
-		public int waterStorage = 0;
-		public int woodStorage = 0;
-		public int metalStorage = 0;
-		public int energyStorage = 0;
-		public int populationHousing = 0;
-		protected int deltaFood = 0;
-		protected int deltaWater = 0;
+        public int[] resourceStorage;
+        public int foodStorage = 0;
+        public int waterStorage = 0;
+        public int woodStorage = 0;
+        public int metalStorage = 0;
+        public int energyStorage = 0;
+        public int populationHousing = 0;
+        protected int[] deltas;
+        protected int deltaFood = 0;
+        protected int deltaWater = 0;
         protected int deltaEnergy = 0;
-		protected int deltaWood = 0;
-		protected int deltaMetal = 0;
+        protected int deltaWood = 0;
+        protected int deltaMetal = 0;
+        public int[] resourceChanges;
         public int produced;
-		public int foodChange;
-		public int waterChange;
+        public int foodChange;
+        public int waterChange;
         public int energyChange;
-		public int woodChange;
-		public int metalChange;
+        public int woodChange;
+        public int metalChange;
         public float alpha = 0f;
         public float buildTime;
         public float elapsedProductionTime = 0f;
         public bool operational;
         public Vector2 Position { get; set; }
-		ProgressBar progressBar;
-		protected bool animated = false;
-		protected Animation animation;
+        ProgressBar progressBar;
+        protected bool animated = false;
+        protected Animation animation;
 
-		public virtual void LoadContent(ContentManager Content)
+        public Building()
+        {
+            deltas = new int[8];
+            resourceCost = new int[8];
+            resourceChanges = new int[8];
+            resourceStorage = new int[8];
+            for (int i = 0; i < 8; i++)
+            {
+                deltas[i] = 0;
+                resourceChanges[i] = 0;
+                resourceCost[i] = 0;
+                resourceStorage[i] = 0;
+            }
+        }
+
+        public virtual void LoadContent(ContentManager Content)
         {
 			var p = new Vector2(Position.X + tilesWide * 32, Position.Y);
 			progressBar = new ProgressBar(Content, p, p);
@@ -77,12 +96,18 @@ namespace Remnants
                 elapsedProductionTime += deltaT;
                 if (elapsedProductionTime >= 1f)
                 {
+                    /*
                     foodChange += deltaFood;
 					waterChange += deltaWater;
 					energyChange += deltaEnergy;
 					woodChange += deltaWood;
 					metalChange += deltaMetal;
-                    elapsedProductionTime -= 1f;
+                    */
+                    for (int i = 0; i < 8; i++)
+                    {
+                        LevelData.Instance.resourceList[i] += deltas[i];
+                    }
+                    elapsedProductionTime = 0;
                 }
 
 				if (animated)

@@ -6,16 +6,18 @@ namespace Remnants
 {
 	class WindTurbine : Building
 	{
-		public WindTurbine (ContentManager Content, Vector2 pos)
+		public WindTurbine (ContentManager Content, Vector2 pos) : base()
 		{
 			tilesWide = 2;
 			tilesHigh = 2;
 			pos.Y -= (tilesHigh-1) * 64;
 			Position = pos;
 			buildTime = 10f;
-			deltaEnergy = 10;
-			metalCost = 100;
-			energyCost = 100;
+            //metalCost = 100;
+            //energyCost = 100;
+            resourceCost[6] = 100;
+            resourceCost[2] = 100;
+            deltas[2] = 10;
 			animated = true;
 			animation = new Animation(Content, "buildings/wind_turbine_spritesheet", 0.1f, 10, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);

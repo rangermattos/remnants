@@ -7,15 +7,19 @@ namespace Remnants
 {
 	class WaterTower : Building
 	{
-		public WaterTower (ContentManager Content, Vector2 pos)
-		{
+		public WaterTower (ContentManager Content, Vector2 pos) : base()
+        {
 			tilesWide = 1;
 			tilesHigh = 2;
 			Position = pos;
 			buildTime = 10f;
-			metalCost = 100;
-			energyCost = 100;
-			waterStorage = 400;
+            //metalCost = 100;
+            //energyCost = 100;
+            resourceCost[6] = 100;
+            resourceCost[2] = 100;
+            //waterStorage = 400;
+            resourceStorage[1] = 400;
+            deltas[2] = -1;
 			LoadContent(Content);
 		}
 

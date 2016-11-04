@@ -12,53 +12,9 @@ namespace Remnants
 {
     public class Level
     {
-        [Serializable]
-        public struct LevelDetails
-        {
-            public Map map;
-            //public List<Building> buildings;
-            public int energy;
-            public int metal;
-            public int pop;
-            public int food;
-            public int water;
-            public int antimatter;
-            public int wood;
-            public int nuclear;
-            public List<int> resourceList;
-
-            public LevelDetails(Map map, List<Building> buildings, int energy, int metal, int pop, int food, int water, int antimatter, int wood, int nuclear, List<int> resourceList)
-            {
-                this.map = map;
-                //this.buildings = buildings;
-                this.energy = energy;
-                this.metal = metal;
-                this.pop = pop;
-                this.food = food;
-                this.water = water;
-                this.antimatter = antimatter;
-                this.wood = wood;
-                this.nuclear = nuclear;
-                this.resourceList = resourceList;
-            }
-        }
-
-        [NonSerialized]
         StorageDevice device;
         Map map;
         List<Building> buildings = new List<Building>();
-        int energy;
-        int metal;
-        int pop;
-        int food;
-        int water;
-        int antimatter;
-        int wood;
-        int nuclear;
-        List<int> resourceList = new List<int>();
-
-        //UI ui;
-        public Vector2 mapSize;
         KeyboardState prevKeyState;
         MouseState prevMouseState;
         MouseState mouseState;
@@ -68,40 +24,22 @@ namespace Remnants
         public Level(SpriteFont f)
         {
             font = f;
-            mapSize = new Vector2(5760, 3240);
-            map = new Map(mapSize);
-            food = 10000;
-            water = 10000;
-            energy = 10000;
-            antimatter = 10000;
-            nuclear = 10000;
-            wood = 10000;
-            metal = 10000;
-            pop = 10000;
-            
-            resourceList.Add(food);
-            resourceList.Add(water);
-            resourceList.Add(energy);
-            resourceList.Add(antimatter);
-            resourceList.Add(nuclear);
-            resourceList.Add(wood);
-            resourceList.Add(metal);
-            resourceList.Add(pop);
-            
+            LevelData.Instance.SetLimits(500);
+            map = new Map();
         }
 
         //level constructer with loadgame
         public Level(SpriteFont f, string filename)
         {
             font = f;
-            mapSize = new Vector2(5760, 3240);
             LoadGame(filename);
+            map = new Map(LevelData.Instance.mapSize);
         }
 
         public void LoadContent(Game1 game, Matrix vm, Vector2 vpDimensions)
         {
             map.LoadContent(game.Content);
-            UI.Create(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions, resourceList);
+            UI.Create(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions);
         }
 
         public void UnloadContent(Game1 game)
@@ -116,7 +54,8 @@ namespace Remnants
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
             var vm = Camera.Instance.cam.GetViewMatrix();
 
-            UI.Instance.Update(gameTime, mouseState, prevMouseState, resourceList);
+            LevelData.Instance.Update();
+            UI.Instance.Update(gameTime, mouseState, prevMouseState);
 
             Vector2 p = Camera.Instance.cam.ScreenToWorld(mousePosition);
             
@@ -124,7 +63,7 @@ namespace Remnants
 
             CheckBuilding(p, Content);
 
-            SetResources();
+            //SetResources();
             
             prevKeyState = keyboardState;
             prevMouseState = mouseState;
@@ -157,31 +96,6 @@ namespace Remnants
                 else
                 {
                     b.Update(gameTime);
-                }
-                if (b.foodChange != 0)
-                {
-                    food += b.foodChange;
-                    b.foodChange = 0;
-                }
-                if (b.waterChange != 0)
-                {
-                    water += b.waterChange;
-                    b.waterChange = 0;
-                }
-                if (b.energyChange != 0)
-                {
-                    energy += b.energyChange;
-                    b.energyChange = 0;
-                }
-                if (b.woodChange != 0)
-                {
-                    wood += b.woodChange;
-                    b.woodChange = 0;
-                }
-                if (b.metalChange != 0)
-                {
-                    metal += b.metalChange;
-                    b.metalChange = 0;
                 }
             }
         }
@@ -340,7 +254,7 @@ namespace Remnants
             result.AsyncWaitHandle.Close();
             return device;
         }
-
+        
         public void LoadGame(string filename)
         {
             device = getStorageDevice();
@@ -368,37 +282,18 @@ namespace Remnants
             // Open the file.
             Stream stream = container.OpenFile(filename, FileMode.Open);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(LevelDetails));
+            XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
 
-            LevelDetails data = (LevelDetails)serializer.Deserialize(stream);
-
+            LevelData data = (LevelData)serializer.Deserialize(stream);
             // Close the file.
             stream.Close();
             // Dispose the container.
             container.Dispose();
-
-            UnpackLevelDetails(data);
-        }
-
-        public void UnpackLevelDetails(LevelDetails data)
-        {
-            map = data.map;
-            //buildings = data.buildings;
-            energy = data.energy;
-            metal = data.metal;
-            pop = data.pop;
-            food = data.food;
-            water = data.water;
-            antimatter = data.antimatter;
-            wood = data.wood;
-            nuclear = data.nuclear;
-            resourceList = data.resourceList;
+            LevelData.Instance.SetLevelData(data);
         }
 
         public void SaveGame()
         {
-            LevelDetails sg = new LevelDetails(map, buildings, energy, metal, pop, food, water, antimatter, wood, nuclear, resourceList);
-
             device = getStorageDevice();
 
             // Open a storage container.
@@ -422,8 +317,8 @@ namespace Remnants
             Stream stream = container.CreateFile(filename);
 
             // Convert the object to XML data and put it in the stream.
-            XmlSerializer serializer = new XmlSerializer(typeof(LevelDetails));
-            serializer.Serialize(stream, sg);
+            XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
+            serializer.Serialize(stream, LevelData.Instance);
 
             // Close the file.
             stream.Close();
@@ -431,7 +326,8 @@ namespace Remnants
             // Dispose the container, to commit changes.
             container.Dispose();
         }
-
+        
+        /*
         void SetResources()
         {
             resourceList[0] = food;
@@ -443,5 +339,6 @@ namespace Remnants
             resourceList[6] = metal;
             resourceList[7] = pop;
         }
+        */
     }
 }

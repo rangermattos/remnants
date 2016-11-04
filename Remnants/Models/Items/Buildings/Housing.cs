@@ -7,8 +7,8 @@ namespace Remnants
 {
 	class HouseSmall : Building
 	{
-		public HouseSmall(ContentManager Content, Vector2 pos)
-		{
+		public HouseSmall(ContentManager Content, Vector2 pos) : base()
+        {
 			tilesWide = 1;
 			tilesHigh = 1;
 			Position = pos;
@@ -16,8 +16,9 @@ namespace Remnants
 			woodCost = 100;
 			energyCost = 100;
 			populationHousing = 2;
-			deltaEnergy = -6;
-			LoadContent(Content);
+            deltas[2] = -6;
+
+            LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
 		{

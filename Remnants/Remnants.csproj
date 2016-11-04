@@ -104,6 +104,7 @@
     <Compile Include="Models\Items\UIItem.cs" />
     <Compile Include="Models\Levels\Level.cs" />
     <Compile Include="Models\Levels\Map.cs" />
+    <Compile Include="Models\Levels\LevelData.cs" />
     <Compile Include="Models\Menus\ConstructionMenu.cs" />
     <Compile Include="Models\Menus\MainMenu.cs" />
     <Compile Include="Models\Menus\Menu.cs" />

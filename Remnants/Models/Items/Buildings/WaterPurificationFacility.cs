@@ -7,15 +7,16 @@ namespace Remnants
 {
 	class WaterPurificationFacility : Building
 	{
-		public WaterPurificationFacility(ContentManager Content, Vector2 pos)
-		{
+		public WaterPurificationFacility(ContentManager Content, Vector2 pos) : base()
+        {
 			tilesWide = 2;
 			tilesHigh = 2;
 			Position = pos;
 			buildTime = 10f;
 			metalCost = 100;
 			energyCost = 100;
-			deltaWater = 10;
+            deltas[1] = 10;
+            deltas[2] = -5;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)

@@ -8,14 +8,14 @@ namespace Remnants
 	{
 		public Grass (ContentManager Content)
 		{
-			LoadContent(Content);
+            canBuild = true;
+            canWalk = true;
+            LoadContent(Content);
 		}
 
 		public override void LoadContent(ContentManager Content)
 		{
 			texture = Content.Load<Texture2D>("tiles/grass");
-			canBuild = true;
-			canWalk = true;
 			base.LoadContent(Content);
 		}
 

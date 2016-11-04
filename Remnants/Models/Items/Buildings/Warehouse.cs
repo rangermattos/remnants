@@ -7,16 +7,17 @@ namespace Remnants
 {
 	class Warehouse : Building
 	{
-		public Warehouse(ContentManager Content, Vector2 pos)
-		{
+		public Warehouse(ContentManager Content, Vector2 pos) : base()
+        {
 			tilesWide = 1;
 			tilesHigh = 1;
 			Position = pos;
 			buildTime = 10f;
 			metalCost = 100;
 			energyCost = 100;
-			woodStorage = 200;
-			metalStorage = 200;
+            deltas[2] = -1;
+            resourceStorage[5] = 200;
+            resourceStorage[6] = 200;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)

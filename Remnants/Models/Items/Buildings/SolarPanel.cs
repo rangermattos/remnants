@@ -6,14 +6,14 @@ namespace Remnants
 {
     class SolarPanel : Building
     {
-        public SolarPanel(ContentManager Content, Vector2 pos)
+        public SolarPanel(ContentManager Content, Vector2 pos) : base()
         {
             tilesWide = 2;
             tilesHigh = 1;
             Position = pos;
             //Position = Vector2.Zero;
             buildTime = 10f;
-            deltaEnergy = 10;
+            deltas[2] = 10;
             metalCost = 100;
             energyCost = 100;
 			animated = true;

@@ -7,15 +7,16 @@ namespace Remnants
 {
 	class BatterySmall : Building
 	{
-		public BatterySmall(ContentManager Content, Vector2 pos)
-		{
+		public BatterySmall(ContentManager Content, Vector2 pos) : base()
+        {
 			tilesWide = 1;
 			tilesHigh = 1;
 			Position = pos;
 			buildTime = 10f;
 			metalCost = 100;
 			energyCost = 100;
-			energyStorage = 200;
+			//energyStorage = 200;
+            resourceStorage[3] = 200;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)

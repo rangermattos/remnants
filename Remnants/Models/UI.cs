@@ -16,7 +16,7 @@ namespace Remnants
         private static UI instance;
 
         private UI() { }
-        private UI(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport, List<int> resourceList)
+        private UI(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport)
         {
             this.font = font;
             buildingSelected = "";
@@ -27,26 +27,26 @@ namespace Remnants
 			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenus(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
 			UIItemList[1].active = true;
             //food
-            AddItem(resourceList[0], font, topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[0], font, topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
             //water
-            AddItem(resourceList[1], font, topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[1], font, topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
             //energy
-            AddItem(resourceList[2], font, topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[2], font, topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
             //antimatter
-            AddItem(resourceList[3], font, topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[3], font, topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
             //nuclear
-            AddItem(resourceList[4], font, topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[4], font, topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
             //wood
-            AddItem(resourceList[5], font, topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[5], font, topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
             //Metal
-            AddItem(resourceList[6], font, topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[6], font, topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
             //Population
-            AddItem(resourceList[7], font, topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[7], font, topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
 
             //construction popupmenu
             AddItem(topLeft, Content.Load<Texture2D>("grayDot"), (bool active) => { Console.Write("Clicking menu\n"); OnClickConstructMenu(active); Console.Write("Menu clicked\n"); return 0; });
             
-            SetItemPositions(viewport, resourceList);
+            SetItemPositions(viewport, LevelData.Instance.resourceList);
         }
 
         public static UI Instance
@@ -61,16 +61,16 @@ namespace Remnants
             }
         }
 
-        public static void Create(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport, List<int> resourceList)
+        public static void Create(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport)
         {
             if (instance != null)
             {
                 throw new Exception("Object already created");
             }
-            instance = new UI(font, position, Content, viewport, resourceList);
+            instance = new UI(font, position, Content, viewport);
         }
 
-        public void Update(GameTime gameTime, MouseState state, MouseState prevState, List<int> resourceList)
+        public void Update(GameTime gameTime, MouseState state, MouseState prevState)
         {
             int j = 0;
             int k = 0;
@@ -79,7 +79,7 @@ namespace Remnants
                 //if (i != UIItemList[0] && i != UIItemList[1])
                 if(k > 1 && k < 10)
                 {
-                    i.Update(state, prevState, resourceList[j]);
+                    i.Update(state, prevState, LevelData.Instance.resourceList[j]);
                     j++;
                 }
                 else
