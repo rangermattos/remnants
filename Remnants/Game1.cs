@@ -56,11 +56,11 @@ namespace Remnants
             viewportAdapter = new ScalingViewportAdapter(GraphicsDevice, virtualWidth, virtualHeight);
             Camera.Create(viewportAdapter);
             //Camera.Instance.cam.Zoom = 1f;
-
+            InputManager.Instance.Update();
             AudioController.Instance.LoadContent(Content);
             AudioController.Instance.Play();
             MenuController.Create(font, Content, this);
-            levelController = new LevelController(false);
+            LevelController.Instance.levelOpen = false;
         }
 
         protected override void UnloadContent()
@@ -70,45 +70,27 @@ namespace Remnants
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                
-                if (levelController.levelOpen)
-                {
-                    if (UI.Instance.buildingSelected != "")
-                        UI.Instance.buildingSelected = "";
-                    levelController.SaveGame();
-                }
-                
-                Exit();
-            }
-
             MenuController.Instance.Update();
-
-            //only update levelcontroller if there is a level active
-            if (levelController.levelOpen)
-            {
-                levelController.Update(gameTime, Content);
-            }
+            LevelController.Instance.Update(gameTime, Content);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             //this clears the leftover pixels and shit. paints them over with black
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(transformMatrix: viewportAdapter.GetScaleMatrix());
+            //spriteBatch.Begin(transformMatrix: viewportAdapter.GetScaleMatrix());
             //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
-            spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
+            //spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
             //spriteBatch.Draw(backGround, new Rectangle(0, 0, 1920, 1080), Color.White);
-            spriteBatch.End();
+            //spriteBatch.End();
 
             //spriteBatch.Begin(transformMatrix: Camera.Instance.cam.GetViewMatrix());
             //only draw levelcontroller if there is a level active
-            if (levelController.levelOpen)
+            if (LevelController.Instance.levelOpen)
             {
-                levelController.Draw(spriteBatch);
+                LevelController.Instance.Draw(spriteBatch);
             }
             MenuController.Instance.Draw(spriteBatch, viewportAdapter);
             /*
@@ -123,17 +105,18 @@ namespace Remnants
 
         public void Quit()
         {
+            LevelController.Instance.SaveGame();
             this.Exit();
         }
 
         public void LoadNewLevel()
         {
-            levelController.LoadNewLevel(this, font);
+            LevelController.Instance.LoadNewLevel(this, font);
         }
 
         public void LoadLevel()
         {
-            levelController.LoadLevel(this, font, "savegame.sav");
+            LevelController.Instance.LoadLevel(this, font, "savegame.sav");
         }
 
         //OnActivated and OnDeactivated adjust what the window title is if the game is alt-tabbed

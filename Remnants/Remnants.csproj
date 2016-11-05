@@ -74,6 +74,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controllers\AudioController.cs" />
+    <Compile Include="Controllers\InputManager.cs" />
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ScalingViewportAdapter.cs" />

@@ -15,6 +15,7 @@ namespace Remnants
         public Vector2 valuePosition { get; set; }
         Vector2 textureScale;
         public int value { get; set; }
+        string readOut;
         SpriteFont font;
         Color color;
         public float alpha { get; set; }
@@ -38,6 +39,7 @@ namespace Remnants
             active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
         }
+
         public UIItem(Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<bool, int> UIItemAction)
         {
             position = incposition;
@@ -51,13 +53,24 @@ namespace Remnants
             size = new Vector2((float)texture.Width, (float)texture.Height);
         }
 
-        public UIItem(float s, int v, SpriteFont incfont, Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<int> UIItemAction)
+        public UIItem(Vector2 tl, Vector2 incposition, Vector2 textureScale, Texture2D txt, bool active)
         {
-            scale = s;
+            position = incposition;
+            topLeft = tl;
+            texture = txt;
+            this.textureScale = textureScale;
+            color = Color.White;
+            this.active = active;
+            size = new Vector2((float)texture.Width, (float)texture.Height);
+        }
+
+        public UIItem(float scale, int v, int vl, SpriteFont incfont, Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<int> UIItemAction)
+        {
+            this.scale = scale;
             value = v;
             font = incfont;
-
-            size = (font.MeasureString(value.ToString())) * scale;
+            readOut = v.ToString() + " / " + vl.ToString();
+            size = font.MeasureString(readOut) * scale;
             valuePosition = new Vector2(0, (32 - size.Y) / 2);
 
             position = incposition;
@@ -79,9 +92,9 @@ namespace Remnants
             //position = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
             //position = new Vector2(0f, position.Y - ConstructionMenu.totHeight);
             //topLeft = tl;
-            float x = ConstructionMenu.Instance.center.X - (ConstructionMenu.Instance.maxWidth / 2);
-            float y = ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2);
-            position = new Vector2(0, y);
+            //float x = ConstructionMenu.Instance.center.X - (ConstructionMenu.Instance.maxWidth / 2);
+            //float y = ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2);
+            //position = new Vector2(0, y);
             color = Color.White;
 
             Action2 = UIItemAction;
@@ -91,9 +104,9 @@ namespace Remnants
             popUpMenu = MenuController.Instance.currentMenu;
         }
 
-        public void Update(MouseState state, MouseState prevState, int val)
+        public void Update(MouseState state, MouseState prevState, int v, int vl)
         {
-            value = val;
+            readOut = v.ToString() + " / " + vl.ToString();
             //menuItem update method checks if the mouse is over it
             if (IsItemHovered(state)) 
             {
@@ -156,7 +169,7 @@ namespace Remnants
                 spriteBatch.Draw(texture, position, null, color, 0f, Vector2.Zero, textureScale, SpriteEffects.None, 0f);
                 if (font != null)
                 {
-                    spriteBatch.DrawString(font, value.ToString(), valuePosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+                    spriteBatch.DrawString(font, readOut, valuePosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
                 }
             }
             /*

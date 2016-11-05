@@ -14,10 +14,19 @@ namespace Remnants
         string loadString = "Loading";
         float loadTime = 5.0f;
         float elapsedLoadTime = 0.0f;
-        
-        public LevelController(bool isOpen)
+
+        private static LevelController instance;
+        private LevelController() { }
+        public static LevelController Instance
         {
-            levelOpen = isOpen;
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new LevelController();
+                }
+                return instance;
+            }
         }
 
         public void LoadContent(Game1 game)
@@ -32,43 +41,46 @@ namespace Remnants
 
         public void Update(GameTime gameTime, ContentManager Content)
         {
-            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            var keyboardState = Keyboard.GetState();
-
-            if (!loading)
+            if (levelOpen)
             {
-                // movement
-                if (keyboardState.IsKeyDown(Keys.W))
-                    Camera.Instance.cam.Position -= new Vector2(0, 250) * deltaTime;
+                var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                var keyboardState = Keyboard.GetState();
 
-                if (keyboardState.IsKeyDown(Keys.S))
-                    Camera.Instance.cam.Position += new Vector2(0, 250) * deltaTime;
-
-                if (keyboardState.IsKeyDown(Keys.A))
-                    Camera.Instance.cam.Position -= new Vector2(250, 0) * deltaTime;
-
-                if (keyboardState.IsKeyDown(Keys.D))
-                    Camera.Instance.cam.Position += new Vector2(250, 0) * deltaTime;
-
-                currentLevel.Update(gameTime, Content, keyboardState);
-
-                if (Camera.Instance.cam.Position.X < 0)
-                    Camera.Instance.cam.Position = new Vector2(0, Camera.Instance.cam.Position.Y);
-
-                if (Camera.Instance.cam.Position.Y < 0 - (32 * Camera.Instance.viewportScale.Scale.Y))
-                    Camera.Instance.cam.Position = new Vector2(Camera.Instance.cam.Position.X, 0 - (32 * Camera.Instance.viewportScale.Scale.Y));
-            }
-            else
-            {
-                elapsedLoadTime += deltaTime;
-                if (elapsedLoadTime >= 1.0f)
+                if (!loading)
                 {
-                    loadString += ".";
-                    loadTime -= 1f;
-                    elapsedLoadTime = 0f;
-                    if (loadTime == 0f)
+                    // movement
+                    if (keyboardState.IsKeyDown(Keys.W))
+                        Camera.Instance.cam.Position -= new Vector2(0, 250) * deltaTime;
+
+                    if (keyboardState.IsKeyDown(Keys.S))
+                        Camera.Instance.cam.Position += new Vector2(0, 250) * deltaTime;
+
+                    if (keyboardState.IsKeyDown(Keys.A))
+                        Camera.Instance.cam.Position -= new Vector2(250, 0) * deltaTime;
+
+                    if (keyboardState.IsKeyDown(Keys.D))
+                        Camera.Instance.cam.Position += new Vector2(250, 0) * deltaTime;
+
+                    currentLevel.Update(gameTime, Content, keyboardState);
+
+                    if (Camera.Instance.cam.Position.X < 0)
+                        Camera.Instance.cam.Position = new Vector2(0, Camera.Instance.cam.Position.Y);
+
+                    if (Camera.Instance.cam.Position.Y < 0 - (32 * Camera.Instance.viewportScale.Scale.Y))
+                        Camera.Instance.cam.Position = new Vector2(Camera.Instance.cam.Position.X, 0 - (32 * Camera.Instance.viewportScale.Scale.Y));
+                }
+                else
+                {
+                    elapsedLoadTime += deltaTime;
+                    if (elapsedLoadTime >= 1.0f)
                     {
-                        loading = false;
+                        loadString += ".";
+                        loadTime -= 1f;
+                        elapsedLoadTime = 0f;
+                        if (loadTime == 0f)
+                        {
+                            loading = false;
+                        }
                     }
                 }
             }

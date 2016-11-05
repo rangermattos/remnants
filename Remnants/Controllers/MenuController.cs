@@ -12,7 +12,7 @@ namespace Remnants
         public Menu currentMenu;
         Menu prevMenu;
         //public bool menuOpen { get; set; }
-        bool menuOpen;
+        public bool menuOpen;
         Game1 game;
 
         private static MenuController instance;
@@ -63,16 +63,29 @@ namespace Remnants
         {
             if (menuOpen)
             {
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    UI.Instance.UIItemList[10].active = false;
+                    UI.Instance.buildingSelected = "";
+                    UnloadContent();
+                    
+                    return "";
+                }
                 MouseState state = Mouse.GetState();
                 return currentMenu.Update(state, game, this);
-                /*
-                        foreach (MenuItem item in currentMenu.menuItemList)
-                        {
-                            item.Update(state, game, this);
-                            if (!menuOpen) { break; }
-                        }
-                */
             }
+            else
+            {
+            }
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                UI.Instance.buildingSelected = "";
+                //SetMenu(new MainMenu(font));
+                game.Quit();
+                
+            }
+
             return "";
         }
 
