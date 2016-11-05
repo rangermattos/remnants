@@ -123,6 +123,8 @@ namespace Remnants
 
         public virtual bool Place(Map map)
         {
+            if (!CheckResources())
+                return false;
             //check that all tiles the building will be on can be built on
             for(int i = 0; i < tilesWide; i++)
             {
@@ -147,7 +149,24 @@ namespace Remnants
                     map.GetTile(Position + new Vector2(i * 64, j * 64)).canBuild = false;
                 }
             }
+            for (int i = 0; i < 8; i++)
+            {
+                //subtract resource cost from available resources
+                LevelData.Instance.resourceList[i] -= resourceCost[i];
+                //add buildings storage capacity to resource limits
+                LevelData.Instance.resourceLimits[i] += resourceStorage[i];
+            }
             //return true so level will build the building
+            return true;
+        }
+
+        bool CheckResources()
+        {
+            for(int i = 0; i < 8; i++)
+            {
+                if (LevelData.Instance.resourceList[i] < resourceCost[i])
+                    return false;
+            }
             return true;
         }
     }

@@ -115,6 +115,13 @@ namespace Remnants
 
         public void Update()
         {
+            for (int i = 0; i < 8; i++)
+            {
+                if(resourceList[i] > resourceLimits[i])
+                {
+                    resourceList[i] = resourceLimits[i];
+                }
+            }
             /*/
             resourceList[0] = food;
             resourceList[1] = water;
