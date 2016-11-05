@@ -56,7 +56,6 @@ namespace Remnants
             viewportAdapter = new ScalingViewportAdapter(GraphicsDevice, virtualWidth, virtualHeight);
             Camera.Create(viewportAdapter);
             //Camera.Instance.cam.Zoom = 1f;
-            InputManager.Instance.Update();
             AudioController.Instance.LoadContent(Content);
             AudioController.Instance.Play();
             MenuController.Create(font, Content, this);
@@ -70,6 +69,7 @@ namespace Remnants
 
         protected override void Update(GameTime gameTime)
         {
+            InputManager.Instance.Update();
             MenuController.Instance.Update();
             LevelController.Instance.Update(gameTime, Content);
             base.Update(gameTime);
