@@ -42,5 +42,20 @@ namespace Remnants
             KeyState = Keyboard.GetState();
             MousePosition = new Vector2(MouseState.X, MouseState.Y);
         }
+
+        public bool LeftPressRelease()
+        {
+            return (MouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed);
+        }
+
+        public bool RightPressRelease()
+        {
+            return (MouseState.RightButton == ButtonState.Released && LastMouseState.RightButton == ButtonState.Pressed);
+        }
+
+        public bool EscPressRelease()
+        {
+            return (KeyState.IsKeyUp(Keys.Escape) && LastKeyState.IsKeyDown(Keys.Escape));
+        }
     }
 }

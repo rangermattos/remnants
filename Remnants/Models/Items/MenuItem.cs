@@ -99,17 +99,16 @@ namespace Remnants
             prevState = Mouse.GetState();
         }
 
-        public string Update(MouseState state, Game1 game, MenuController menuController)
+        public string Update(Game1 game, MenuController menuController)
         {
             //menuItem update method checks if the mouse is over it
-            Vector2 mousePosition = new Vector2(state.X, state.Y);
             //mousePosition = mousePosition / game.Scale;
-            if (IsItemActive(mousePosition))
+            if (IsItemActive())
             {
                 //pulse effect if hovered over
                 Pulse();
                 //if clicked run the proper function
-                if (state.LeftButton == ButtonState.Released && prevState.LeftButton == ButtonState.Pressed)
+                if (InputManager.Instance.LeftPressRelease())
                 {
                     //run through the possible actions and find the one that isn't null. run that one
                     if (Action1 != null)
@@ -134,7 +133,6 @@ namespace Remnants
                 alpha = 1.0f;
                 sign = -1;
             }
-            prevState = state;
             return "";
         }
         /*
@@ -176,14 +174,16 @@ namespace Remnants
             }
         }
 
-        bool IsItemActive(Vector2 mousePosition)
+        bool IsItemActive()
         {
             //determine mouse position relative to this item
+            Vector2 mp = InputManager.Instance.MousePosition;
             if (offset)
             {
-                return (mousePosition.X > (position.X - (size.X / 2)) && mousePosition.X < (position.X + (size.X / 2)) && mousePosition.Y > (position.Y - (size.Y / 2)) && mousePosition.Y < (position.Y + (size.Y / 2)));
+                return (mp.X > (position.X - (size.X / 2)) && mp.X < (position.X + (size.X / 2)) && mp.Y > (position.Y - (size.Y / 2)) && mp.Y < (position.Y + (size.Y / 2)));
             }
-            return (mousePosition.X > position.X && mousePosition.X < position.X + size.X && mousePosition.Y > position.Y && mousePosition.Y < position.Y + size.Y);
+            return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y);
+            //return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y);
         }
 
         public string GetText()

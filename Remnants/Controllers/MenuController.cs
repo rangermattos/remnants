@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System;
+using System.Collections.Generic;
 
 namespace Remnants
 {
@@ -10,21 +11,23 @@ namespace Remnants
     {
         public SpriteFont font;
         public Menu currentMenu;
-        Menu prevMenu;
-        //public bool menuOpen { get; set; }
         public bool menuOpen;
+        Menu prevMenu;
         Game1 game;
+        List<Menu> ActiveMenus = new List<Menu>();
+        private static Texture2D backGround;
 
         private static MenuController instance;
 
         private MenuController() { }
-        private MenuController(SpriteFont font, ContentManager content, Game1 game)
+        private MenuController(SpriteFont font, ContentManager Content, Game1 game)
         {
             this.font = font;
             this.game = game;
-            currentMenu = new MainMenu(font);
-            prevMenu = currentMenu;
-            menuOpen = true;
+            //currentMenu = MainMenu.Instance;
+            //prevMenu = currentMenu;
+            //menuOpen = true;
+            LoadContent(Content);
         }
 
         public static MenuController Instance
@@ -48,41 +51,53 @@ namespace Remnants
             instance = new MenuController(font, content, game);
         }
 
-        public void LoadContent()
+        public void LoadContent(ContentManager Content)
         {
+            backGround = Content.Load<Texture2D>("StarsBasic");
         }
 
-        public void UnloadContent()
+        public void UnloadContent(Menu m)
         {
+            ActiveMenus.Remove(m);
+            m.isActive = false;
             currentMenu = null;
             menuOpen = false;
-            Console.WriteLine("menuOpen: " + menuOpen);
         }
 
         public string Update()
         {
-            if (menuOpen)
+            if (menuOpen && !MainMenu.Instance.isActive)
             {
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                if (InputManager.Instance.EscPressRelease())
                 {
                     UI.Instance.UIItemList[10].active = false;
                     UI.Instance.buildingSelected = "";
-                    UnloadContent();
+                    UnloadContent(ConstructionMenu.Instance);
                     
                     return "";
                 }
-                MouseState state = Mouse.GetState();
-                return currentMenu.Update(state, game, this);
             }
-            else
+            if (menuOpen)
             {
+                string s;
+                int c = ActiveMenus.Count;
+                foreach(Menu m in ActiveMenus)
+                {
+                    s = m.Update(game, this);
+                    if(s != "")
+                    {
+                        return s;
+                    }
+                    if (ActiveMenus.Count != c)
+                        break;
+                }
             }
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (InputManager.Instance.EscPressRelease())
             {
                 UI.Instance.buildingSelected = "";
-                //SetMenu(new MainMenu(font));
-                game.Quit();
+                SetMenu(MainMenu.Instance);
+                //game.Quit();
                 
             }
 
@@ -94,9 +109,15 @@ namespace Remnants
             if (menuOpen)
             {
                 spriteBatch.Begin(transformMatrix: viewportAdapter.GetScaleMatrix());
-                foreach (MenuItem item in currentMenu.menuItemList)
+                //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
+                //spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
+                if (MainMenu.Instance.isActive)
                 {
-                    item.Draw(spriteBatch);
+                    spriteBatch.Draw(backGround, new Rectangle(0, 0, 1920, 1080), Color.White);
+                }
+                foreach (Menu m in ActiveMenus)
+                {
+                    m.Draw(spriteBatch);
                     //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition() - item.GetOrigin(), item.GetColor() * item.alpha, 0.0f, Vector2.Zero, item.scale, SpriteEffects.None, 0.0f);
                     //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition(), item.GetColor() * item.alpha, 0.0f, item.GetOrigin(), 1.0f, SpriteEffects.None, 0.0f);
                 }
@@ -106,6 +127,8 @@ namespace Remnants
 
         public void SetMenu(Menu m)
         {
+            m.isActive = true;
+            ActiveMenus.Add(m);
             currentMenu = m;
             menuOpen = true;
             Console.WriteLine("menuOpen: " + menuOpen);

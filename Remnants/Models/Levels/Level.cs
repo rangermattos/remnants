@@ -16,42 +16,35 @@ namespace Remnants
         StorageDevice device;
         Map map;
         List<Building> buildings = new List<Building>();
-        KeyboardState prevKeyState;
-        MouseState prevMouseState;
-        MouseState mouseState;
-        Vector2 mousePosition;
-        SpriteFont font;
+        SpriteFont font = MenuController.Instance.font;
 
-        public Level(SpriteFont f)
+        public Level()
         {
-            font = f;
             LevelData.Instance.SetLimits(500);
             map = new Map();
         }
 
         //level constructer with loadgame
-        public Level(SpriteFont f, string filename)
+        public Level(string filename)
         {
-            font = f;
             LoadGame(filename);
             map = new Map(LevelData.Instance.mapSize);
         }
 
-        public void LoadContent(Game1 game, Matrix vm, Vector2 vpDimensions)
+        public void LoadContent(ContentManager Content)
         {
-            map.LoadContent(game.Content);
-            UI.Create(font, Vector2.Transform(Vector2.Zero, Matrix.Invert(vm)), game.Content, vpDimensions);
+            map.LoadContent(Content);
 
             if(LevelData.Instance.buildingList.Count > 0)
             {
-                LoadBuildings(game);
+                LoadBuildings(Content);
             }
         }
 
-        void LoadBuildings(Game1 game)
+        void LoadBuildings(ContentManager Content)
         {
             object[] po = new object[2];
-            po[0] = game.Content;
+            po[0] = Content;
             foreach (LevelData.buildingData b in LevelData.Instance.buildingList)
             {
                 po[1] = b.Position;
@@ -72,36 +65,30 @@ namespace Remnants
             }
         }
 
-        public void UnloadContent(Game1 game)
+        public void UnloadContent(ContentManager Content)
         {
-            game.Content.Unload();
+            //game.Content.Unload();
         }
 
-        public void Update(GameTime gameTime, ContentManager Content, KeyboardState keyboardState)
+        public void Update(GameTime gameTime, ContentManager Content)
         {
-            mouseState = Mouse.GetState();
-            mousePosition = new Vector2(mouseState.X, mouseState.Y);
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
             var vm = Camera.Instance.cam.GetViewMatrix();
 
             LevelData.Instance.Update();
-            UI.Instance.Update(gameTime, mouseState, prevMouseState);
+            UI.Instance.Update(gameTime);
 
-            Vector2 p = Camera.Instance.cam.ScreenToWorld(mousePosition);
+            Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
             
             UpdateBuildings(gameTime, p);
 
             CheckBuilding(p, Content);
 
             //SetResources();
-            
-            prevKeyState = keyboardState;
-            prevMouseState = mouseState;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             spriteBatch.Begin(transformMatrix: Camera.Instance.cam.GetViewMatrix());
             map.Draw(spriteBatch);
             foreach (Building b in buildings)
@@ -110,9 +97,7 @@ namespace Remnants
             }
             spriteBatch.End();
 
-            spriteBatch.Begin();
             UI.Instance.Draw(spriteBatch);
-            spriteBatch.End();
         }
 
         public void UpdateBuildings(GameTime gameTime, Vector2 p)
@@ -133,9 +118,7 @@ namespace Remnants
         public void CheckBuilding(Vector2 p, ContentManager Content)
         {
             string buildingString = UI.Instance.buildingSelected;
-            if (buildingString != ""
-               && mouseState.LeftButton == ButtonState.Released
-               && prevMouseState.LeftButton == ButtonState.Pressed)
+            if (buildingString != "" && InputManager.Instance.LeftPressRelease())
             {
                 //gets the mouses position in the world and sets it in p
                 //get the tile x and y position
@@ -162,11 +145,12 @@ namespace Remnants
                     buildings.Add(tempBuilding);
                 }
             }
-            else if (buildingString != ""
-               && mouseState.RightButton == ButtonState.Released
-               && prevMouseState.RightButton == ButtonState.Pressed)
+            if (InputManager.Instance.RightPressRelease())
             {
+                //if right click, no building selected, and close building selection menu
                 UI.Instance.buildingSelected = "";
+                UI.Instance.UIItemList[10].active = false;
+                MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
             }
         }
 

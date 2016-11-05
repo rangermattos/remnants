@@ -10,17 +10,21 @@ namespace Remnants
     class UI
     {
         public List<UIItem> UIItemList = new List<UIItem>();
+        public string buildingSelected { get; set; }
+        public bool isActive;
         Vector2 topLeft = new Vector2();
         SpriteFont font;
-        public string buildingSelected { get; set; }
         private static UI instance;
 
         private UI() { }
-        private UI(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport)
+        private UI(ContentManager Content)
         {
-            this.font = font;
+            Vector2 position = Vector2.Transform(Vector2.Zero, Matrix.Invert(Camera.Instance.cam.GetViewMatrix()));
+            Vector2 viewport = Camera.Instance.cam.Origin * 2;
+            this.font = MenuController.Instance.font;
             buildingSelected = "";
             topLeft = Vector2.Zero;
+            isActive = false;
 
             //UIBar
             Vector2 textureScale = new Vector2(Camera.Instance.cam.Origin.X * 2 * Camera.Instance.viewportScale.Scale.X, 32 * Camera.Instance.viewportScale.Scale.Y);
@@ -29,21 +33,21 @@ namespace Remnants
 			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenus(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
 			UIItemList[1].active = true;
             //food
-            AddItem(LevelData.Instance.resourceList[0], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[0], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
             //water
-            AddItem(LevelData.Instance.resourceList[1], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[1], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
             //energy
-            AddItem(LevelData.Instance.resourceList[2], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[2], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
             //antimatter
-            AddItem(LevelData.Instance.resourceList[3], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[3], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
             //nuclear
-            AddItem(LevelData.Instance.resourceList[4], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[4], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
             //wood
-            AddItem(LevelData.Instance.resourceList[5], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[5], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
             //Metal
-            AddItem(LevelData.Instance.resourceList[6], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[6], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
             //Population
-            AddItem(LevelData.Instance.resourceList[7], LevelData.Instance.resourceLimits[0], font, topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
+            AddItem(LevelData.Instance.resourceList[7], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
 
             //construction popupmenu
             textureScale = new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight);
@@ -64,40 +68,48 @@ namespace Remnants
             }
         }
 
-        public static void Create(SpriteFont font, Vector2 position, ContentManager Content, Vector2 viewport)
+        public static void Create(ContentManager Content)
         {
             if (instance != null)
             {
                 throw new Exception("Object already created");
             }
-            instance = new UI(font, position, Content, viewport);
+            instance = new UI(Content);
         }
 
-        public void Update(GameTime gameTime, MouseState state, MouseState prevState)
+        public void Update(GameTime gameTime)
         {
-            int j = 0;
-            int k = 0;
-            foreach (UIItem i in UIItemList)
+            if (isActive)
             {
-                //if (i != UIItemList[0] && i != UIItemList[1])
-                if(k > 1 && k < 10)
+                int j = 0;
+                int k = 0;
+                foreach (UIItem i in UIItemList)
                 {
-                    i.Update(state, prevState, LevelData.Instance.resourceList[j], LevelData.Instance.resourceLimits[j]);
-                    j++;
+                    //if (i != UIItemList[0] && i != UIItemList[1])
+                    if (k > 1 && k < 10)
+                    {
+                        i.Update(LevelData.Instance.resourceList[j], LevelData.Instance.resourceLimits[j]);
+                        j++;
+                    }
+                    else
+                    {
+                        i.Update();
+                    }
+                    k++;
                 }
-                else
-                {
-                    i.Update(state, prevState);
-                }
-                k++;
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (UIItem i in UIItemList)
+            if (isActive)
             {
-                i.Draw(spriteBatch);
+                spriteBatch.Begin();
+                foreach (UIItem i in UIItemList)
+                {
+                    i.Draw(spriteBatch);
+                }
+                spriteBatch.End();
             }
         }
 
@@ -119,10 +131,10 @@ namespace Remnants
             UIItemList.Add(item);
         }
 
-        void AddItem(int v, int vl, SpriteFont font, Vector2 tl, Vector2 position, Texture2D texture, System.Func<int> UIItemAction)
+        void AddItem(int v, int vl, Vector2 tl, Vector2 position, Texture2D texture, System.Func<int> UIItemAction)
         {
             float scale = 0.275f;
-            UIItem item = new UIItem(scale, v, vl, font, tl, position, texture, UIItemAction);
+            UIItem item = new UIItem(scale, v, vl, tl, position, texture, UIItemAction);
             UIItemList.Add(item);
         }
         
@@ -187,7 +199,7 @@ namespace Remnants
             UIItemList[10].active = !UIItemList[10].active;
             if (!UIItemList[10].active)
             {
-                MenuController.Instance.UnloadContent();
+                MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
             }
         }
 
@@ -208,7 +220,7 @@ namespace Remnants
 
         public void BuildingSelectorDeactivate()
         {
-            MenuController.Instance.UnloadContent();
+            MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
             buildingSelected = "";
         }
     }

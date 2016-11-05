@@ -68,9 +68,7 @@ namespace Remnants
             }
 
         }
-        private ConstructionMenu(float scale, SpriteFont font, List<string> stringList, Vector2 center)
-        {
-        }
+        
 
         public static ConstructionMenu Instance
         {

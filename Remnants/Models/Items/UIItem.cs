@@ -28,6 +28,13 @@ namespace Remnants
         //System.Func<string> Action3;
         public bool active { get; set; }
         Menu popUpMenu;
+        /*/
+        MouseState MouseState;
+        MouseState LastMouseState;
+        KeyboardState KeyState;
+        KeyboardState LastKeyState;
+        Vector2 MousePosition;
+        /*/
 
         public UIItem(Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<int> UIItemAction)
         {
@@ -64,11 +71,11 @@ namespace Remnants
             size = new Vector2((float)texture.Width, (float)texture.Height);
         }
 
-        public UIItem(float scale, int v, int vl, SpriteFont incfont, Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<int> UIItemAction)
+        public UIItem(float scale, int v, int vl, Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<int> UIItemAction)
         {
             this.scale = scale;
             value = v;
-            font = incfont;
+            font = MenuController.Instance.font;
             readOut = v.ToString() + " / " + vl.ToString();
             size = font.MeasureString(readOut) * scale;
             valuePosition = new Vector2(0, (32 - size.Y) / 2);
@@ -104,14 +111,21 @@ namespace Remnants
             popUpMenu = MenuController.Instance.currentMenu;
         }
 
-        public void Update(MouseState state, MouseState prevState, int v, int vl)
+        public void Update(int v, int vl)
         {
             readOut = v.ToString() + " / " + vl.ToString();
+            /*/
+            this.MousePosition = InputManager.Instance.MousePosition;
+            this.MouseState = InputManager.Instance.MouseState;
+            this.LastMouseState = InputManager.Instance.LastMouseState;
+            this.KeyState = InputManager.Instance.KeyState;
+            this.LastKeyState = InputManager.Instance.LastKeyState;
+            /*/
             //menuItem update method checks if the mouse is over it
-            if (IsItemHovered(state)) 
+            if (IsItemHovered()) 
             {
                 //if clicked run the proper function
-                if (state.LeftButton == ButtonState.Released)// && prevState.LeftButton == ButtonState.Pressed)
+                if (InputManager.Instance.MouseState.LeftButton == ButtonState.Released && InputManager.Instance.LastMouseState.LeftButton == ButtonState.Pressed)
                 {
                     //run through the possible actions and find the one that isn't null. run that one
                     if (Action1 != null)
@@ -127,7 +141,7 @@ namespace Remnants
             }
         }
 
-        public void Update(MouseState state, MouseState prevState)
+        public void Update()
         {
             //string s = "";
             if (popUpMenu != null && active)
@@ -136,10 +150,10 @@ namespace Remnants
                 //UI.Instance.buildingSelected = s;
             }
             //menuItem update method checks if the mouse is over it
-			if (IsItemHovered(state) && active)
+			if (IsItemHovered() && active)
             {
                 //if clicked run the proper function
-                if (state.LeftButton == ButtonState.Released && prevState.LeftButton == ButtonState.Pressed)
+                if (InputManager.Instance.MouseState.LeftButton == ButtonState.Released && InputManager.Instance.LastMouseState.LeftButton == ButtonState.Pressed)
 				{
 					if (popUpMenu != null)
 						Console.Write("Construction menu clicked\n");
@@ -195,10 +209,12 @@ namespace Remnants
             */
         }
 
-        bool IsItemHovered(MouseState state)
+        bool IsItemHovered()
         {
+            //might need to transform screen to map or map to screen or maybe scale
             //determine mouse position relative to this item
-            return (state.Position.X > position.X && state.Position.X < position.X + size.X && state.Position.Y > position.Y && state.Position.Y < position.Y + size.Y);            
+            Vector2 mp = InputManager.Instance.MousePosition;
+            return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y);            
         }
     }
 }

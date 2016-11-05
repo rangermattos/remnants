@@ -10,13 +10,16 @@ namespace Remnants
         Level currentLevel;
         public bool levelOpen;
         public bool loading;
-        SpriteFont sf;
         string loadString = "Loading";
         float loadTime = 5.0f;
         float elapsedLoadTime = 0.0f;
+        SpriteFont font;
 
         private static LevelController instance;
-        private LevelController() { }
+        private LevelController()
+        {
+            font = MenuController.Instance.font;
+        }
         public static LevelController Instance
         {
             get
@@ -29,14 +32,12 @@ namespace Remnants
             }
         }
 
-        public void LoadContent(Game1 game)
-        {
-        }
+        public void LoadContent(ContentManager Content) { }
 
-        public void UnloadContent(Game1 game)
+        public void UnloadContent(ContentManager Content)
         {
-            currentLevel.UnloadContent(game);
             levelOpen = false;
+            currentLevel.UnloadContent(Content);
         }
 
         public void Update(GameTime gameTime, ContentManager Content)
@@ -61,7 +62,7 @@ namespace Remnants
                     if (keyboardState.IsKeyDown(Keys.D))
                         Camera.Instance.cam.Position += new Vector2(250, 0) * deltaTime;
 
-                    currentLevel.Update(gameTime, Content, keyboardState);
+                    currentLevel.Update(gameTime, Content);
 
                     if (Camera.Instance.cam.Position.X < 0)
                         Camera.Instance.cam.Position = new Vector2(0, Camera.Instance.cam.Position.Y);
@@ -80,6 +81,7 @@ namespace Remnants
                         if (loadTime == 0f)
                         {
                             loading = false;
+                            UI.Instance.isActive = true;
                         }
                     }
                 }
@@ -88,14 +90,17 @@ namespace Remnants
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (loading)
+            if (levelOpen)
             {
-                spriteBatch.Begin();
-                spriteBatch.DrawString(sf, loadString, Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
-                spriteBatch.End();
+                if (loading)
+                {
+                    spriteBatch.Begin();
+                    spriteBatch.DrawString(font, loadString, Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                    spriteBatch.End();
+                }
+                else
+                    currentLevel.Draw(spriteBatch);
             }
-            else
-                currentLevel.Draw(spriteBatch);
         }
 
         public void SaveGame()
@@ -103,31 +108,29 @@ namespace Remnants
             currentLevel.SaveGame();
         }
 
-        public void LoadNewLevel(Game1 game, SpriteFont font)
+        public void LoadNewLevel(ContentManager Content)
         {
-            LoadContent(game);
-            sf = font;
+            LoadContent(Content);
             //send viewport and mapsize to Camera.Instance.cam2d
-            currentLevel = new Level(font);
+            currentLevel = new Level();
             //set Camera.Instance.cam to center of map
             //Camera.Instance.cam.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
 
-            currentLevel.LoadContent(game, Camera.Instance.cam.GetViewMatrix(), Camera.Instance.cam.Origin * 2);
+            currentLevel.LoadContent(Content);
             levelOpen = true;
-            //loading = true;
+            loading = true;
         }
 
-        public void LoadLevel(Game1 game, SpriteFont font, string filename)
+        public void LoadLevel(ContentManager Content, string filename)
         {
-            LoadContent(game);
-            sf = font;
+            LoadContent(Content);
             //send viewport and mapsize to Camera.Instance.cam2d
-            currentLevel = new Level(font, filename);
+            currentLevel = new Level(filename);
             //set Camera.Instance.cam to center of map
             //Camera.Instance.cam.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y / 2);
             //set zoom
 
-            currentLevel.LoadContent(game, Camera.Instance.cam.GetViewMatrix(), Camera.Instance.cam.Origin * 2);
+            currentLevel.LoadContent(Content);
             levelOpen = true;
             loading = true;
         }

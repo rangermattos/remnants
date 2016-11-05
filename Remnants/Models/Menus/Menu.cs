@@ -12,10 +12,11 @@ namespace Remnants
         protected int itemCount { get; set; }
         float menuHeight = 0;
         public float scale;
+        public bool isActive;
 
         public Menu()
         {
-
+            isActive = false;
         }
 
         protected int AddItem(string text, SpriteFont font, Vector2 position)
@@ -105,13 +106,12 @@ namespace Remnants
             return menuItemList;
         }
 
-        public virtual string Update(MouseState state, Game1 game, MenuController mc)
+        public virtual string Update(Game1 game, MenuController mc)
         {
             string s = "";
-            var v = new Vector2(state.X, state.Y);
             foreach (MenuItem item in menuItemList)
             {
-                s = item.Update(state, game, mc);
+                s = item.Update(game, mc);
                 if (s != "")
                 {
                     UI.Instance.buildingSelected = s;
@@ -120,6 +120,16 @@ namespace Remnants
                 }
             }
             return s;
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (MenuItem item in menuItemList)
+            {
+                item.Draw(spriteBatch);
+                //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition() - item.GetOrigin(), item.GetColor() * item.alpha, 0.0f, Vector2.Zero, item.scale, SpriteEffects.None, 0.0f);
+                //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition(), item.GetColor() * item.alpha, 0.0f, item.GetOrigin(), 1.0f, SpriteEffects.None, 0.0f);
+            }
         }
     }
 }

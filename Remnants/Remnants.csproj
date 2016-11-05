@@ -101,6 +101,7 @@
     <Compile Include="Models\Items\Tile.cs" />
     <Compile Include="Models\Items\Tiles\Grass.cs" />
     <Compile Include="Models\Items\Tiles\MetalFloor.cs" />
+    <Compile Include="Models\Items\Tiles\Ore.cs" />
     <Compile Include="Models\Items\Tiles\Water.cs" />
     <Compile Include="Models\Items\UIItem.cs" />
     <Compile Include="Models\Levels\Level.cs" />

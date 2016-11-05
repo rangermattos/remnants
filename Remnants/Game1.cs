@@ -13,14 +13,10 @@ namespace Remnants
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private SpriteFont font;
-        private LevelController levelController;
         private readonly int virtualWidth = 1920;
         private readonly int virtualHeight = 1080;
-        private static Texture2D backGround;
+        //private static Texture2D backGround;
         private ScalingViewportAdapter viewportAdapter;
-        Vector2 vpDim;
-        Vector2 camDim;
-        Vector2 virtualDim;
 
         public Game1()
         {
@@ -51,7 +47,7 @@ namespace Remnants
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            backGround = Content.Load<Texture2D>("StarsBasic");
+            //backGround = Content.Load<Texture2D>("StarsBasic");
 
             viewportAdapter = new ScalingViewportAdapter(GraphicsDevice, virtualWidth, virtualHeight);
             Camera.Create(viewportAdapter);
@@ -59,6 +55,8 @@ namespace Remnants
             AudioController.Instance.LoadContent(Content);
             AudioController.Instance.Play();
             MenuController.Create(font, Content, this);
+            MenuController.Instance.SetMenu(MainMenu.Instance);
+            UI.Create(Content);
             LevelController.Instance.levelOpen = false;
         }
 
@@ -81,17 +79,11 @@ namespace Remnants
             GraphicsDevice.Clear(Color.Black);
 
             //spriteBatch.Begin(transformMatrix: viewportAdapter.GetScaleMatrix());
-            //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
-            //spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
-            //spriteBatch.Draw(backGround, new Rectangle(0, 0, 1920, 1080), Color.White);
             //spriteBatch.End();
 
             //spriteBatch.Begin(transformMatrix: Camera.Instance.cam.GetViewMatrix());
             //only draw levelcontroller if there is a level active
-            if (LevelController.Instance.levelOpen)
-            {
-                LevelController.Instance.Draw(spriteBatch);
-            }
+            LevelController.Instance.Draw(spriteBatch);
             MenuController.Instance.Draw(spriteBatch, viewportAdapter);
             /*
             spriteBatch.Begin();
@@ -111,12 +103,12 @@ namespace Remnants
 
         public void LoadNewLevel()
         {
-            LevelController.Instance.LoadNewLevel(this, font);
+            LevelController.Instance.LoadNewLevel(Content);
         }
 
         public void LoadLevel()
         {
-            LevelController.Instance.LoadLevel(this, font, "savegame.sav");
+            LevelController.Instance.LoadLevel(Content, "savegame.sav");
         }
 
         //OnActivated and OnDeactivated adjust what the window title is if the game is alt-tabbed
