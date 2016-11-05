@@ -47,6 +47,7 @@ namespace Remnants
             tileList.Add(new MetalFloor(Content));
             tileList.Add(new Water(Content));
 			tileList.Add(new Grass(Content));
+			tileList.Add(new Ore(Content));
             if(LevelData.Instance.tileList.Count == 0)
                 GenerateMap(Content);
             else
@@ -106,7 +107,9 @@ namespace Remnants
                 for(int j = 0; j < yTiles; j++)
                 {
                     int ind = r.Next(100);
-                    if (ind < 80)
+					if (ind < 20)
+						tiles[i][j] = new Ore(Content);
+                    else if (ind < 80)
 						tiles[i][j] = new Grass(Content);
                     else if (ind >= 80)
                         tiles[i][j] = new Water(Content);
@@ -122,6 +125,8 @@ namespace Remnants
             {
                 if (tile.type == "Grass")
                     tiles[tile.xPosition][tile.yPosition] = new Grass(Content);
+				else if (tile.type == "Ore")
+					tiles[tile.xPosition][tile.yPosition] = new Ore(Content);
                 else if(tile.type == "Water")
                     tiles[tile.xPosition][tile.yPosition] = new Water(Content);
                 tiles[tile.xPosition][tile.yPosition].Position = new Vector2((64f * tile.xPosition), (64f * tile.yPosition));

@@ -1,3 +1,4 @@
 metalFloor: http://opengameart.org/content/metalstone-textures CC-BY 3.0
 font: http://www.fontspace.com/astigmatic-one-eye-typographic-institute/audiowide SIL Open Font License
 grass: http://opengameart.org/content/32-x-32-grass-tile CC-BY-SA 3.0 Andrew Dunham http://opengameart.org/users/wolfmountaingames
+ore: By Image:Banded_iron_formation.jpg, with white background replaced with transparency, by Gracenotes, using the GIMP. Also released under the GFDL, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=2233241
