@@ -13,11 +13,11 @@ namespace Remnants
             Position = pos;
             //Position = Vector2.Zero;
             buildTime = 10f;
-            deltas[2] = 10;
+			deltas[(int)resources.ENERGY] = 10;
             //metalCost = 100;
             //energyCost = 100;
-            resourceCost[6] = 100;
-            resourceCost[2] = 100;
+			resourceCost[(int)resources.ENERGY] = 100;
+			resourceCost[(int)resources.METAL] = 100;
 			animated = true;
 			animation = new Animation(Content, "buildings/solar_panel_spritesheet", 0.1f, 25, tilesHigh*64, tilesWide*64, true, true);
             LoadContent(Content);

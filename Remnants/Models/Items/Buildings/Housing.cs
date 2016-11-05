@@ -15,10 +15,10 @@ namespace Remnants
 			buildTime = 10f;
             //woodCost = 100;
             //energyCost = 100;
-            resourceCost[6] = 100;
-            resourceCost[2] = 100;
-            resourceCost[5] = 100;
-            deltas[2] = -3;
+			resourceCost[(int)resources.ENERGY] = 100;
+			resourceCost[(int)resources.WOOD] = 100;
+			//resourceCost[(int)resources.METAL] = 100;
+			deltas[(int)resources.ENERGY] = -3;
             populationHousing = 2;
 
             LoadContent(Content);
@@ -60,9 +60,9 @@ namespace Remnants
 			buildTime = 10f;
             //metalCost = 100;
             //energyCost = 200;
-            resourceCost[6] = 100;
-            resourceCost[2] = 200;
-            deltas[2] = -10;
+			resourceCost[(int)resources.METAL] = 100;
+			resourceCost[(int)resources.ENERGY] = 200;
+			deltas[(int)resources.ENERGY] = -10;
 			populationHousing = 4;
 			LoadContent(Content);
 		}
@@ -103,9 +103,9 @@ namespace Remnants
 			buildTime = 10f;
             //metalCost = 200;
             //energyCost = 400;
-            resourceCost[6] = 200;
-            resourceCost[2] = 400;
-            deltas[2] = -15;
+			resourceCost[(int)resources.METAL] = 200;
+			resourceCost[(int)resources.ENERGY] = 400;
+			deltas[(int)resources.ENERGY] = -15;
 			populationHousing = 8;
 			LoadContent(Content);
 		}

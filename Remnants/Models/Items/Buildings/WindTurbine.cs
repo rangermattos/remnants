@@ -15,9 +15,9 @@ namespace Remnants
 			buildTime = 10f;
             //metalCost = 100;
             //energyCost = 100;
-            resourceCost[6] = 100;
-            resourceCost[2] = 100;
-            deltas[2] = 10;
+			resourceCost[(int)resources.ENERGY] = 100;
+			resourceCost[(int)resources.METAL] = 100;
+			deltas[(int)resources.ENERGY] = 10;
 			animated = true;
 			animation = new Animation(Content, "buildings/wind_turbine_spritesheet", 0.1f, 10, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);

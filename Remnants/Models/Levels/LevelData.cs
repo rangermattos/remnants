@@ -71,27 +71,27 @@ namespace Remnants
         {
             food = 10000;
             water = 10000;
-            energy = 10000;
+			energy = 10000;
+			nuclear = 10000;
             antimatter = 10000;
-            nuclear = 10000;
             wood = 10000;
             metal = 10000;
             pop = 10000;
 
             resourceList.Add(food);
             resourceList.Add(water);
-            resourceList.Add(energy);
+			resourceList.Add(energy);
+			resourceList.Add(nuclear);
             resourceList.Add(antimatter);
-            resourceList.Add(nuclear);
             resourceList.Add(wood);
             resourceList.Add(metal);
             resourceList.Add(pop);
 
             resourceLimits.Add(food);
             resourceLimits.Add(water);
-            resourceLimits.Add(energy);
+			resourceLimits.Add(energy);
+			resourceLimits.Add(nuclear);
             resourceLimits.Add(antimatter);
-            resourceLimits.Add(nuclear);
             resourceLimits.Add(wood);
             resourceLimits.Add(metal);
             resourceLimits.Add(pop);
