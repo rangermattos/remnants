@@ -154,7 +154,7 @@ namespace Remnants
             float scale = Camera.Instance.viewportScale.Scale.X;
             //32 for icon width, 1 for spacing between, 128 for readout text width
             // - (32 * scale + 1 + 128 * scale) * 7
-            float x = (Camera.Instance.cam.Origin.X * 2) - (32 * scale + 1 + 128 * scale) * 7;
+            float x = (Camera.Instance.cam.Origin.X * 2) - (32 + 1 + 128) * 7;
 
             int k = 0;
             /*/
@@ -177,7 +177,9 @@ namespace Remnants
                 {
                     i.position = new Vector2(x, 0);
                     i.valuePosition = new Vector2(x + 34, i.valuePosition.Y);
-                    x += (32 * scale + 1 + 128 * scale);
+                    i.valuePosition = Vector2.Transform(i.position, Camera.Instance.viewportScale);
+                    i.valuePosition = Vector2.Transform(i.valuePosition, Camera.Instance.viewportScale);
+                    x += (32 + 1 + 128);
                 }
                 k++;
             }

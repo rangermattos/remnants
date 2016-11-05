@@ -95,7 +95,6 @@ namespace Remnants
             textureScale = new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight);
             
             texture = txt;
-
             //position = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
             //position = new Vector2(0f, position.Y - ConstructionMenu.totHeight);
             //topLeft = tl;

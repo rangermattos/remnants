@@ -69,6 +69,7 @@ namespace Remnants
             foreach (MenuItem item in menuItemList)
             {
                 item.position.Y = top + menuPosition * avgHeight;
+                item.position = Vector2.Transform(item.position, Camera.Instance.viewportScale);
                 menuPosition++;
             }
         }
@@ -85,6 +86,7 @@ namespace Remnants
                 item.origin.Y = 0;
                 item.position.X = 2;//center.X - item.GetSize().X / 2;// - item.origin.X;
                 item.position.Y = top + menuPosition * avgHeight;
+                item.position = Vector2.Transform(item.position, Camera.Instance.viewportScale);
                 menuPosition++;
             }
         }

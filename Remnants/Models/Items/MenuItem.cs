@@ -178,6 +178,7 @@ namespace Remnants
         {
             //determine mouse position relative to this item
             Vector2 mp = InputManager.Instance.MousePosition;
+
             if (offset)
             {
                 return (mp.X > (position.X - (size.X / 2)) && mp.X < (position.X + (size.X / 2)) && mp.Y > (position.Y - (size.Y / 2)) && mp.Y < (position.Y + (size.Y / 2)));

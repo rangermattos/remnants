@@ -68,7 +68,6 @@ namespace Remnants
             }
 
         }
-        
 
         public static ConstructionMenu Instance
         {
