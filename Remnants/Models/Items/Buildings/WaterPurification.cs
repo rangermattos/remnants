@@ -5,9 +5,9 @@ using System;
 
 namespace Remnants
 {
-	class WaterPurificationFacility : Building
+	class WaterPurification : Building
 	{
-		public WaterPurificationFacility(ContentManager Content, Vector2 pos) : base()
+		public WaterPurification(ContentManager Content, Vector2 pos) : base()
         {
 			tilesWide = 2;
 			tilesHigh = 2;

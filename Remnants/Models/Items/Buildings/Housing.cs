@@ -5,9 +5,9 @@ using System;
 
 namespace Remnants
 {
-	class HouseSmall : Building
+	class SmallHouse : Building
 	{
-		public HouseSmall(ContentManager Content, Vector2 pos) : base()
+		public SmallHouse(ContentManager Content, Vector2 pos) : base()
         {
 			tilesWide = 1;
 			tilesHigh = 1;
@@ -50,9 +50,9 @@ namespace Remnants
 		}
 	}
 
-	class HouseMedium : Building
+	class MediumHouse : Building
 	{
-		public HouseMedium(ContentManager Content, Vector2 pos)
+		public MediumHouse(ContentManager Content, Vector2 pos)
 		{
 			tilesWide = 2;
 			tilesHigh = 1;
@@ -93,9 +93,9 @@ namespace Remnants
 		}
 	}
 
-	class HouseLarge : Building
+	class LargeHouse : Building
 	{
-		public HouseLarge(ContentManager Content, Vector2 pos)
+		public LargeHouse(ContentManager Content, Vector2 pos)
 		{
 			tilesWide = 2;
 			tilesHigh = 1;

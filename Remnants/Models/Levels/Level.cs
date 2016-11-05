@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using System.Reflection;
 
 namespace Remnants
 {
@@ -49,67 +50,24 @@ namespace Remnants
 
         void LoadBuildings(Game1 game)
         {
+            object[] po = new object[2];
+            po[0] = game.Content;
             foreach (LevelData.buildingData b in LevelData.Instance.buildingList)
             {
-                if (b.type == "SolarPanel")
+                po[1] = b.Position;
+                Building tempBuilding;
+                try
                 {
-                    buildings.Add(new SolarPanel(game.Content, b.Position));
+                    //magic?
+                    tempBuilding = (Building)Activator.CreateInstance(Type.GetType("Remnants." + b.type), po);
                 }
-                else if (b.type == "ShockTrap")
+                catch (Exception)
                 {
-                    buildings.Add(new ShockTrap(game.Content, b.Position));
+                    throw;
                 }
-                else if (b.type == "WindTurbine")
+                if (tempBuilding.Place(map))
                 {
-                    buildings.Add(new WindTurbine(game.Content, b.Position));
-                }
-                else if (b.type == "SmallBatteryFacility")
-                {
-                    buildings.Add(new BatterySmall(game.Content, b.Position));
-                }
-                else if (b.type == "MediumBatteryFacility")
-                {
-                    buildings.Add(new BatteryMedium(game.Content, b.Position));
-                }
-                else if (b.type == "LargeBatteryFacility")
-                {
-                    buildings.Add(new BatteryLarge(game.Content, b.Position));
-                }
-                else if (b.type == "SmallHouse")
-                {
-                    buildings.Add(new HouseSmall(game.Content, b.Position));
-                }
-                else if (b.type == "MediumHouse")
-                {
-                    buildings.Add(new HouseMedium(game.Content, b.Position));
-                }
-                else if (b.type == "LargeHouse")
-                {
-                    buildings.Add(new HouseLarge(game.Content, b.Position));
-                }
-                else if (b.type == "Greenhouse")
-                {
-                    buildings.Add(new Greenhouse(game.Content, b.Position));
-                }
-                else if (b.type == "WaterPurification")
-                {
-                    buildings.Add(new WaterPurificationFacility(game.Content, b.Position));
-                }
-                else if (b.type == "Mine")
-                {
-                    buildings.Add(new Mine(game.Content, b.Position));
-                }
-                else if (b.type == "Granary")
-                {
-                    buildings.Add(new Granary(game.Content, b.Position));
-                }
-                else if (b.type == "WaterTower")
-                {
-                    buildings.Add(new WaterTower(game.Content, b.Position));
-                }
-                else if (b.type == "Warehouse")
-                {
-                    buildings.Add(new Warehouse(game.Content, b.Position));
+                    buildings.Add(tempBuilding);
                 }
             }
         }
@@ -186,125 +144,22 @@ namespace Remnants
                 //scale back up, p will now be in line with the tiles
                 p = new Vector2(x * 64f, y * 64f);
 
-                if (buildingString == "SolarPanel")
+                object[] po = new object[2];
+                po[0] = Content;
+                po[1] = p;
+                Building tempBuilding;
+                try
                 {
-                    var tempBuilding = new SolarPanel(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new SolarPanel(Content, p));
-                    }
+                    //magic?
+                    tempBuilding = (Building)Activator.CreateInstance(Type.GetType("Remnants." + buildingString), po);
                 }
-                else if (buildingString == "ShockTrap")
+                catch (Exception)
                 {
-                    var tempBuilding = new ShockTrap(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new ShockTrap(Content, p));
-                    }
+                    throw;
                 }
-                else if (buildingString == "WindTurbine")
+                if (tempBuilding.Place(map))
                 {
-                    var tempBuilding = new WindTurbine(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new WindTurbine(Content, p));
-                    }
-                }
-                else if (buildingString == "SmallBatteryFacility")
-                {
-                    var tempBuilding = new BatterySmall(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new BatterySmall(Content, p));
-                    }
-                }
-                else if (buildingString == "MediumBatteryFacility")
-                {
-                    var tempBuilding = new BatteryMedium(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new BatteryMedium(Content, p));
-                    }
-                }
-                else if (buildingString == "LargeBatteryFacility")
-                {
-                    var tempBuilding = new BatteryLarge(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new BatteryLarge(Content, p));
-                    }
-                }
-                else if (buildingString == "SmallHouse")
-                {
-                    var tempBuilding = new HouseSmall(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new HouseSmall(Content, p));
-                    }
-                }
-                else if (buildingString == "MediumHouse")
-                {
-                    var tempBuilding = new HouseMedium(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new HouseMedium(Content, p));
-                    }
-                }
-                else if (buildingString == "LargeHouse")
-                {
-                    var tempBuilding = new HouseLarge(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new HouseLarge(Content, p));
-                    }
-                }
-                else if (buildingString == "Greenhouse")
-                {
-                    var tempBuilding = new Greenhouse(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new Greenhouse(Content, p));
-                    }
-                }
-                else if (buildingString == "WaterPurification")
-                {
-                    var tempBuilding = new WaterPurificationFacility(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new WaterPurificationFacility(Content, p));
-                    }
-                }
-                else if (buildingString == "Mine")
-                {
-                    var tempBuilding = new Mine(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new Mine(Content, p));
-                    }
-                }
-                else if (buildingString == "Granary")
-                {
-                    var tempBuilding = new Granary(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new Granary(Content, p));
-                    }
-                }
-                else if (buildingString == "WaterTower")
-                {
-                    var tempBuilding = new WaterTower(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new WaterTower(Content, p));
-                    }
-                }
-                else if (buildingString == "Warehouse")
-                {
-                    var tempBuilding = new Warehouse(Content, p);
-                    if (tempBuilding.Place(map))
-                    {
-                        buildings.Add(new Warehouse(Content, p));
-                    }
+                    buildings.Add(tempBuilding);
                 }
             }
             else if (buildingString != ""

@@ -5,9 +5,9 @@ using System;
 
 namespace Remnants
 {
-	class BatterySmall : Building
+	class SmallBatteryFacility : Building
 	{
-		public BatterySmall(ContentManager Content, Vector2 pos) : base()
+		public SmallBatteryFacility(ContentManager Content, Vector2 pos) : base()
         {
 			tilesWide = 1;
 			tilesHigh = 1;
@@ -48,9 +48,9 @@ namespace Remnants
 		}
 	}
 
-	class BatteryMedium : Building
+	class MediumBatteryFacility : Building
 	{
-		public BatteryMedium(ContentManager Content, Vector2 pos)
+		public MediumBatteryFacility(ContentManager Content, Vector2 pos)
 		{
 			tilesWide = 1;
 			tilesHigh = 1;
@@ -91,9 +91,9 @@ namespace Remnants
 		}
 	}
 
-	class BatteryLarge : Building
+	class LargeBatteryFacility : Building
 	{
-		public BatteryLarge(ContentManager Content, Vector2 pos)
+		public LargeBatteryFacility(ContentManager Content, Vector2 pos)
 		{
 			tilesWide = 1;
 			tilesHigh = 1;
