@@ -73,6 +73,7 @@ namespace Remnants
                     UI.Instance.UIItemList[10].active = false;
                     UI.Instance.buildingSelected = "";
                     UnloadContent(ConstructionMenu.Instance);
+                    return "";
                 }
                 if (!MainMenu.Instance.isActive && !ConstructionMenu.Instance.isActive)
                 {
@@ -84,6 +85,7 @@ namespace Remnants
                 {
                     UnloadContent(MainMenu.Instance);
                     UI.Instance.isActive = true;
+                    return "";
                 }
                 else
                 {
