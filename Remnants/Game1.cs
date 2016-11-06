@@ -17,6 +17,7 @@ namespace Remnants
         private readonly int virtualHeight = 1080;
         //private static Texture2D backGround;
         private ScalingViewportAdapter viewportAdapter;
+        bool gameActive;
 
         public Game1()
         {
@@ -27,6 +28,7 @@ namespace Remnants
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             Window.IsBorderless = true;
+            gameActive = true;
             //graphics.IsFullScreen = true;
 
             /*
@@ -67,9 +69,12 @@ namespace Remnants
 
         protected override void Update(GameTime gameTime)
         {
-            InputManager.Instance.Update();
-            MenuController.Instance.Update();
-            LevelController.Instance.Update(gameTime, Content);
+            if (gameActive)
+            {
+                InputManager.Instance.Update();
+                MenuController.Instance.Update();
+                LevelController.Instance.Update(gameTime, Content);
+            }
             base.Update(gameTime);
         }
 
@@ -118,11 +123,13 @@ namespace Remnants
         protected override void OnActivated(object sender, EventArgs args)
         {
             this.Window.Title = "Active Game";
+            gameActive = true;
             base.OnActivated(sender, args);
         }
         protected override void OnDeactivated(object sender, EventArgs args)
         {
             this.Window.Title = "InActive Game";
+            gameActive = false;
             base.OnActivated(sender, args);
         }
 
