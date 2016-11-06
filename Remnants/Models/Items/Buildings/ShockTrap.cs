@@ -24,7 +24,7 @@ namespace Remnants
             tilesHigh = 1;
             Position = pos;
             buildTime = 10f;
-			deltas[(int)resources.ENERGY] = -10;
+			resourceUsage[(int)resources.ENERGY] = 10;
             //metalCost = 100;
             //energyCost = 100;
 			resourceCost[(int)resources.ENERGY] = 100;
@@ -51,7 +51,7 @@ namespace Remnants
 
         public override void Update(GameTime gameTime, Vector2 point)
         {
-            if (operational)
+			if (status == (int)buildingStates.OPERATIONAL)
             {
                 if (WithinRange(point))
                 {
@@ -69,6 +69,10 @@ namespace Remnants
                     }
                 }
             }
+			else
+			{
+				lb = null;
+			}
             base.Update(gameTime);
         }
 

@@ -14,12 +14,14 @@ namespace Remnants
         public int populationHousing = 0;
         public int[] resourceCost;
         public int[] resourceStorage;
-        protected int[] deltas;
+        protected int[] resourceGain;
+		protected int[] resourceUsage;
         public int[] resourceChanges;
         public float alpha;
         public float buildTime;
         public float elapsedProductionTime = 0f;
-        public bool operational;
+        public int status;
+		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
         public Vector2 Position { get; set; }
         ProgressBar progressBar;
         protected bool animated = false;
@@ -27,17 +29,20 @@ namespace Remnants
 
         public Building()
         {
-            deltas = new int[8];
+            resourceGain = new int[8];
+			resourceUsage = new int[8];
             resourceCost = new int[8];
             resourceChanges = new int[8];
             resourceStorage = new int[8];
             for (int i = 0; i < 8; i++)
             {
-                deltas[i] = 0;
+                resourceGain[i] = 0;
+				resourceUsage[i] = 0;
                 resourceChanges[i] = 0;
                 resourceCost[i] = 0;
                 resourceStorage[i] = 0;
             }
+			status = (int)buildingStates.CONSTRUCTING;
         }
 
         public virtual void LoadContent(ContentManager Content)
@@ -56,8 +61,9 @@ namespace Remnants
         {
             
             var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
-			if (alpha < 1f && !operational) // still constructing
+			switch(status)
 			{
+			case ((int)buildingStates.CONSTRUCTING): // still constructing
 				alpha += deltaT / buildTime;
 				if (alpha > 1f) // construction complete
 				{
@@ -68,23 +74,25 @@ namespace Remnants
 				if (progressBar.progress > 1f)
 					progressBar.progress = 1f;
 				progressBar.barScale.X = progressBar.progress * 32;
-			} 
-			else 
-			{
+				break;
+			case ((int)buildingStates.OPERATIONAL):
 				// calculate production/cost
 				elapsedProductionTime += deltaT;
 				if (elapsedProductionTime >= 1f)
 				{
-					/*
-                    foodChange += deltaFood;
-					waterChange += deltaWater;
-					energyChange += deltaEnergy;
-					woodChange += deltaWood;
-					metalChange += deltaMetal;
-                    */
-					for (int i = 0; i < 8; i++)
+					// check if enough resources to operate
+					if (LevelData.Instance.checkResources(resourceUsage))
 					{
-						LevelData.Instance.resourceList[i] += deltas[i];
+						for (int i = 0; i < 8; i++)
+						{
+							LevelData.Instance.resourceList[i] += resourceGain[i];
+							LevelData.Instance.resourceList[i] -= resourceUsage[i];
+						}
+					}
+					else
+					{
+						Console.Write("Insufficient resources to operate\n");
+						status = (int)buildingStates.IDLE;
 					}
 					elapsedProductionTime = 0;
 				}
@@ -93,6 +101,17 @@ namespace Remnants
 				{
 					animation.Update(gameTime);
 				}
+				break;
+			case ((int)buildingStates.IDLE):
+				if (LevelData.Instance.checkResources(resourceUsage))
+				{
+					Console.Write("Sufficient resources, resuming operation\n");
+					status = (int)buildingStates.OPERATIONAL;
+				}
+				break;
+			case ((int)buildingStates.DISABLED):
+
+				break;
 			}
         }
 
@@ -121,7 +140,7 @@ namespace Remnants
 
         public virtual bool Place(Map map)
         {
-            if (!CheckResources())
+			if (!LevelData.Instance.checkResources(resourceCost))
                 return false;
             //check that all tiles the building will be on can be built on
             for(int i = 0; i < tilesWide; i++)
@@ -156,16 +175,6 @@ namespace Remnants
             return true;
         }
 
-        bool CheckResources()
-        {
-            for(int i = 0; i < 8; i++)
-            {
-                if (LevelData.Instance.resourceList[i] < resourceCost[i])
-                    return false;
-            }
-            return true;
-        }
-
 		void completeConstruction()
 		{
 			Console.Write("Construtction completed\n");
@@ -174,6 +183,7 @@ namespace Remnants
 				//add buildings storage capacity to resource limits
 				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
 			}
+			status = (int)buildingStates.OPERATIONAL;
 		}
     }
 }

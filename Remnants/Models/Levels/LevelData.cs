@@ -32,7 +32,7 @@ namespace Remnants
         {
             public string type;
             public Vector2 Position;
-            public bool operational;
+            public int status;
             public float buildTime;
             public float elapsedProductionTime;
             public float alpha;
@@ -41,7 +41,7 @@ namespace Remnants
             {
                 type = b.GetType().Name;
                 this.Position = b.Position;
-                this.operational = b.operational;
+                this.status = b.status;
                 this.buildTime = b.buildTime;
                 this.elapsedProductionTime = b.elapsedProductionTime;
                 this.alpha = b.alpha;
@@ -61,6 +61,8 @@ namespace Remnants
         public List<tileData> tileList = new List<tileData>();
         public List<int> resourceList = new List<int>();
         public List<int> resourceLimits = new List<int>();
+		public string[] resourceNames = new string[8] { "food", "water", "energy", "nuclear fuel", "antimatter", "wood", "metal", "population"};
+
 
         public Vector2 mapSize;
         
@@ -145,5 +147,19 @@ namespace Remnants
                 resourceLimits[i] = value;
             }
         }
+
+		// returns whether sufficient resources to apply resourceUse
+		public bool checkResources(int[] resourceUse)
+		{
+			for (int i = 0; i < 8; i++)
+			{
+				if (resourceList[i] < resourceUse[i])
+				{
+					Console.Write("Insufficient " + resourceNames[i] + "\n");
+					return false;
+				}
+			}
+			return true;
+		}
     }
 }

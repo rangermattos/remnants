@@ -18,7 +18,7 @@ namespace Remnants
 			resourceCost[(int)resources.ENERGY] = 100;
 			resourceCost[(int)resources.WOOD] = 100;
 			//resourceCost[(int)resources.METAL] = 100;
-			deltas[(int)resources.ENERGY] = -3;
+			resourceUsage[(int)resources.ENERGY] = 3;
             populationHousing = 2;
 
             LoadContent(Content);
@@ -62,7 +62,7 @@ namespace Remnants
             //energyCost = 200;
 			resourceCost[(int)resources.METAL] = 100;
 			resourceCost[(int)resources.ENERGY] = 200;
-			deltas[(int)resources.ENERGY] = -10;
+			resourceUsage[(int)resources.ENERGY] = 10;
 			populationHousing = 4;
 			LoadContent(Content);
 		}
@@ -105,7 +105,7 @@ namespace Remnants
             //energyCost = 400;
 			resourceCost[(int)resources.METAL] = 200;
 			resourceCost[(int)resources.ENERGY] = 400;
-			deltas[(int)resources.ENERGY] = -15;
+			resourceUsage[(int)resources.ENERGY] = 15;
 			populationHousing = 8;
 			LoadContent(Content);
 		}

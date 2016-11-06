@@ -17,8 +17,8 @@ namespace Remnants
             //energyCost = 100;
 			resourceCost[(int)resources.ENERGY] = 100;
 			resourceCost[(int)resources.METAL] = 100;
-			deltas[(int)resources.ENERGY] = -10;
-			deltas[(int)resources.METAL] = 10;
+			resourceGain[(int)resources.METAL] = 10;
+			resourceUsage[(int)resources.ENERGY] = 10;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)

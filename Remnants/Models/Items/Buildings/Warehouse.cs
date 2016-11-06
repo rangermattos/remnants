@@ -17,7 +17,7 @@ namespace Remnants
             //energyCost = 100;
 			resourceCost[(int)resources.ENERGY] = 100;
 			resourceCost[(int)resources.METAL] = 100;
-			deltas[(int)resources.ENERGY] = -1;
+			resourceUsage[(int)resources.ENERGY] = 1;
 			resourceStorage[(int)resources.WOOD] = 200;
 			resourceStorage[(int)resources.METAL] = 200;
 			LoadContent(Content);

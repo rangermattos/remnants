@@ -19,7 +19,7 @@ namespace Remnants
 			resourceCost[(int)resources.METAL] = 100;
             //foodStorage = 400;
 			resourceStorage[(int)resources.FOOD] = 400;
-            deltas[2] = -2;
+			resourceUsage[(int)resources.ENERGY] = 2;
 
             LoadContent(Content);
 		}
