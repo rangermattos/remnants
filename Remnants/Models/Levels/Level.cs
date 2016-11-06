@@ -74,7 +74,6 @@ namespace Remnants
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
-            var vm = Camera.Instance.cam.GetViewMatrix();
 
             LevelData.Instance.Update();
             UI.Instance.Update(gameTime);
