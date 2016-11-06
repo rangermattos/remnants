@@ -121,6 +121,10 @@ namespace Remnants
                 {
                     resourceList[i] = resourceLimits[i];
                 }
+				else if (resourceList[i] < 0)
+				{
+					resourceList[i] = 0;
+				}
             }
             /*/
             resourceList[0] = food;
