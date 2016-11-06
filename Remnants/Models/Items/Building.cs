@@ -56,11 +56,14 @@ namespace Remnants
         {
             
             var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
-			if (alpha < 1f) 
+			if (alpha < 1f && !operational) // still constructing
 			{
 				alpha += deltaT / buildTime;
-				if (alpha > 1f)
+				if (alpha > 1f) // construction complete
+				{
 					alpha = 1f;
+					completeConstruction(); // should trigger just once
+				}
 				progressBar.progress += deltaT / buildTime;
 				if (progressBar.progress > 1f)
 					progressBar.progress = 1f;
@@ -68,34 +71,29 @@ namespace Remnants
 			} 
 			else 
 			{
-				operational = true;
-			}
-
-            if (operational)
-            {
 				// calculate production/cost
-                elapsedProductionTime += deltaT;
-                if (elapsedProductionTime >= 1f)
-                {
-                    /*
+				elapsedProductionTime += deltaT;
+				if (elapsedProductionTime >= 1f)
+				{
+					/*
                     foodChange += deltaFood;
 					waterChange += deltaWater;
 					energyChange += deltaEnergy;
 					woodChange += deltaWood;
 					metalChange += deltaMetal;
                     */
-                    for (int i = 0; i < 8; i++)
-                    {
-                        LevelData.Instance.resourceList[i] += deltas[i];
-                    }
-                    elapsedProductionTime = 0;
-                }
+					for (int i = 0; i < 8; i++)
+					{
+						LevelData.Instance.resourceList[i] += deltas[i];
+					}
+					elapsedProductionTime = 0;
+				}
 
 				if (animated)
 				{
 					animation.Update(gameTime);
 				}
-            }
+			}
         }
 
         public virtual void Update(GameTime gameTime, Vector2 point)
@@ -153,8 +151,6 @@ namespace Remnants
             {
                 //subtract resource cost from available resources
                 LevelData.Instance.resourceList[i] -= resourceCost[i];
-                //add buildings storage capacity to resource limits
-                LevelData.Instance.resourceLimits[i] += resourceStorage[i];
             }
             //return true so level will build the building
             return true;
@@ -169,5 +165,15 @@ namespace Remnants
             }
             return true;
         }
+
+		void completeConstruction()
+		{
+			Console.Write("Construtction completed\n");
+			for (int i = 0; i < 8; i++)
+			{
+				//add buildings storage capacity to resource limits
+				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
+			}
+		}
     }
 }
