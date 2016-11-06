@@ -22,6 +22,7 @@ namespace Remnants
         {
             LevelData.Instance.SetLimits(500);
             map = new Map();
+            Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
         }
 
         //level constructer with loadgame
@@ -73,7 +74,6 @@ namespace Remnants
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
-            var vm = Camera.Instance.cam.GetViewMatrix();
 
             LevelData.Instance.Update();
             UI.Instance.Update(gameTime);

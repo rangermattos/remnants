@@ -72,6 +72,7 @@ namespace Remnants
             if (gameActive)
             {
                 InputManager.Instance.Update();
+                Camera.Instance.Update(gameTime);
                 MenuController.Instance.Update();
                 LevelController.Instance.Update(gameTime, Content);
             }
