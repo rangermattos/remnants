@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Remnants
 {
+	enum resources { FOOD, WATER, ENERGY, NUCLEAR, ANTIMATTER, WOOD, METAL, POP };
+
     class LevelController
     {
         Level currentLevel;

@@ -15,10 +15,10 @@ namespace Remnants
 			buildTime = 10f;
             //metalCost = 100;
             //energyCost = 100;
-            resourceCost[6] = 100;
-            resourceCost[2] = 100;
-            deltas[1] = 10;
-            deltas[2] = -5;
+			resourceCost[(int)resources.ENERGY] = 100;
+			resourceCost[(int)resources.METAL] = 100;
+			deltas[(int)resources.WATER] = 10;
+			deltas[(int)resources.ENERGY] = -5;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)

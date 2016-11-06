@@ -15,10 +15,10 @@ namespace Remnants
 			buildTime = 10f;
             //metalCost = 100;
             //energyCost = 100;
-            resourceCost[6] = 100;
-            resourceCost[2] = 100;
+            resourceCost[(int)resources.ENERGY] = 100;
+			resourceCost[(int)resources.METAL] = 100;
             //energyStorage = 200;
-            resourceStorage[3] = 200;
+			resourceStorage[(int)resources.ENERGY] = 200;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
@@ -58,10 +58,10 @@ namespace Remnants
 			buildTime = 10f;
             //metalCost = 200;
             //energyCost = 200;
-            resourceCost[6] = 200;
-            resourceCost[2] = 200;
+			resourceCost[(int)resources.ENERGY] = 200;
+			resourceCost[(int)resources.METAL] = 200;
             //energyStorage = 400;
-            resourceStorage[3] = 400;
+			resourceStorage[(int)resources.ENERGY] = 400;
             LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
@@ -101,10 +101,10 @@ namespace Remnants
 			buildTime = 10f;
             //metalCost = 400;
             //energyCost = 400;
-            resourceCost[6] = 400;
-            resourceCost[2] = 400;
+			resourceCost[(int)resources.ENERGY] = 400;
+			resourceCost[(int)resources.METAL] = 400;
             //energyStorage = 200;
-            resourceStorage[3] = 800;
+			resourceStorage[(int)resources.ENERGY] = 800;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
