@@ -75,6 +75,7 @@ namespace Remnants
                 Camera.Instance.Update(gameTime);
                 MenuController.Instance.Update();
                 LevelController.Instance.Update(gameTime, Content);
+				DevCheats.Instance.Update();
             }
             base.Update(gameTime);
         }

@@ -57,5 +57,36 @@ namespace Remnants
         {
             return (KeyState.IsKeyUp(Keys.Escape) && LastKeyState.IsKeyDown(Keys.Escape));
         }
+
+		public bool NumPadPressRelease(int n)
+		{
+			switch (n)
+			{
+			case 1:
+				return (KeyState.IsKeyUp(Keys.NumPad1) && LastKeyState.IsKeyDown(Keys.NumPad1));
+			case 2:
+				return (KeyState.IsKeyUp(Keys.NumPad2) && LastKeyState.IsKeyDown(Keys.NumPad2));
+			case 3:
+				return (KeyState.IsKeyUp(Keys.NumPad3) && LastKeyState.IsKeyDown(Keys.NumPad3));
+			case 4:
+				return (KeyState.IsKeyUp(Keys.NumPad4) && LastKeyState.IsKeyDown(Keys.NumPad4));
+			case 5:
+				return (KeyState.IsKeyUp(Keys.NumPad5) && LastKeyState.IsKeyDown(Keys.NumPad5));
+			case 6:
+				return (KeyState.IsKeyUp(Keys.NumPad6) && LastKeyState.IsKeyDown(Keys.NumPad6));
+			case 7:
+				return (KeyState.IsKeyUp(Keys.NumPad7) && LastKeyState.IsKeyDown(Keys.NumPad7));
+			case 8:
+				return (KeyState.IsKeyUp(Keys.NumPad8) && LastKeyState.IsKeyDown(Keys.NumPad8));
+			case 9:
+				return (KeyState.IsKeyUp(Keys.NumPad9) && LastKeyState.IsKeyDown(Keys.NumPad9));
+			case 0:
+				return (KeyState.IsKeyUp(Keys.NumPad0) && LastKeyState.IsKeyDown(Keys.NumPad0));
+			default:
+				Console.Write("Unknown numpad key: " + n + "\n");
+				return false;
+			}
+
+		}
     }
 }
