@@ -148,10 +148,17 @@ namespace Remnants
                 {
                     throw;
                 }
-                if (tempBuilding.Place(map))
-                {
-                    buildings.Add(tempBuilding);
-                }
+				if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.POP_PER_BUILDING))
+				{
+	                if (tempBuilding.Place(map))
+	                {
+	                    buildings.Add(tempBuilding);
+	                }
+				}
+				else
+				{
+					Console.Write("Insufficient population to support new building\n");
+				}
             }
             if (InputManager.Instance.RightPressRelease())
             {
@@ -177,7 +184,6 @@ namespace Remnants
 					LevelData.Instance.resourceList[(int)resources.FOOD] -= popConsumption[(int)resources.FOOD];
 					LevelData.Instance.resourceList[(int)resources.WATER] -= popConsumption[(int)resources.WATER];
 
-					Console.Write("test\n");
 					// check for population growth
 					if (LevelData.Instance.canPopGrow() && LevelData.Instance.checkResources(populationGrowthCost))
 					{

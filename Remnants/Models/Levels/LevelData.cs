@@ -63,6 +63,7 @@ namespace Remnants
         public List<int> resourceLimits = new List<int>();
 		public string[] resourceNames = new string[8] { "food", "water", "energy", "nuclear fuel", "antimatter", "wood", "metal", "population"};
 
+		public int POP_PER_BUILDING = 2;
 
         public Vector2 mapSize;
         
