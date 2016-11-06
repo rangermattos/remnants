@@ -91,7 +91,6 @@ namespace Remnants
 					}
 					else
 					{
-						Console.Write("Insufficient resources to operate\n");
 						status = (int)buildingStates.IDLE;
 					}
 					elapsedProductionTime = 0;

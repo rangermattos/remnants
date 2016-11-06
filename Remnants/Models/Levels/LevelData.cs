@@ -161,5 +161,10 @@ namespace Remnants
 			}
 			return true;
 		}
+
+		public bool canPopGrow()
+		{
+			return resourceList[(int)resources.POP] < resourceLimits[(int)resources.POP];
+		}
     }
 }

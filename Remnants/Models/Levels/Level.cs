@@ -12,15 +12,21 @@ using System.Reflection;
 namespace Remnants
 {
     public class Level
-    {
+	{
+		Random r = new Random();
         StorageDevice device;
         Map map;
         List<Building> buildings = new List<Building>();
         SpriteFont font = MenuController.Instance.font;
+		float lastPopulationGrowth = 0f;
+		float meanGrowthTime = 10f;
+		int[] populationGrowthCost = new int[8] { 20, 20, 0, 0, 0, 0, 0, 0 };
+		float elapsedConsumptionTime = 0f;
 
         public Level()
         {
             LevelData.Instance.SetLimits(500);
+			LevelData.Instance.resourceLimits[(int)resources.POP] = 10;
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
         }
@@ -83,6 +89,8 @@ namespace Remnants
             UpdateBuildings(gameTime, p);
 
             CheckBuilding(p, Content);
+
+			updatePopulation(gameTime);
 
             //SetResources();
         }
@@ -153,6 +161,52 @@ namespace Remnants
                 MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
             }
         }
+
+		public void updatePopulation(GameTime gameTime)
+		{
+			var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			elapsedConsumptionTime += deltaT;
+			if (elapsedConsumptionTime >= 1f)
+			{
+				int[] popConsumption = new int[8];
+				popConsumption[(int)resources.FOOD] = (int)(LevelData.Instance.resourceList[(int)resources.POP] * 0.5);
+				popConsumption[(int)resources.WATER] = (int)(LevelData.Instance.resourceList[(int)resources.POP] * 0.5);
+				if (LevelData.Instance.checkResources(popConsumption))
+				{
+					// consume food and water
+					LevelData.Instance.resourceList[(int)resources.FOOD] -= popConsumption[(int)resources.FOOD];
+					LevelData.Instance.resourceList[(int)resources.WATER] -= popConsumption[(int)resources.WATER];
+
+					Console.Write("test\n");
+					// check for population growth
+					if (LevelData.Instance.canPopGrow() && LevelData.Instance.checkResources(populationGrowthCost))
+					{
+						lastPopulationGrowth += elapsedConsumptionTime;
+						Console.Write("lastPopulationGrowth: " + lastPopulationGrowth + "\n");
+						double prob = 1 - Math.Pow(Math.E,-(lastPopulationGrowth/meanGrowthTime)); // exponential distribution
+						if (r.NextDouble() < prob)
+						{
+							// population grows
+							Console.Write("Population grows! Took " + lastPopulationGrowth + " seconds\n");
+							LevelData.Instance.resourceList[(int)resources.POP] += 1;
+							LevelData.Instance.resourceList[(int)resources.FOOD] -= populationGrowthCost[(int)resources.FOOD];
+							LevelData.Instance.resourceList[(int)resources.WATER] -= populationGrowthCost[(int)resources.WATER];
+							lastPopulationGrowth = 0f;
+						}
+					}
+				}
+				else
+				{
+					Console.Write("Not enough food or water!\n");
+					if (r.NextDouble() < 0.33)
+					{
+						Console.Write("A citizen has died!\n");
+						LevelData.Instance.resourceList[(int)resources.POP] -= 1;
+					}
+				}
+				elapsedConsumptionTime = 0f;
+			}
+		}
 
         private StorageDevice getStorageDevice()
         {

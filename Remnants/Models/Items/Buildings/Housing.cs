@@ -19,7 +19,7 @@ namespace Remnants
 			resourceCost[(int)resources.WOOD] = 100;
 			//resourceCost[(int)resources.METAL] = 100;
 			resourceUsage[(int)resources.ENERGY] = 3;
-            populationHousing = 2;
+			resourceStorage[(int)resources.POP] = 2;
 
             LoadContent(Content);
 		}
@@ -63,7 +63,7 @@ namespace Remnants
 			resourceCost[(int)resources.METAL] = 100;
 			resourceCost[(int)resources.ENERGY] = 200;
 			resourceUsage[(int)resources.ENERGY] = 10;
-			populationHousing = 4;
+			resourceStorage[(int)resources.POP] = 4;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
@@ -106,7 +106,7 @@ namespace Remnants
 			resourceCost[(int)resources.METAL] = 200;
 			resourceCost[(int)resources.ENERGY] = 400;
 			resourceUsage[(int)resources.ENERGY] = 15;
-			populationHousing = 8;
+			resourceStorage[(int)resources.POP] = 8;
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
