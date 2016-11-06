@@ -13,8 +13,8 @@ namespace Remnants
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private SpriteFont font;
-        private readonly int virtualWidth = 1920;
-        private readonly int virtualHeight = 1080;
+        private readonly int virtualWidth = 1500;
+        private readonly int virtualHeight = 1200;
         //private static Texture2D backGround;
         private ScalingViewportAdapter viewportAdapter;
 
@@ -97,7 +97,10 @@ namespace Remnants
 
         public void Quit()
         {
-            LevelController.Instance.SaveGame();
+            if (LevelController.Instance.levelOpen)
+            {
+                LevelController.Instance.SaveGame();
+            }
             this.Exit();
         }
 

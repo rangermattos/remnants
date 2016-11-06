@@ -66,16 +66,33 @@ namespace Remnants
 
         public string Update()
         {
-            if (menuOpen && !MainMenu.Instance.isActive)
+            if (InputManager.Instance.EscPressRelease())
             {
-                if (InputManager.Instance.EscPressRelease())
+                if (ConstructionMenu.Instance.isActive)
                 {
                     UI.Instance.UIItemList[10].active = false;
                     UI.Instance.buildingSelected = "";
                     UnloadContent(ConstructionMenu.Instance);
-                    
+                }
+                if (!MainMenu.Instance.isActive && !ConstructionMenu.Instance.isActive)
+                {
+                    UI.Instance.isActive = false;
+                    SetMenu(MainMenu.Instance);
                     return "";
                 }
+                if (MainMenu.Instance.isActive && LevelController.Instance.levelOpen)
+                {
+                    UnloadContent(MainMenu.Instance);
+                    UI.Instance.isActive = true;
+                }
+                else
+                {
+                    game.Quit();
+                }
+            }
+
+            if (menuOpen && !MainMenu.Instance.isActive)
+            {
             }
             if (menuOpen)
             {
@@ -93,14 +110,6 @@ namespace Remnants
                 }
             }
 
-            if (InputManager.Instance.EscPressRelease())
-            {
-                UI.Instance.buildingSelected = "";
-                SetMenu(MainMenu.Instance);
-                //game.Quit();
-                
-            }
-
             return "";
         }
 
@@ -108,12 +117,12 @@ namespace Remnants
         {
             if (menuOpen)
             {
-                spriteBatch.Begin(transformMatrix: viewportAdapter.GetScaleMatrix());
+                //spriteBatch.Begin(transformMatrix: Camera.Instance.viewportScale);
+                spriteBatch.Begin();
                 //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
-                //spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
                 if (MainMenu.Instance.isActive)
                 {
-                    spriteBatch.Draw(backGround, new Rectangle(0, 0, 1920, 1080), Color.White);
+                    spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
                 }
                 foreach (Menu m in ActiveMenus)
                 {

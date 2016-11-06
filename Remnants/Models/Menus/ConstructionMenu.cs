@@ -40,7 +40,8 @@ namespace Remnants
 
             foreach (string st in l)
             {
-                Vector2 tempVect = (MenuController.Instance.font.MeasureString(st) * scale);
+                //Vector2 tempVect = Vector2.Transform((MenuController.Instance.font.MeasureString(st) * scale), Camera.Instance.viewportScale);
+                Vector2 tempVect = MenuController.Instance.font.MeasureString(st) * scale;
                 ftotHeight += (tempVect.Y);
                 if (tempVect.X > fmaxWidth)
                 {
@@ -50,12 +51,12 @@ namespace Remnants
             fmaxWidth += 4f;
 
             totHeight = ftotHeight;
-            maxWidth = fmaxWidth;
+            maxWidth = fmaxWidth / Camera.Instance.viewportScale.Scale.X;
 
             //var v = Vector2.Transform(Vector2.Zero, Matrix.Invert(Camera.Instance.cam.GetViewMatrix()));
             var v = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
             center = new Vector2(maxWidth / 2, v.Y - (totHeight / 2));
-
+            //center = Vector2.Transform(center, Camera.Instance.viewportScale);
             foreach (string s in l)
             {
                 itemCount += AddItem(scale, s, MenuController.Instance.font, center, () => { /*MenuController.Instance.UnloadContent();*/ return s.Replace(" ", ""); });

@@ -27,7 +27,7 @@ namespace Remnants
             isActive = false;
 
             //UIBar
-            Vector2 textureScale = new Vector2(Camera.Instance.cam.Origin.X * 2 * Camera.Instance.viewportScale.Scale.X, 32 * Camera.Instance.viewportScale.Scale.Y);
+            Vector2 textureScale = Vector2.Transform(new Vector2(Camera.Instance.cam.Origin.X * 2, 32), Camera.Instance.viewportScale);
             AddItem(topLeft, Vector2.Zero, textureScale, Content.Load<Texture2D>("grayDot"), true);
             //construct
 			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenus(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
@@ -50,8 +50,10 @@ namespace Remnants
             AddItem(LevelData.Instance.resourceList[7], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
 
             //construction popupmenu
-            textureScale = new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight);
-            AddItem(topLeft, new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2)), textureScale, Content.Load<Texture2D>("grayDot"), false);
+            Vector2 temp = Vector2.Transform(new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2)), Camera.Instance.viewportScale);
+            //Vector2 temp = new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2));
+            textureScale = Vector2.Transform(new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight), Camera.Instance.viewportScale);
+            AddItem(topLeft, temp, textureScale, Content.Load<Texture2D>("grayDot"), false);
             
             SetItemPositions(viewport, LevelData.Instance.resourceList);
         }
@@ -147,10 +149,9 @@ namespace Remnants
         void SetItemPositions(Vector2 viewport, List<int> resourceList)
         {
             Vector2 tempVect = new Vector2(0, 0);
-            UIItemList[0].position = tempVect;
-
+            UIItemList[0].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
             tempVect = new Vector2(0, viewport.Y - 32);
-            UIItemList[1].position = tempVect;
+            UIItemList[1].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
             float scale = Camera.Instance.viewportScale.Scale.X;
             //32 for icon width, 1 for spacing between, 128 for readout text width
             // - (32 * scale + 1 + 128 * scale) * 7
@@ -177,7 +178,7 @@ namespace Remnants
                 {
                     i.position = new Vector2(x, 0);
                     i.valuePosition = new Vector2(x + 34, i.valuePosition.Y);
-                    i.valuePosition = Vector2.Transform(i.position, Camera.Instance.viewportScale);
+                    i.position = Vector2.Transform(i.position, Camera.Instance.viewportScale);
                     i.valuePosition = Vector2.Transform(i.valuePosition, Camera.Instance.viewportScale);
                     x += (32 + 1 + 128);
                 }
@@ -185,8 +186,11 @@ namespace Remnants
             }
 
             tempVect = new Vector2(0, 0);
-            UIItemList[9].position = tempVect;
-            UIItemList[9].valuePosition = new Vector2(34, UIItemList[9].valuePosition.Y);
+            UIItemList[9].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
+            tempVect = new Vector2(34, UIItemList[9].valuePosition.Y);
+            UIItemList[9].valuePosition = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
+
+            //UIItemList[10].position = Vector2.Transform()
         }
 
         void OnClickConstruct()

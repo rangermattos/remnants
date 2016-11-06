@@ -118,7 +118,8 @@ namespace Remnants
 
             currentLevel.LoadContent(Content);
             levelOpen = true;
-            loading = true;
+            //loading = true;
+            UI.Instance.isActive = true;
         }
 
         public void LoadLevel(ContentManager Content, string filename)
@@ -132,7 +133,7 @@ namespace Remnants
 
             currentLevel.LoadContent(Content);
             levelOpen = true;
-            loading = true;
+            //loading = true;
         }
     }
 }

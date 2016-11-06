@@ -70,6 +70,7 @@ namespace Remnants
             {
                 item.position.Y = top + menuPosition * avgHeight;
                 item.position = Vector2.Transform(item.position, Camera.Instance.viewportScale);
+                //item.origin = Vector2.Transform(item.origin, Camera.Instance.viewportScale);
                 menuPosition++;
             }
         }
@@ -87,6 +88,7 @@ namespace Remnants
                 item.position.X = 2;//center.X - item.GetSize().X / 2;// - item.origin.X;
                 item.position.Y = top + menuPosition * avgHeight;
                 item.position = Vector2.Transform(item.position, Camera.Instance.viewportScale);
+                item.origin = Vector2.Transform(item.origin, Camera.Instance.viewportScale);
                 menuPosition++;
             }
         }

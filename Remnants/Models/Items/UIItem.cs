@@ -42,9 +42,11 @@ namespace Remnants
             topLeft = tl;
             texture = txt;
             textureScale = new Vector2(1f, 1f);
+            textureScale = Vector2.Transform(textureScale, Camera.Instance.viewportScale);
             color = Color.White;
             active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
+            size = Vector2.Transform(size, Camera.Instance.viewportScale);
         }
 
         public UIItem(Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<bool, int> UIItemAction)
@@ -53,11 +55,13 @@ namespace Remnants
             topLeft = tl;
             texture = txt;
             textureScale = new Vector2(1f, 1f);
+            textureScale = Vector2.Transform(textureScale, Camera.Instance.viewportScale);
             color = Color.White;
 
             Action2 = UIItemAction;
             active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
+            size = Vector2.Transform(size, Camera.Instance.viewportScale);
         }
 
         public UIItem(Vector2 tl, Vector2 incposition, Vector2 textureScale, Texture2D txt, bool active)
@@ -66,9 +70,11 @@ namespace Remnants
             topLeft = tl;
             texture = txt;
             this.textureScale = textureScale;
+            //this.textureScale = Vector2.Transform(textureScale, Camera.Instance.viewportScale);
             color = Color.White;
             this.active = active;
             size = new Vector2((float)texture.Width, (float)texture.Height);
+            size = Vector2.Transform(size, Camera.Instance.viewportScale);
         }
 
         public UIItem(float scale, int v, int vl, Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<int> UIItemAction)
@@ -84,16 +90,19 @@ namespace Remnants
             topLeft = tl;
             texture = txt;
             textureScale = new Vector2(1f, 1f);
+            textureScale = Vector2.Transform(textureScale, Camera.Instance.viewportScale);
 
             color = Color.White;
             active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
+            size = Vector2.Transform(size, Camera.Instance.viewportScale);
         }
         
         public UIItem(Vector2 tl, Texture2D txt, System.Func<bool, int> UIItemAction)
         {
             textureScale = new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight);
-            
+            //textureScale = Vector2.Transform(textureScale, Camera.Instance.viewportScale);
+
             texture = txt;
             //position = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
             //position = new Vector2(0f, position.Y - ConstructionMenu.totHeight);
