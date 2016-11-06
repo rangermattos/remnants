@@ -22,6 +22,7 @@ namespace Remnants
         {
             LevelData.Instance.SetLimits(500);
             map = new Map();
+            Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
         }
 
         //level constructer with loadgame

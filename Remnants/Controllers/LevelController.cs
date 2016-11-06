@@ -47,30 +47,10 @@ namespace Remnants
             if (levelOpen)
             {
                 var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                var keyboardState = Keyboard.GetState();
 
                 if (!loading)
                 {
-                    // movement
-                    if (keyboardState.IsKeyDown(Keys.W))
-                        Camera.Instance.cam.Position -= new Vector2(0, 250) * deltaTime;
-
-                    if (keyboardState.IsKeyDown(Keys.S))
-                        Camera.Instance.cam.Position += new Vector2(0, 250) * deltaTime;
-
-                    if (keyboardState.IsKeyDown(Keys.A))
-                        Camera.Instance.cam.Position -= new Vector2(250, 0) * deltaTime;
-
-                    if (keyboardState.IsKeyDown(Keys.D))
-                        Camera.Instance.cam.Position += new Vector2(250, 0) * deltaTime;
-
                     currentLevel.Update(gameTime, Content);
-
-                    if (Camera.Instance.cam.Position.X < 0)
-                        Camera.Instance.cam.Position = new Vector2(0, Camera.Instance.cam.Position.Y);
-
-                    if (Camera.Instance.cam.Position.Y < 0 - (32 * Camera.Instance.viewportScale.Scale.Y))
-                        Camera.Instance.cam.Position = new Vector2(Camera.Instance.cam.Position.X, 0 - (32 * Camera.Instance.viewportScale.Scale.Y));
                 }
                 else
                 {
