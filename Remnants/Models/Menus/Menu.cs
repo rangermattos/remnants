@@ -120,6 +120,7 @@ namespace Remnants
                 {
                     UI.Instance.buildingSelected = s;
                     Console.WriteLine("buildingSelected: " + UI.Instance.buildingSelected);
+					UI.Instance.EnqueueMessage("Building selected: " + UI.Instance.buildingSelected);
                     return s;
                 }
             }

@@ -102,10 +102,15 @@ namespace Remnants
 				}
 				break;
 			case ((int)buildingStates.IDLE):
-				if (LevelData.Instance.checkResources(resourceUsage))
+				elapsedProductionTime += deltaT;
+				if (elapsedProductionTime >= 1f)
 				{
-					Console.Write("Sufficient resources, resuming operation\n");
-					status = (int)buildingStates.OPERATIONAL;
+					if (LevelData.Instance.checkResources(resourceUsage))
+					{
+						Console.Write("Sufficient resources, resuming operation\n");
+						status = (int)buildingStates.OPERATIONAL;
+					}
+					elapsedProductionTime = 0;
 				}
 				break;
 			case ((int)buildingStates.DISABLED):
@@ -140,7 +145,10 @@ namespace Remnants
         public virtual bool Place(Map map)
         {
 			if (!LevelData.Instance.checkResources(resourceCost))
+			{
+				UI.Instance.EnqueueMessage("Cannot construct building");
                 return false;
+			}
             //check that all tiles the building will be on can be built on
             for(int i = 0; i < tilesWide; i++)
             {
@@ -176,7 +184,7 @@ namespace Remnants
 
 		void completeConstruction()
 		{
-			Console.Write("Construtction completed\n");
+			UI.Instance.EnqueueMessage("Construtction completed");
 			for (int i = 0; i < 8; i++)
 			{
 				//add buildings storage capacity to resource limits

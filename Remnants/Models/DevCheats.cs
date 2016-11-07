@@ -31,6 +31,7 @@ namespace Remnants
 		public void giveResource(int resource, int amount)
 		{
 			LevelData.Instance.resourceList[resource] += amount;
+			UI.Instance.EnqueueMessage("DEV CHEAT: Adding " + amount + " to " + LevelData.Instance.resourceNames[resource]);
 		}
 
 		// give the player a specified amount of all resources
@@ -38,8 +39,9 @@ namespace Remnants
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				LevelData.Instance.resourceList[i+1] += amount;
+				LevelData.Instance.resourceList[i] += amount;
 			}
+			UI.Instance.EnqueueMessage("DEV CHEAT: Adding " + amount + " to all resources");
 		}
 
 		public void Update()
@@ -47,7 +49,7 @@ namespace Remnants
 			// use numpad for resource giving
 			for (int i = 0; i < 8; i++)
 			{
-				if (InputManager.Instance.NumPadPressRelease(i))
+				if (InputManager.Instance.NumPadPressRelease(i+1))
 				{
 					giveResource(i,100);
 				}

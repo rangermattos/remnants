@@ -157,7 +157,7 @@ namespace Remnants
 				}
 				else
 				{
-					Console.Write("Insufficient population to support new building\n");
+					UI.Instance.EnqueueMessage("Insufficient population to support new building");
 				}
             }
             if (InputManager.Instance.RightPressRelease())
@@ -185,28 +185,35 @@ namespace Remnants
 					LevelData.Instance.resourceList[(int)resources.WATER] -= popConsumption[(int)resources.WATER];
 
 					// check for population growth
-					if (LevelData.Instance.canPopGrow() && LevelData.Instance.checkResources(populationGrowthCost))
+					if (LevelData.Instance.canPopGrow())
 					{
-						lastPopulationGrowth += elapsedConsumptionTime;
-						Console.Write("lastPopulationGrowth: " + lastPopulationGrowth + "\n");
-						double prob = 1 - Math.Pow(Math.E,-(lastPopulationGrowth/meanGrowthTime)); // exponential distribution
-						if (r.NextDouble() < prob)
+						if (LevelData.Instance.checkResources(populationGrowthCost))
 						{
-							// population grows
-							Console.Write("Population grows! Took " + lastPopulationGrowth + " seconds\n");
-							LevelData.Instance.resourceList[(int)resources.POP] += 1;
-							LevelData.Instance.resourceList[(int)resources.FOOD] -= populationGrowthCost[(int)resources.FOOD];
-							LevelData.Instance.resourceList[(int)resources.WATER] -= populationGrowthCost[(int)resources.WATER];
-							lastPopulationGrowth = 0f;
+							lastPopulationGrowth += elapsedConsumptionTime;
+							Console.Write("lastPopulationGrowth: " + lastPopulationGrowth + "\n");
+							double prob = 1 - Math.Pow(Math.E,-(lastPopulationGrowth/meanGrowthTime)); // exponential distribution
+							if (r.NextDouble() < prob)
+							{
+								// population grows
+								UI.Instance.EnqueueMessage("Population grows!");
+								LevelData.Instance.resourceList[(int)resources.POP] += 1;
+								LevelData.Instance.resourceList[(int)resources.FOOD] -= populationGrowthCost[(int)resources.FOOD];
+								LevelData.Instance.resourceList[(int)resources.WATER] -= populationGrowthCost[(int)resources.WATER];
+								lastPopulationGrowth = 0f;
+							}
+						}
+						else
+						{
+							UI.Instance.EnqueueMessage("Population cannot grow");
 						}
 					}
 				}
 				else
 				{
-					Console.Write("Not enough food or water!\n");
+					UI.Instance.EnqueueMessage("Not enough food or water! Citizens may starve!");
 					if (r.NextDouble() < 0.33)
 					{
-						Console.Write("A citizen has died!\n");
+						UI.Instance.EnqueueMessage("A citizen has died!");
 						LevelData.Instance.resourceList[(int)resources.POP] -= 1;
 					}
 				}

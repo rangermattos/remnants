@@ -54,6 +54,9 @@ namespace Remnants
             //Vector2 temp = new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2));
             textureScale = Vector2.Transform(new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight), Camera.Instance.viewportScale);
             AddItem(topLeft, temp, textureScale, Content.Load<Texture2D>("grayDot"), false);
+
+			// Message Queue
+			UIItemList.Add(new MessageQueue(new Vector2(128, 128), new Vector2(128, 128), Vector2.Zero, Content.Load<Texture2D>("grayDot"), 5f));
             
             SetItemPositions(viewport, LevelData.Instance.resourceList);
         }
@@ -93,7 +96,11 @@ namespace Remnants
                         i.Update(LevelData.Instance.resourceList[j], LevelData.Instance.resourceLimits[j]);
                         j++;
                     }
-                    else
+					else if (k == 11) // message queue
+					{
+						i.Update(gameTime);
+					}
+					else
                     {
                         i.Update();
                     }
@@ -229,5 +236,10 @@ namespace Remnants
             MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
             buildingSelected = "";
         }
+
+		public void EnqueueMessage(string msg)
+		{
+			((MessageQueue)UIItemList[11]).addMessage(msg);
+		}
     }
 }

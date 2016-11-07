@@ -149,6 +149,11 @@ namespace Remnants
             }
         }
 
+		public virtual void Update(GameTime gameTime)
+		{
+			
+		}
+
         public void Update()
         {
             //string s = "";
@@ -184,7 +189,7 @@ namespace Remnants
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (active)
             {
