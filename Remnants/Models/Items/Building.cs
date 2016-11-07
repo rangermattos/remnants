@@ -22,7 +22,6 @@ namespace Remnants
         public float elapsedProductionTime = 0f;
         public int status;
 		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
-        public Vector2 Position { get; set; }
         ProgressBar progressBar;
         protected bool animated = false;
         protected Animation animation;
@@ -48,7 +47,7 @@ namespace Remnants
 
         public virtual void LoadContent(ContentManager Content)
         {
-			var p = new Vector2(Position.X + tilesWide * 32, Position.Y);
+			var p = new Vector2(position.X + tilesWide * 32, position.Y);
 			progressBar = new ProgressBar(Content, p, p);
             progressBar.position = new Vector2(progressBar.position.X - progressBar.container.Width / 2, progressBar.position.Y);
         }
@@ -129,11 +128,11 @@ namespace Remnants
         {
 			if (animated)
 			{
-				animation.Draw(spriteBatch, Position, mask * alpha);
+				animation.Draw(spriteBatch, position, mask * alpha);
 			}
 			else
 			{
-            	spriteBatch.Draw(texture, Position, mask * alpha);
+            	spriteBatch.Draw(texture, position, mask * alpha);
 			}
 
 			if (progressBar.progress != 1.0f)
@@ -155,11 +154,11 @@ namespace Remnants
             {
                 for(int j = 0; j < tilesHigh; j++)
                 {
-                    if(map.GetTile(Position + new Vector2(i * 64, j * 64)) == null)
+                    if(map.GetTile(position + new Vector2(i * 64, j * 64)) == null)
                     {
                         return false;
                     }
-                    if (!map.GetTile(Position + new Vector2(i * 64, j * 64)).canBuild)
+                    if (!map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild)
                     {
                         return false;
                     }
@@ -171,7 +170,7 @@ namespace Remnants
             {
                 for (int j = 0; j < tilesHigh; j++)
                 {
-                    map.GetTile(Position + new Vector2(i * 64, j * 64)).canBuild = false;
+                    map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild = false;
                 }
             }
             for (int i = 0; i < 8; i++)

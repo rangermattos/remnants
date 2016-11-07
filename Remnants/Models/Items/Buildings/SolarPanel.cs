@@ -10,7 +10,7 @@ namespace Remnants
         {
             tilesWide = 2;
             tilesHigh = 1;
-            Position = pos;
+            position = pos;
             //Position = Vector2.Zero;
             buildTime = 10f;
 			resourceGain[(int)resources.ENERGY] = 10;

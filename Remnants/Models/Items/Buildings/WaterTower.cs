@@ -11,7 +11,7 @@ namespace Remnants
         {
 			tilesWide = 1;
 			tilesHigh = 2;
-			Position = pos;
+			position = pos;
 			buildTime = 10f;
             //metalCost = 100;
             //energyCost = 100;

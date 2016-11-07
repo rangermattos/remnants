@@ -31,7 +31,7 @@ namespace Remnants
         public struct buildingData
         {
             public string type;
-            public Vector2 Position;
+            public Vector2 position;
             public int status;
             public float buildTime;
             public float elapsedProductionTime;
@@ -40,7 +40,7 @@ namespace Remnants
             public buildingData(Building b)
             {
                 type = b.GetType().Name;
-                this.Position = b.Position;
+                this.position = b.position;
                 this.status = b.status;
                 this.buildTime = b.buildTime;
                 this.elapsedProductionTime = b.elapsedProductionTime;

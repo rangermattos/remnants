@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace Remnants.Models
 {
@@ -19,8 +23,10 @@ namespace Remnants.Models
         public float defenseStrength;
         // The ID used for registry, note that building and unit registries will overlap
         public int ID;
-        // unuqie name for unit / building, however may be containted in both unit and building registry
-        public String name;
+        // unique name for unit / building, however may be contained in both unit and building registry
+		public String name;
+		// the entity's position in the world
+		public Vector2 position { get; set; }
         //used to set up the unit / buildings stats
         public virtual void Init()
         {

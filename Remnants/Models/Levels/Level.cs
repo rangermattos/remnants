@@ -54,7 +54,7 @@ namespace Remnants
             po[0] = Content;
             foreach (LevelData.buildingData b in LevelData.Instance.buildingList)
             {
-                po[1] = b.Position;
+                po[1] = b.position;
                 Building tempBuilding;
                 try
                 {

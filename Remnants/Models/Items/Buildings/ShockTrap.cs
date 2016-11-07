@@ -22,7 +22,7 @@ namespace Remnants
         {
             tilesWide = 1;
             tilesHigh = 1;
-            Position = pos;
+            position = pos;
             buildTime = 10f;
 			resourceUsage[(int)resources.ENERGY] = 10;
             //metalCost = 100;
@@ -31,7 +31,7 @@ namespace Remnants
 			resourceCost[(int)resources.METAL] = 100;
             LoadContent(Content);
             range = new Circle();
-            range.Center = Position + new Vector2(texture.Width / 2, texture.Height / 2);
+            range.Center = position + new Vector2(texture.Width / 2, texture.Height / 2);
             range.Radius = 350f;
             //lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), Position + new Vector2(200, 200), Color.LightCyan);
         }
@@ -57,7 +57,7 @@ namespace Remnants
                 {
                     if (lb == null)
                     {
-                        lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), point, Color.LightCyan);
+                        lb = new LightningBolt(position + new Vector2(texture.Width / 2, texture.Height / 2), point, Color.LightCyan);
                     }
                 }
                 if (lb != null)

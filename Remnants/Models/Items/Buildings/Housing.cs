@@ -11,7 +11,7 @@ namespace Remnants
         {
 			tilesWide = 1;
 			tilesHigh = 1;
-			Position = pos;
+			position = pos;
 			buildTime = 10f;
             //woodCost = 100;
             //energyCost = 100;
@@ -56,7 +56,7 @@ namespace Remnants
 		{
 			tilesWide = 2;
 			tilesHigh = 1;
-			Position = pos;
+			position = pos;
 			buildTime = 10f;
             //metalCost = 100;
             //energyCost = 200;
@@ -99,7 +99,7 @@ namespace Remnants
 		{
 			tilesWide = 2;
 			tilesHigh = 1;
-			Position = pos;
+			position = pos;
 			buildTime = 10f;
             //metalCost = 200;
             //energyCost = 400;

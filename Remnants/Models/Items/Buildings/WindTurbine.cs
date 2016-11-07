@@ -11,7 +11,7 @@ namespace Remnants
 			tilesWide = 2;
 			tilesHigh = 2;
 			pos.Y -= (tilesHigh-1) * 64;
-			Position = pos;
+			position = pos;
 			buildTime = 10f;
             //metalCost = 100;
             //energyCost = 100;
