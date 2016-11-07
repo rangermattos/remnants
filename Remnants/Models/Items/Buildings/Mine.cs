@@ -44,6 +44,28 @@ namespace Remnants
 
 		public override bool Place(Map map)
 		{
+			// must be built on at least 1 ore tile
+			// check that all tiles the building will be on can be built on
+			bool hasOre = false;
+			for(int i = 0; i < tilesWide; i++)
+			{
+				for(int j = 0; j < tilesHigh; j++)
+				{
+					if(map.GetTile(position + new Vector2(i * 64, j * 64)) == null)
+					{
+						return false;
+					}
+					if (map.GetTile(position + new Vector2(i * 64, j * 64)) is Ore)
+					{
+						hasOre = true;
+					}
+				}
+			}
+			if (!hasOre)
+			{
+				UI.Instance.EnqueueMessage("Mine must be built on at least 1 ore tile");
+				return false;
+			}
 			return base.Place(map);
 		}
 	}
