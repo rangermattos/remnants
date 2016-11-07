@@ -26,6 +26,7 @@ namespace Remnants
         ProgressBar progressBar;
         protected bool animated = false;
         protected Animation animation;
+		public Color mask = Color.White;
 
         public Building()
         {
@@ -91,7 +92,7 @@ namespace Remnants
 					}
 					else
 					{
-						status = (int)buildingStates.IDLE;
+						idle();
 					}
 					elapsedProductionTime = 0;
 				}
@@ -108,7 +109,7 @@ namespace Remnants
 					if (LevelData.Instance.checkResources(resourceUsage))
 					{
 						Console.Write("Sufficient resources, resuming operation\n");
-						status = (int)buildingStates.OPERATIONAL;
+						enable();
 					}
 					elapsedProductionTime = 0;
 				}
@@ -128,11 +129,11 @@ namespace Remnants
         {
 			if (animated)
 			{
-				animation.Draw(spriteBatch, Position, Color.White * alpha);
+				animation.Draw(spriteBatch, Position, mask * alpha);
 			}
 			else
 			{
-            	spriteBatch.Draw(texture, Position, Color.White * alpha);
+            	spriteBatch.Draw(texture, Position, mask * alpha);
 			}
 
 			if (progressBar.progress != 1.0f)
@@ -191,6 +192,29 @@ namespace Remnants
 				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
 			}
 			status = (int)buildingStates.OPERATIONAL;
+		}
+
+		public void enable()
+		{
+			mask = Color.White;
+			status = (int)buildingStates.OPERATIONAL;
+		}
+
+		public void disable()
+		{
+			mask = Color.Red;
+			status = (int)buildingStates.DISABLED;
+		}
+
+		public void idle()
+		{
+			mask = Color.Orange;
+			status = (int)buildingStates.IDLE;
+		}
+
+		public bool isDisabled()
+		{
+			return status == (int)buildingStates.DISABLED;
 		}
     }
 }
