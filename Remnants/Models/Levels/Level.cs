@@ -90,7 +90,9 @@ namespace Remnants
 
             CheckBuilding(p, Content);
 
-			updatePopulation(gameTime);
+			UpdatePopulation(gameTime);
+
+			EnableOrDisableBuilding(p);
 
             //SetResources();
         }
@@ -169,7 +171,7 @@ namespace Remnants
             }
         }
 
-		public void updatePopulation(GameTime gameTime)
+		public void UpdatePopulation(GameTime gameTime)
 		{
 			var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			elapsedConsumptionTime += deltaT;
@@ -218,6 +220,32 @@ namespace Remnants
 					}
 				}
 				elapsedConsumptionTime = 0f;
+			}
+		}
+
+		public void EnableOrDisableBuilding(Vector2 p)
+		{
+			// if no building selected and m1 pressed
+			if (UI.Instance.buildingSelected == "" && InputManager.Instance.LeftPressRelease())
+			{
+				// check each building to see if p is in that building's bounds
+				foreach (Building building in buildings)
+				{
+					if (building.position.X < p.X && p.X < building.position.X + building.tilesWide*64)
+					{
+						if (building.position.Y < p.Y && p.Y < building.position.Y + building.tilesHigh*64)
+						{
+							if (building.isDisabled())
+							{
+								building.enable();
+							}
+							else
+							{
+								building.disable();
+							}
+						}
+					}
+				}
 			}
 		}
 

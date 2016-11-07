@@ -195,20 +195,37 @@ namespace Remnants
 
 		public void enable()
 		{
+			if (isConstructing())
+			{
+				return;
+			}
 			mask = Color.White;
 			status = (int)buildingStates.OPERATIONAL;
 		}
 
 		public void disable()
 		{
+			if (isConstructing())
+			{
+				return;
+			}
 			mask = Color.Red;
 			status = (int)buildingStates.DISABLED;
 		}
 
 		public void idle()
 		{
+			if (isConstructing())
+			{
+				return;
+			}
 			mask = Color.Orange;
 			status = (int)buildingStates.IDLE;
+		}
+
+		public bool isConstructing()
+		{
+			return status == (int)buildingStates.CONSTRUCTING;
 		}
 
 		public bool isDisabled()
