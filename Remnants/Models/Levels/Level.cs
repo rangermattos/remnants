@@ -22,6 +22,7 @@ namespace Remnants
 		float meanGrowthTime = 10f;
 		int[] populationGrowthCost = new int[8] { 20, 20, 0, 0, 0, 0, 0, 0 };
 		float elapsedConsumptionTime = 0f;
+        public bool paused = false;
 
         public Level()
         {
@@ -81,19 +82,24 @@ namespace Remnants
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
-
+            if (InputManager.Instance.SpacePressRelease())
+            {
+                paused = !paused;
+            }
             LevelData.Instance.Update();
             UI.Instance.Update(gameTime);
 
             Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
-            
-            UpdateBuildings(gameTime, p);
 
             CheckBuilding(p, Content);
 
-			UpdatePopulation(gameTime);
+            EnableOrDisableBuilding(p);
+            if (!paused)
+            {
+                UpdateBuildings(gameTime, p);
 
-			EnableOrDisableBuilding(p);
+                UpdatePopulation(gameTime);
+            }
 
 			//SetResources();
 

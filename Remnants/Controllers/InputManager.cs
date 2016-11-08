@@ -58,7 +58,12 @@ namespace Remnants
             return (KeyState.IsKeyUp(Keys.Escape) && LastKeyState.IsKeyDown(Keys.Escape));
         }
 
-		public bool NumPadPressRelease(int n)
+        public bool SpacePressRelease()
+        {
+            return (KeyState.IsKeyUp(Keys.Space) && LastKeyState.IsKeyDown(Keys.Space));
+        }
+
+        public bool NumPadPressRelease(int n)
 		{
 			switch (n)
 			{
