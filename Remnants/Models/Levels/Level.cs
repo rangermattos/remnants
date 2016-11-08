@@ -179,8 +179,8 @@ namespace Remnants
 			if (elapsedConsumptionTime >= 1f)
 			{
 				int[] popConsumption = new int[8];
-				popConsumption[(int)resources.FOOD] = (int)(LevelData.Instance.resourceList[(int)resources.POP] * 0.5);
-				popConsumption[(int)resources.WATER] = (int)(LevelData.Instance.resourceList[(int)resources.POP] * 0.5);
+				popConsumption[(int)resources.FOOD] = (int)Math.Ceiling(LevelData.Instance.resourceList[(int)resources.POP] * 0.5);
+				popConsumption[(int)resources.WATER] = (int)Math.Ceiling(LevelData.Instance.resourceList[(int)resources.POP] * 0.5);
 				if (LevelData.Instance.checkResources(popConsumption))
 				{
 					// consume food and water
