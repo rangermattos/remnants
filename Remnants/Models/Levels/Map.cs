@@ -107,11 +107,11 @@ namespace Remnants
                 for(int j = 0; j < yTiles; j++)
                 {
                     int ind = r.Next(100);
-					if (ind < 5)
+					if (ind < 3)
 						tiles[i][j] = new Ore(Content);
-                    else if (ind < 80)
+                    else if (ind < 90)
 						tiles[i][j] = new Grass(Content);
-                    else if (ind >= 80)
+                    else if (ind >= 90)
                         tiles[i][j] = new Water(Content);
                     tiles[i][j].Position = new Vector2((64f * i), (64f * j));
                     LevelData.Instance.tileList.Add(new LevelData.tileData(i, j, tiles[i][j]));
