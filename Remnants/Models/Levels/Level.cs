@@ -82,7 +82,8 @@ namespace Remnants
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
-            if (InputManager.Instance.SpacePressRelease())
+            //if (InputManager.Instance.SpacePressRelease())
+            if (InputManager.Instance.PressRelease(Keys.Space))
             {
                 paused = !paused;
             }

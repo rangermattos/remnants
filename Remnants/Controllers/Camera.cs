@@ -61,6 +61,12 @@ namespace Remnants
 
                 if (keyboardState.IsKeyDown(Keys.D))
                     cam.Position += new Vector2(250, 0) * deltaTime;
+
+                if (InputManager.Instance.PressRelease(Keys.OemPlus))
+                    cam.ZoomIn(0.1f);
+
+                if (InputManager.Instance.PressRelease(Keys.OemMinus))
+                    cam.ZoomOut(0.1f);
             }
             //cam.Position = Vector2.Transform(cam.Position, cam.GetViewMatrix());
             /*/
