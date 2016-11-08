@@ -49,7 +49,7 @@ namespace Remnants
                 LoadBuildings(Content);
             }
             UI.Create(Content);
-            UI.Instance.isActive = true;
+            //UI.Instance.isActive = true;
         }
 
         void LoadBuildings(ContentManager Content)
