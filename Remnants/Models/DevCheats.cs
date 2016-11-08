@@ -46,18 +46,21 @@ namespace Remnants
 
 		public void Update()
 		{
-			// use numpad for resource giving
-			for (int i = 0; i < 8; i++)
-			{
-				if (InputManager.Instance.NumPadPressRelease(i+1))
-				{
-					giveResource(i,100);
-				}
-			}
-			if (InputManager.Instance.NumPadPressRelease(0))
-			{
-				giveResources(100);
-			}
+            if (LevelController.Instance.levelOpen)
+            {
+                // use numpad for resource giving
+                for (int i = 0; i < 8; i++)
+                {
+                    if (InputManager.Instance.NumPadPressRelease(i + 1))
+                    {
+                        giveResource(i, 100);
+                    }
+                }
+                if (InputManager.Instance.NumPadPressRelease(0))
+                {
+                    giveResources(100);
+                }
+            }
 		}
 	}
 }

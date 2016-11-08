@@ -25,6 +25,7 @@ namespace Remnants
 
         public Level()
         {
+            LevelData.Instance.InitValues();
             LevelData.Instance.SetLimits(500);
 			LevelData.Instance.resourceLimits[(int)resources.POP] = 10;
             map = new Map();
@@ -47,6 +48,8 @@ namespace Remnants
             {
                 LoadBuildings(Content);
             }
+            UI.Create(Content);
+            UI.Instance.isActive = true;
         }
 
         void LoadBuildings(ContentManager Content)
@@ -289,11 +292,16 @@ namespace Remnants
             XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
 
             LevelData data = (LevelData)serializer.Deserialize(stream);
+            for (int i = 0; i < 8; i++)
+            {
+                Console.WriteLine(data.resourceList[i].ToString());
+                Console.WriteLine(data.resourceLimits[i].ToString());
+            }
             // Close the file.
             stream.Close();
             // Dispose the container.
             container.Dispose();
-            LevelData.Instance.SetLevelData(data);
+            LevelData.SetLevelData(data);
         }
 
         public void SaveGame()
@@ -302,6 +310,13 @@ namespace Remnants
             {
                 LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
+
+            for (int i = 0; i < 8; i++)
+            {
+                Console.WriteLine(LevelData.Instance.resourceList[i].ToString());
+                Console.WriteLine(LevelData.Instance.resourceLimits[i].ToString());
+            }
+
             device = getStorageDevice();
 
             // Open a storage container.

@@ -20,6 +20,7 @@ namespace Remnants
         private static LevelController instance;
         private LevelController()
         {
+            levelOpen = false;
             font = MenuController.Instance.font;
         }
         public static LevelController Instance
@@ -101,7 +102,6 @@ namespace Remnants
             currentLevel.LoadContent(Content);
             levelOpen = true;
             //loading = true;
-            UI.Instance.isActive = true;
         }
 
         public void LoadLevel(ContentManager Content, string filename)
@@ -116,7 +116,6 @@ namespace Remnants
             currentLevel.LoadContent(Content);
             levelOpen = true;
             //loading = true;
-            UI.Instance.isActive = true;
         }
     }
 }

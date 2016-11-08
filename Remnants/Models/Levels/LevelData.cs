@@ -74,32 +74,6 @@ namespace Remnants
         {
             resourceList = new List<int>();
             resourceLimits = new List<int>();
-            food = 10000;
-            water = 10000;
-			energy = 10000;
-			nuclear = 10000;
-            antimatter = 10000;
-            wood = 10000;
-            metal = 10000;
-            pop = 10000;
-
-            resourceList.Add(food);
-            resourceList.Add(water);
-			resourceList.Add(energy);
-			resourceList.Add(nuclear);
-            resourceList.Add(antimatter);
-            resourceList.Add(wood);
-            resourceList.Add(metal);
-            resourceList.Add(pop);
-
-            resourceLimits.Add(food);
-            resourceLimits.Add(water);
-			resourceLimits.Add(energy);
-			resourceLimits.Add(nuclear);
-            resourceLimits.Add(antimatter);
-            resourceLimits.Add(wood);
-            resourceLimits.Add(metal);
-            resourceLimits.Add(pop);
         }
 
         public static LevelData Instance
@@ -113,9 +87,60 @@ namespace Remnants
             }
         }
 
-        public void SetLevelData(LevelData d)
+        public static void SetLevelData(LevelData d)
         {
             instance = d;
+        }
+
+        public void InitValues()
+        {
+            food = 10000;
+            water = 10000;
+            energy = 10000;
+            nuclear = 10000;
+            antimatter = 10000;
+            wood = 10000;
+            metal = 10000;
+            pop = 10000;
+
+            resourceList.Add(food);
+            resourceList.Add(water);
+            resourceList.Add(energy);
+            resourceList.Add(nuclear);
+            resourceList.Add(antimatter);
+            resourceList.Add(wood);
+            resourceList.Add(metal);
+            resourceList.Add(pop);
+
+            resourceLimits.Add(food);
+            resourceLimits.Add(water);
+            resourceLimits.Add(energy);
+            resourceLimits.Add(nuclear);
+            resourceLimits.Add(antimatter);
+            resourceLimits.Add(wood);
+            resourceLimits.Add(metal);
+            resourceLimits.Add(pop);
+        }
+
+        public void InitValues(List<int> r, List<int> lim)
+        {
+            resourceList.Add(food);
+            resourceList.Add(water);
+            resourceList.Add(energy);
+            resourceList.Add(nuclear);
+            resourceList.Add(antimatter);
+            resourceList.Add(wood);
+            resourceList.Add(metal);
+            resourceList.Add(pop);
+
+            resourceLimits.Add(food);
+            resourceLimits.Add(water);
+            resourceLimits.Add(energy);
+            resourceLimits.Add(nuclear);
+            resourceLimits.Add(antimatter);
+            resourceLimits.Add(wood);
+            resourceLimits.Add(metal);
+            resourceLimits.Add(pop);
         }
 
         public void Update()
@@ -131,16 +156,14 @@ namespace Remnants
 					resourceList[i] = 0;
 				}
             }
-            /*/
-            resourceList[0] = food;
-            resourceList[1] = water;
-            resourceList[2] = energy;
-            resourceList[3] = antimatter;
-            resourceList[4] = nuclear;
-            resourceList[5] = wood;
-            resourceList[6] = metal;
-            resourceList[7] = pop;
-            /*/
+            food = resourceList[0];
+            water = resourceList[1];
+            energy = resourceList[2];
+            antimatter = resourceList[3];
+            nuclear = resourceList[4];
+            wood = resourceList[5];
+            metal = resourceList[6];
+            pop = resourceList[7];
         }
 
         public void SetLimits(int value)

@@ -66,28 +66,34 @@ namespace Remnants
 
         public string Update()
         {
-            if (InputManager.Instance.EscPressRelease())
-            {
-                if (ConstructionMenu.Instance.isActive)
+            if (LevelController.Instance.levelOpen) {
+                if (InputManager.Instance.EscPressRelease())
                 {
-                    UI.Instance.UIItemList[10].active = false;
-                    UI.Instance.buildingSelected = "";
-                    UnloadContent(ConstructionMenu.Instance);
-                    return "";
+                    if (ConstructionMenu.Instance.isActive)
+                    {
+                        UI.Instance.UIItemList[10].active = false;
+                        UI.Instance.buildingSelected = "";
+                        UnloadContent(ConstructionMenu.Instance);
+                        return "";
+                    }
+                    if (!MainMenu.Instance.isActive && !ConstructionMenu.Instance.isActive)
+                    {
+                        UI.Instance.isActive = false;
+                        SetMenu(MainMenu.Instance);
+                        return "";
+                    }
+                    if (MainMenu.Instance.isActive && LevelController.Instance.levelOpen)
+                    {
+                        UnloadContent(MainMenu.Instance);
+                        UI.Instance.isActive = true;
+                        return "";
+                    }
+                    else
+                    {
+                        game.Quit();
+                    }
                 }
-                if (!MainMenu.Instance.isActive && !ConstructionMenu.Instance.isActive)
-                {
-                    UI.Instance.isActive = false;
-                    SetMenu(MainMenu.Instance);
-                    return "";
-                }
-                if (MainMenu.Instance.isActive && LevelController.Instance.levelOpen)
-                {
-                    UnloadContent(MainMenu.Instance);
-                    UI.Instance.isActive = true;
-                    return "";
-                }
-                else
+                else if(InputManager.Instance.EscPressRelease())
                 {
                     game.Quit();
                 }

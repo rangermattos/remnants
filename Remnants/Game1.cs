@@ -58,8 +58,7 @@ namespace Remnants
             AudioController.Instance.Play();
             MenuController.Create(font, Content, this);
             MenuController.Instance.SetMenu(MainMenu.Instance);
-            UI.Create(Content);
-            LevelController.Instance.levelOpen = false;
+            //UI.Create(Content);
         }
 
         protected override void UnloadContent()
