@@ -107,7 +107,7 @@ namespace Remnants
                 for(int j = 0; j < yTiles; j++)
                 {
                     int ind = r.Next(100);
-					if (ind < 20)
+					if (ind < 5)
 						tiles[i][j] = new Ore(Content);
                     else if (ind < 80)
 						tiles[i][j] = new Grass(Content);
