@@ -66,10 +66,7 @@ namespace Remnants
                 {
                     throw;
                 }
-                if (tempBuilding.Place(map))
-                {
-                    buildings.Add(tempBuilding);
-                }
+                buildings.Add(tempBuilding);
             }
         }
 

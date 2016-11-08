@@ -59,9 +59,8 @@ namespace Remnants
 
         public List<buildingData> buildingList = new List<buildingData>();
         public List<tileData> tileList = new List<tileData>();
-        public List<int> resourceList = new List<int>();
-        public List<int> resourceLimits = new List<int>();
-		public string[] resourceNames = new string[8] { "food", "water", "energy", "nuclear fuel", "antimatter", "wood", "metal", "population"};
+        public List<int> resourceList;
+        public List<int> resourceLimits;
 
 		public int POP_PER_BUILDING = 2;
 
@@ -69,9 +68,12 @@ namespace Remnants
         
         [NonSerialized]
         private static LevelData instance;
+        public string[] resourceNames = new string[8] { "food", "water", "energy", "nuclear fuel", "antimatter", "wood", "metal", "population" };
 
         private LevelData()
         {
+            resourceList = new List<int>();
+            resourceLimits = new List<int>();
             food = 10000;
             water = 10000;
 			energy = 10000;
