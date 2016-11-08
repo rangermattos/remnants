@@ -80,6 +80,7 @@
     <Compile Include="Controllers\ScalingViewportAdapter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Controllers\Camera.cs" />
+    <Compile Include="Models\DevCheats.cs" />
     <Compile Include="Models\Effects\LightningBolt.cs" />
     <Compile Include="Models\Effects\Line.cs" />
     <Compile Include="Models\Items\BuildingRegistry.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Models\Items\Buildings\WaterTower.cs" />
     <Compile Include="Models\Items\Buildings\WindTurbine.cs" />
     <Compile Include="Models\Items\MenuItem.cs" />
+    <Compile Include="Models\Items\MessageQueue.cs" />
     <Compile Include="Models\Items\ProgressBar.cs" />
     <Compile Include="Models\Items\Tile.cs" />
     <Compile Include="Models\Items\Tiles\Grass.cs" />

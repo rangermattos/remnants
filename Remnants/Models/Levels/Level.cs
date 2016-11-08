@@ -36,6 +36,7 @@ namespace Remnants
         {
             LoadGame(filename);
             map = new Map(LevelData.Instance.mapSize);
+            Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
         }
 
         public void LoadContent(ContentManager Content)

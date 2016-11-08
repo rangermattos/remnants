@@ -116,6 +116,7 @@ namespace Remnants
             currentLevel.LoadContent(Content);
             levelOpen = true;
             //loading = true;
+            UI.Instance.isActive = true;
         }
     }
 }
