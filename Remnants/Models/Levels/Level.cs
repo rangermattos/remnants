@@ -95,7 +95,8 @@ namespace Remnants
 
 			EnableOrDisableBuilding(p);
 
-            //SetResources();
+			//SetResources();
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
