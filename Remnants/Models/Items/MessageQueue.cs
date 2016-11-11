@@ -7,7 +7,9 @@ namespace Remnants
 	class MessageQueue : UIItem
 	{
 		List<Message> messages;
-        Mission mission;
+        List<Mission> missions;
+        int currentMission;
+        bool missionActive;
 		float msgDuration;
 		float width, height;
         float MissionScale = 0.4f;
@@ -17,8 +19,14 @@ namespace Remnants
 			this.msgDuration = msgDuration;
 			messages = new List<Message>();
 			scale = 0.3f;
-            mission = new Mission("Current Mission: Create a Solar Panel or Wind Turbine");
-		}
+            missions = new List<Mission>();
+            missions.Add(new Mission("You need to generate energy before your battery stores run out." + "\n                            " + "Construct a Solar Panel or Wind Turbine", new string[2] { "SolarPanel", "WindTurbine"}, 2));
+            missions.Add(new Mission("You still have no source of food." + "\n                            " + "Construct a Greenhouse", new string[1] { "Greenhouse" }, 1));
+            missions.Add(new Mission("You still have no way to create clean water" + "\n                            " + "Construct a Water Purification plant", new string[1] { "WaterPurification" }, 1));
+            missions.Add(new Mission("You're running low on building materials!" + "\n                            " + "Construct a Mine to collect metal", new string[1] { "Mine" }, 1));
+            currentMission = 0;
+            missionActive = true;
+        }
 
 		public void addMessage(string msg)
 		{
@@ -27,7 +35,18 @@ namespace Remnants
 
 		public override void Update(GameTime gameTime)
 		{
-            mission.isCompleted();
+            if (missionActive)
+            {
+                if (missions[currentMission].isCompleted() && currentMission >= missions.Count - 1)
+                {
+                    UI.Instance.EnqueueMessage("You've Completed all available missions! Well Done!");
+                    missionActive = false;
+                }
+                if (missions[currentMission].isCompleted() && currentMission < missions.Count - 1)
+                {
+                    currentMission++;
+                }
+            }
             /*
             if (mission.isCompleted()){
                 mission = null;
@@ -63,9 +82,12 @@ namespace Remnants
             //var center = new Vector2(topLeft.X + (width / 2), topLeft.Y + (height / 2));
 
             //this is extremely innefficient way to draw mission
-            Vector2 v = new Vector2(topLeft.X, topLeft.Y - (MenuController.Instance.font.MeasureString(mission.msg)).Y * MissionScale);
-            v = Vector2.Transform(v, Camera.Instance.viewportScale);
-            mission.Draw(spriteBatch, v, MissionScale);
+            if (missionActive)
+            {
+                Vector2 v = new Vector2(topLeft.X, topLeft.Y - (MenuController.Instance.font.MeasureString(missions[currentMission].msg)).Y * MissionScale);
+                v = Vector2.Transform(v, Camera.Instance.viewportScale);
+                missions[currentMission].Draw(spriteBatch, v, MissionScale);
+            }
 
 			float avgHeight = height / messages.Count;
 			for (int i = 0; i < messages.Count; i++)
@@ -109,11 +131,15 @@ namespace Remnants
     //for mission objectives to guide the player
     class Mission
     {
-        public string msg;
+        public string msg = "Current Mission: ";
+        string [] buildingTypes;
+        int count;
 
-        public Mission(string msg)
+        public Mission(string msg, string [] buildingTypes, int count)
         {
-            this.msg = msg;
+            this.msg += msg;
+            this.buildingTypes = buildingTypes;
+            this.count = count;
         }
 
         public void Update(GameTime gameTime)
@@ -125,10 +151,14 @@ namespace Remnants
         {
             foreach(LevelData.buildingData b in LevelData.Instance.buildingList)
             {
-                if(b.type == "SolarPanel" || b.type == "WindTrubine")
+                for(int i = 0; i < count; i++)
                 {
-                    msg = "Current Mission:";
-                    return true;
+                    if (b.type == buildingTypes[i])
+                    {
+                        msg = "Current Mission: COMPLETED";
+                        UI.Instance.EnqueueMessage("Mission Completed! Setting new Mission");
+                        return true;
+                    }
                 }
             }
             return false;
