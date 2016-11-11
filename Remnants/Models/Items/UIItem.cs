@@ -13,10 +13,14 @@ namespace Remnants
         public Vector2 topLeft { get; set; }
         public Vector2 position { get; set; }
         public Vector2 valuePosition { get; set; }
+        public Vector2 valueLimitPosition { get; set; }
         Vector2 textureScale;
         public int value { get; set; }
+        public int valueLimit { get; set; }
         string readOut;
+        string vlReadOut;
         SpriteFont font;
+        Color valueColor;
         Color color;
         public float alpha { get; set; }
         public float scale { get; set; }
@@ -81,10 +85,12 @@ namespace Remnants
         {
             this.scale = scale;
             value = v;
+            valueLimit = vl;
             font = MenuController.Instance.font;
             readOut = v.ToString() + " / " + vl.ToString();
             size = font.MeasureString(readOut) * scale;
             valuePosition = new Vector2(0, (32 - size.Y) / 2);
+            valueLimitPosition = new Vector2((valuePosition.X + (font.MeasureString(v.ToString())).X) * scale, valuePosition.Y);
 
             position = incposition;
             topLeft = tl;
@@ -111,6 +117,7 @@ namespace Remnants
             //float y = ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2);
             //position = new Vector2(0, y);
             color = Color.White;
+            valueColor = Color.White;
 
             Action2 = UIItemAction;
             active = false;
@@ -121,7 +128,21 @@ namespace Remnants
 
         public void Update(int v, int vl)
         {
-            readOut = v.ToString() + " / " + vl.ToString();
+            value = v;
+            valueLimit = vl;
+
+            readOut = v.ToString();
+            vlReadOut = " / " + vl.ToString();
+            valueLimitPosition = new Vector2(valuePosition.X + (font.MeasureString(readOut)).X * scale, valuePosition.Y);
+
+            if(value < valueLimit / 5)
+            {
+                valueColor = Color.Red;
+            }
+            else
+            {
+                valueColor = Color.White;
+            }
             /*/
             this.MousePosition = InputManager.Instance.MousePosition;
             this.MouseState = InputManager.Instance.MouseState;
@@ -196,7 +217,10 @@ namespace Remnants
                 spriteBatch.Draw(texture, position, null, color, 0f, Vector2.Zero, textureScale, SpriteEffects.None, 0f);
                 if (font != null)
                 {
-                    spriteBatch.DrawString(font, readOut, valuePosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+                    if(readOut != null)
+                        spriteBatch.DrawString(font, readOut, valuePosition, valueColor, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+                    if(vlReadOut != null)
+                        spriteBatch.DrawString(font, vlReadOut, valueLimitPosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
                 }
             }
             /*
