@@ -1,22 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System;
 
 namespace Remnants
 {
 	class MessageQueue : UIItem
 	{
 		List<Message> messages;
+        Mission mission;
 		float msgDuration;
 		float width, height;
+        float MissionScale = 0.4f;
 		
 		public MessageQueue (Vector2 tl, Vector2 incposition, Vector2 textureScale, Texture2D txt, float msgDuration) : base(tl, incposition, textureScale, txt, true)
 		{
 			this.msgDuration = msgDuration;
 			messages = new List<Message>();
 			scale = 0.3f;
+            mission = new Mission("Current Mission: Create a Solar Panel or Wind Turbine");
 		}
 
 		public void addMessage(string msg)
@@ -26,6 +27,11 @@ namespace Remnants
 
 		public override void Update(GameTime gameTime)
 		{
+            /*
+            if (mission.isCompleted()){
+                mission = null;
+            }
+            */
 			for (int i = 0; i < messages.Count; i++)
 			{
 				messages[i].Update(gameTime);
@@ -52,8 +58,13 @@ namespace Remnants
 			}
 			width = width / Camera.Instance.viewportScale.Scale.X;
 
-			//var v = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
-			//var center = new Vector2(topLeft.X + (width / 2), topLeft.Y + (height / 2));
+            //var v = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
+            //var center = new Vector2(topLeft.X + (width / 2), topLeft.Y + (height / 2));
+
+            //this is extremely innefficient way to draw mission
+            Vector2 v = new Vector2(topLeft.X, topLeft.Y - (MenuController.Instance.font.MeasureString(mission.msg)).Y * MissionScale);
+            v = Vector2.Transform(v, Camera.Instance.viewportScale);
+            mission.Draw(spriteBatch, v, MissionScale);
 
 			float avgHeight = height / messages.Count;
 			for (int i = 0; i < messages.Count; i++)
@@ -93,5 +104,38 @@ namespace Remnants
 			spriteBatch.DrawString(MenuController.Instance.font, msg, pos, Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
 		}
 	}
+
+    //for mission objectives to guide the player
+    class Mission
+    {
+        public string msg;
+
+        public Mission(string msg)
+        {
+            this.msg = msg;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
+        public bool isCompleted()
+        {
+            foreach(LevelData.buildingData b in LevelData.Instance.buildingList)
+            {
+                if(b.type == "SolarPanel" || b.type == "WindTrubine")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, Vector2 pos, float scale)
+        {
+            spriteBatch.DrawString(MenuController.Instance.font, msg, pos, Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+        }
+    }
 }
 
