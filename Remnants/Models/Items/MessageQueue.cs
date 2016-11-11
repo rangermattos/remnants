@@ -27,6 +27,7 @@ namespace Remnants
 
 		public override void Update(GameTime gameTime)
 		{
+            mission.isCompleted();
             /*
             if (mission.isCompleted()){
                 mission = null;
@@ -126,6 +127,7 @@ namespace Remnants
             {
                 if(b.type == "SolarPanel" || b.type == "WindTrubine")
                 {
+                    msg = "Current Mission:";
                     return true;
                 }
             }
