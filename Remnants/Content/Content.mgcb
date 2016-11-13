@@ -566,6 +566,18 @@
 /processorParam:TextureFormat=Color
 /build:buildings/water_tower.png
 
+#begin buildings/water_tower_spritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:buildings/water_tower_spritesheet.png
+
 #begin buildings/wind_turbine.png
 /importer:TextureImporter
 /processor:TextureProcessor

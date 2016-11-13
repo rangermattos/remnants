@@ -20,6 +20,8 @@ namespace Remnants
             //waterStorage = 400;
 			resourceStorage[(int)resources.WATER] = 400;
 			resourceUsage[(int)resources.ENERGY] = 1;
+			animated = true;
+			currentAnimation = new Animation(Content, "buildings/water_tower_spritesheet", 1f, 7, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);
 		}
 
