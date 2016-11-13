@@ -212,7 +212,8 @@ namespace Remnants
 	                if (tempBuilding.Place(map))
 	                {
 	                    buildings.Add(tempBuilding);
-	                }
+                        LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
+                    }
 				}
 				else
 				{
@@ -364,7 +365,6 @@ namespace Remnants
         {
             foreach(Building b in buildings)
             {
-                LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
 
             for (int i = 0; i < 8; i++)

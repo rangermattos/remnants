@@ -7,11 +7,11 @@ namespace Remnants
 {
     class MenuItem
     {
-        string text;
+        public string text;
         Vector2 size = new Vector2();
         public Vector2 origin = new Vector2();
         SpriteFont font;
-        Color color;
+        public Color color;
         public Vector2 position = new Vector2();
         public float alpha;
         public float scale { get; set; }
@@ -21,6 +21,7 @@ namespace Remnants
         System.Func<string> Action3;
         MouseState prevState;
         bool offset = true;
+        Building buildingRepresented;
 
         /*
          * MenuItems take functions as arguments
@@ -69,8 +70,9 @@ namespace Remnants
             Action3 = menuItemAction;
         }
         /*/
-        public MenuItem(float sc, string inctext, SpriteFont incfont, Vector2 incposition, System.Func<string> menuItemAction)
+        public MenuItem(Building b, float sc, string inctext, SpriteFont incfont, Vector2 incposition, System.Func<string> menuItemAction)
         {
+            buildingRepresented = b;
             scale = sc;
             text = inctext;
             font = incfont;
@@ -103,11 +105,24 @@ namespace Remnants
         {
             //menuItem update method checks if the mouse is over it
             //mousePosition = mousePosition / game.Scale;
+            if (buildingRepresented != null)
+            {
+                color = Color.White;
+                for (int i = 0; i < 8; i++)
+                {
+                    if (buildingRepresented.resourceCost[i] > LevelData.Instance.resourceList[i])
+                    {
+                        color = Color.Red;
+                        break;
+                    }
+                }
+            }
             if (IsItemActive())
             {
                 //pulse effect if hovered over
                 Pulse();
                 //if clicked run the proper function
+
                 if (InputManager.Instance.LeftPressRelease())
                 {
                     //run through the possible actions and find the one that isn't null. run that one

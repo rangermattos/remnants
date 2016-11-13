@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -57,9 +58,28 @@ namespace Remnants
             var v = new Vector2(0, (Camera.Instance.cam.Origin.Y * 2) - 32);
             center = new Vector2(maxWidth / 2, v.Y - (totHeight / 2));
             //center = Vector2.Transform(center, Camera.Instance.viewportScale);
+            object[] po = new object[2];
+            po[0] = MenuController.Instance.cont;
+            po[1] = Vector2.Zero;
             foreach (string s in l)
             {
-                itemCount += AddItem(scale, s, MenuController.Instance.font, center, () => { /*MenuController.Instance.UnloadContent();*/ return s.Replace(" ", ""); });
+                //create an instance of the building represented by the menu item and 
+                //store it in this menu item.
+                //this is used to check if the building cost 
+                //is greater than the players current resource amounts
+                //this building is never updated or drawn, or included in any list with the levels active buildings
+                Building tempBuilding;
+                try
+                {
+                    //magic?
+                    tempBuilding = (Building)Activator.CreateInstance(Type.GetType("Remnants." + s.Replace(" ", "")), po);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                itemCount += AddItem(tempBuilding, scale, s, MenuController.Instance.font, center, () => { /*MenuController.Instance.UnloadContent();*/ return s.Replace(" ", ""); });
             }
             SetPositions(center, 0);
 
@@ -81,21 +101,6 @@ namespace Remnants
                 return instance;
             }
         }
-        /*
-        public override string Update(MouseState state, Game1 game, MenuController mc)
-        {
-            string s = "";
-            var v = new Vector2(state.X, state.Y);
-            foreach (MenuItem item in menuItemList)
-            {
-                s = item.Update(state, game, mc);
-                if(s != "")
-                {
-                    return s;
-                }
-            }
-            return s;
-        }
-        */
+
     }
 }
