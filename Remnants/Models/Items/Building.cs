@@ -44,7 +44,14 @@ namespace Remnants
             }
 			status = (int)buildingStates.CONSTRUCTING;
         }
-
+        public override void Init()
+        {
+            base.Init();
+            this.hp = 1000;
+            this.hpMax = 1000;
+            this.attackStrength = 10;
+            this.defenseStrength = 10;
+        }
         public virtual void LoadContent(ContentManager Content)
         {
 			var p = new Vector2(position.X + tilesWide * 32, position.Y);

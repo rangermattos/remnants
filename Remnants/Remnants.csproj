@@ -114,6 +114,8 @@
     <Compile Include="Models\Menus\Menu.cs" />
     <Compile Include="Models\UI.cs" />
     <Compile Include="Models\Items\Unit.cs" />
+    <Compile Include="Pathing\Path.cs" />
+    <Compile Include="Pathing\PathManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Effects\Animation.cs" />
