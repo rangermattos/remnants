@@ -223,27 +223,6 @@ namespace Remnants
                         spriteBatch.DrawString(font, vlReadOut, valueLimitPosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
                 }
             }
-            /*
-            if(popUpMenu != null)
-            {
-                if (active)
-                {
-                    spriteBatch.Draw(texture, position, null, color, 0f, Vector2.Zero, textureScale, SpriteEffects.None, 0f);
-                    foreach (MenuItem item in popUpMenu.menuItemList)
-                    {
-						spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition() - item.GetOrigin(), item.GetColor() * item.alpha, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
-                    }
-                }
-            }
-            else
-            {
-                spriteBatch.Draw(texture, position, null, color, 0f, Vector2.Zero, textureScale, SpriteEffects.None, 0f);
-                if (font != null)
-                {
-                    spriteBatch.DrawString(font, value.ToString(), valuePosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
-                }
-            }
-            */
         }
 
         bool IsItemHovered()

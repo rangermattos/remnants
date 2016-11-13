@@ -16,6 +16,7 @@ namespace Remnants
         Game1 game;
         List<Menu> ActiveMenus = new List<Menu>();
         private static Texture2D backGround;
+        public ContentManager cont;
 
         private static MenuController instance;
 
@@ -24,6 +25,7 @@ namespace Remnants
         {
             this.font = font;
             this.game = game;
+            cont = Content;
             //currentMenu = MainMenu.Instance;
             //prevMenu = currentMenu;
             //menuOpen = true;
