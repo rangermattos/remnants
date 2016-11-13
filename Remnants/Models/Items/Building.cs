@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
 using System;
 using Remnants.Models;
 
@@ -20,11 +21,9 @@ namespace Remnants
         public float alpha;
         public float buildTime;
         public float elapsedProductionTime = 0f;
-        public int status;
+        public int status = -1;
 		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
-        public ProgressBar progressBar;
-        protected bool animated = false;
-        protected Animation animation;
+        ProgressBar progressBar;
 		public Color mask = Color.White;
 
         public Building()
@@ -42,10 +41,21 @@ namespace Remnants
                 resourceCost[i] = 0;
                 resourceStorage[i] = 0;
             }
+			status = (int)buildingStates.CONSTRUCTING;
         }
-
+        public override void Init()
+        {
+            base.Init();
+            this.hp = 1000;
+            this.hpMax = 1000;
+            this.attackStrength = 10;
+            this.defenseStrength = 10;
+        }
         public virtual void LoadContent(ContentManager Content)
         {
+			var p = new Vector2(position.X + tilesWide * 32, position.Y);
+			progressBar = new ProgressBar(Content, p, p);
+            progressBar.position = new Vector2(progressBar.position.X - progressBar.container.Width / 2, progressBar.position.Y);
         }
 
         public virtual void UnloadContent()
@@ -94,7 +104,7 @@ namespace Remnants
 
 				if (animated)
 				{
-					animation.Update(gameTime);
+					currentAnimation.Update(gameTime);
 				}
 				break;
 			case ((int)buildingStates.IDLE):
@@ -124,7 +134,7 @@ namespace Remnants
         {
 			if (animated)
 			{
-				animation.Draw(spriteBatch, position, mask * alpha);
+				currentAnimation.Draw(spriteBatch, position, mask * alpha);
 			}
 			else
 			{

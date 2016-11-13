@@ -19,7 +19,7 @@ namespace Remnants
 			resourceCost[(int)resources.ENERGY] = 100;
 			resourceCost[(int)resources.METAL] = 100;
 			animated = true;
-			animation = new Animation(Content, "buildings/solar_panel_spritesheet", 0.1f, 25, tilesHigh*64, tilesWide*64, true, true);
+			currentAnimation = new Animation(Content, "buildings/solar_panel_spritesheet", 0.1f, 25, tilesHigh*64, tilesWide*64, true, true);
             LoadContent(Content);
         }
 

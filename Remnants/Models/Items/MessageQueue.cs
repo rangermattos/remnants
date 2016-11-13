@@ -37,15 +37,18 @@ namespace Remnants
 		{
             if (missionActive)
             {
-                if (missions[currentMission].isCompleted() && currentMission >= missions.Count - 1)
-                {
-                    UI.Instance.EnqueueMessage("You've Completed all available missions! Well Done!");
-                    missionActive = false;
-                }
-                if (missions[currentMission].isCompleted() && currentMission < missions.Count - 1)
-                {
-                    currentMission++;
-                }
+				if (missions[currentMission].isCompleted())
+				{
+					if (currentMission >= missions.Count - 1)
+                	{
+                    	UI.Instance.EnqueueMessage("You've Completed all available missions! Well Done!");
+                    	missionActive = false;
+                	}
+	                else 
+	                {
+	                    currentMission++;
+	                }
+				}
             }
             /*
             if (mission.isCompleted()){

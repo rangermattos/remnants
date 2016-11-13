@@ -8,6 +8,7 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using Remnants.Models;
 
 namespace Remnants
 {
@@ -17,12 +18,28 @@ namespace Remnants
         StorageDevice device;
         Map map;
         List<Building> buildings = new List<Building>();
+        List<Unit> units = new List<Unit>();
         SpriteFont font = MenuController.Instance.font;
 		float lastPopulationGrowth = 0f;
 		float meanGrowthTime = 10f;
 		int[] populationGrowthCost = new int[8] { 20, 20, 0, 0, 0, 0, 0, 0 };
 		float elapsedConsumptionTime = 0f;
         public bool paused = false;
+
+        public List<Entity> getNearbyEntities(Unit u, int range)
+        {
+            List<Entity> ret = new List<Entity>();
+            //search entities first
+            int dsq = range * range;
+            foreach(Unit i in units)
+            {
+                if(u != i && (u.position - i.position).LengthSquared() <= dsq)
+                {
+                    ret.Add(i);
+                }
+            }
+            return ret;
+        }
 
         public Level()
         {
@@ -51,6 +68,17 @@ namespace Remnants
             }
             UI.Create(Content);
             //UI.Instance.isActive = true;
+        }
+        public Path getPathToLocation(Vector2 position)
+        {
+            return null;
+        }
+
+        internal bool isPositionValid(Vector2 position)
+        {
+            if (!map.GetTile(position).canWalk)
+                return false;
+            return true;
         }
 
         void LoadBuildings(ContentManager Content)
@@ -119,6 +147,14 @@ namespace Remnants
                 UpdateBuildings(gameTime, p);
 
                 UpdatePopulation(gameTime);
+                if(units.Count == 0)
+                {
+                    Unit u = new Unit();
+                    u.loadContent(Content);
+                    u.position = new Vector2(p.X, p.Y);
+                    units.Add(u);
+                }
+                UpdateUnits(gameTime, p);
             }
 
 			//SetResources();
@@ -132,6 +168,10 @@ namespace Remnants
             foreach (Building b in buildings)
             {
                 b.Draw(spriteBatch);
+            }
+            foreach(Unit u in units)
+            {
+                u.Draw(spriteBatch);
             }
             spriteBatch.End();
 
@@ -150,6 +190,14 @@ namespace Remnants
                 {
                     b.Update(gameTime);
                 }
+            }
+        }
+
+        public void UpdateUnits(GameTime gameTime, Vector2 p)
+        {
+            foreach (Unit u in units)
+            {
+                u.Update(gameTime, this);
             }
         }
 
