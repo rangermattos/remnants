@@ -22,7 +22,7 @@ namespace Remnants
         public float elapsedProductionTime = 0f;
         public int status;
 		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
-        ProgressBar progressBar;
+        public ProgressBar progressBar;
         protected bool animated = false;
         protected Animation animation;
 		public Color mask = Color.White;
@@ -42,14 +42,10 @@ namespace Remnants
                 resourceCost[i] = 0;
                 resourceStorage[i] = 0;
             }
-			status = (int)buildingStates.CONSTRUCTING;
         }
 
         public virtual void LoadContent(ContentManager Content)
         {
-			var p = new Vector2(position.X + tilesWide * 32, position.Y);
-			progressBar = new ProgressBar(Content, p, p);
-            progressBar.position = new Vector2(progressBar.position.X - progressBar.container.Width / 2, progressBar.position.Y);
         }
 
         public virtual void UnloadContent()
