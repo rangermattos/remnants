@@ -23,7 +23,7 @@ namespace Remnants
         public float elapsedProductionTime = 0f;
         public int status = -1;
 		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
-        ProgressBar progressBar;
+        public ProgressBar progressBar;
 		public Color mask = Color.White;
 
         public Building()

@@ -76,7 +76,8 @@ namespace Remnants
 
         internal bool isPositionValid(Vector2 position)
         {
-            if (!map.GetTile(position).canWalk)
+            Tile t = map.GetTile(position);
+            if (t == null || !t.canWalk)
                 return false;
             return true;
         }
@@ -97,6 +98,25 @@ namespace Remnants
                 catch (Exception)
                 {
                     throw;
+                }
+                tempBuilding.status = b.status;
+                tempBuilding.buildTime = b.buildTime;
+                tempBuilding.elapsedProductionTime = b.elapsedProductionTime;
+                tempBuilding.alpha = b.alpha;
+
+                if (tempBuilding.status == (int)Building.buildingStates.CONSTRUCTING)
+                {
+                    var prog = new Vector2(tempBuilding.position.X + tempBuilding.tilesWide * 32, tempBuilding.position.Y);
+                    tempBuilding.progressBar = new ProgressBar(Content, prog, prog);
+                    tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
+                    tempBuilding.progressBar.progress = b.progress;
+                }
+                else
+                {
+                    var prog = new Vector2(tempBuilding.position.X + tempBuilding.tilesWide * 32, tempBuilding.position.Y);
+                    tempBuilding.progressBar = new ProgressBar(Content, prog, prog);
+                    tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
+                    tempBuilding.progressBar.progress = 1.0f;
                 }
                 buildings.Add(tempBuilding);
             }
@@ -210,9 +230,12 @@ namespace Remnants
 				if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.POP_PER_BUILDING))
 				{
 	                if (tempBuilding.Place(map))
-	                {
-	                    buildings.Add(tempBuilding);
-                        LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
+                    {
+                        tempBuilding.status = (int)Building.buildingStates.CONSTRUCTING;
+                        var prog = new Vector2(tempBuilding.position.X + tempBuilding.tilesWide * 32, tempBuilding.position.Y);
+                        tempBuilding.progressBar = new ProgressBar(Content, prog, prog);
+                        tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
+                        buildings.Add(tempBuilding);
                     }
 				}
 				else
@@ -365,6 +388,7 @@ namespace Remnants
         {
             foreach(Building b in buildings)
             {
+                LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
 
             for (int i = 0; i < 8; i++)

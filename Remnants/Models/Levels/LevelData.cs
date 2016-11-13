@@ -36,6 +36,7 @@ namespace Remnants
             public float buildTime;
             public float elapsedProductionTime;
             public float alpha;
+            public float progress;
 
             public buildingData(Building b)
             {
@@ -45,6 +46,7 @@ namespace Remnants
                 this.buildTime = b.buildTime;
                 this.elapsedProductionTime = b.elapsedProductionTime;
                 this.alpha = b.alpha;
+                this.progress = b.progressBar.progress;
             }
         }
 

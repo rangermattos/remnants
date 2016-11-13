@@ -16,9 +16,12 @@ namespace Remnants
     public class Path
     {
         PathNode rootNode;
-        public void followPath(Entity e)
+        public bool followPath(Entity e)
         {
-
+            if (rootNode == null)
+                return false;
+            
+            return false;
         }
     }
 }
