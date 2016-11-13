@@ -63,7 +63,7 @@ namespace Remnants
 
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            Content.Unload();
         }
 
         protected override void Update(GameTime gameTime)
@@ -107,6 +107,7 @@ namespace Remnants
             {
                 LevelController.Instance.SaveGame();
             }
+            UnloadContent();
             this.Exit();
         }
 
