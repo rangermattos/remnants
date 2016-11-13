@@ -63,6 +63,11 @@ namespace Remnants
             po[1] = Vector2.Zero;
             foreach (string s in l)
             {
+                //create an instance of the building represented by the menu item and 
+                //store it in this menu item.
+                //this is used to check if the building cost 
+                //is greater than the players current resource amounts
+                //this building is never updated or drawn, or included in any list with the levels active buildings
                 Building tempBuilding;
                 try
                 {
@@ -73,6 +78,7 @@ namespace Remnants
                 {
                     throw;
                 }
+
                 itemCount += AddItem(tempBuilding, scale, s, MenuController.Instance.font, center, () => { /*MenuController.Instance.UnloadContent();*/ return s.Replace(" ", ""); });
             }
             SetPositions(center, 0);
