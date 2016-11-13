@@ -27,6 +27,9 @@ namespace Remnants.Models
 		public String name;
 		// the entity's position in the world
 		public Vector2 position { get; set; }
+		// entity animations, may have more than one
+		protected bool animated = false;
+		protected Animation currentAnimation;
         //used to set up the unit / buildings stats
         public virtual void Init()
         {

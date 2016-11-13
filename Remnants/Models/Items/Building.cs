@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
 using System;
 using Remnants.Models;
 
@@ -20,11 +21,9 @@ namespace Remnants
         public float alpha;
         public float buildTime;
         public float elapsedProductionTime = 0f;
-        public int status;
+        public int status = -1;
 		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
         ProgressBar progressBar;
-        protected bool animated = false;
-        protected Animation animation;
 		public Color mask = Color.White;
 
         public Building()
@@ -105,7 +104,7 @@ namespace Remnants
 
 				if (animated)
 				{
-					animation.Update(gameTime);
+					currentAnimation.Update(gameTime);
 				}
 				break;
 			case ((int)buildingStates.IDLE):
@@ -135,7 +134,7 @@ namespace Remnants
         {
 			if (animated)
 			{
-				animation.Draw(spriteBatch, position, mask * alpha);
+				currentAnimation.Draw(spriteBatch, position, mask * alpha);
 			}
 			else
 			{

@@ -13,8 +13,6 @@ namespace Remnants
     public class Unit : Entity
     {
         public Texture2D texture;
-        protected bool animated = false;
-        protected Animation animation;
         public Color mask = Color.White;
         public float alpha = 1.0f;
         //team 0 = AGGRESSIVE TO ALL
@@ -36,7 +34,7 @@ namespace Remnants
         {
             if (animated)
             {
-                animation.Draw(spriteBatch, position, mask * alpha);
+                currentAnimation.Draw(spriteBatch, position, mask * alpha);
             }
             else
             {

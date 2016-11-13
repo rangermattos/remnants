@@ -20,7 +20,7 @@ namespace Remnants
             //energyStorage = 200;
 			resourceStorage[(int)resources.ENERGY] = 200;
 			animated = true;
-			animation = new Animation(Content, "buildings/battery_small_spritesheet", 1f, 2, tilesHigh*64, tilesWide*64, true, true);
+			currentAnimation = new Animation(Content, "buildings/battery_small_spritesheet", 1f, 2, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
@@ -65,7 +65,7 @@ namespace Remnants
             //energyStorage = 400;
 			resourceStorage[(int)resources.ENERGY] = 400;
 			animated = true;
-			animation = new Animation(Content, "buildings/battery_medium_spritesheet", 1f, 2, tilesHigh*64, tilesWide*64, true, true);
+			currentAnimation = new Animation(Content, "buildings/battery_medium_spritesheet", 1f, 2, tilesHigh*64, tilesWide*64, true, true);
             LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
@@ -110,7 +110,7 @@ namespace Remnants
             //energyStorage = 200;
 			resourceStorage[(int)resources.ENERGY] = 800;
 			animated = true;
-			animation = new Animation(Content, "buildings/battery_large_spritesheet", 1f, 2, tilesHigh*64, tilesWide*64, true, true);
+			currentAnimation = new Animation(Content, "buildings/battery_large_spritesheet", 1f, 2, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)
