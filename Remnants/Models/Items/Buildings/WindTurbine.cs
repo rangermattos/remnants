@@ -19,7 +19,7 @@ namespace Remnants
 			resourceCost[(int)resources.METAL] = 100;
 			resourceGain[(int)resources.ENERGY] = 15;
 			animated = true;
-			animation = new Animation(Content, "buildings/wind_turbine_spritesheet", 0.1f, 10, tilesHigh*64, tilesWide*64, true, true);
+			currentAnimation = new Animation(Content, "buildings/wind_turbine_spritesheet", 0.1f, 10, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);
 		}
 
