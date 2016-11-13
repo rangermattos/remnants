@@ -76,7 +76,8 @@ namespace Remnants
 
         internal bool isPositionValid(Vector2 position)
         {
-            if (!map.GetTile(position).canWalk)
+            Tile t = map.GetTile(position);
+            if (t == null || !t.canWalk)
                 return false;
             return true;
         }
