@@ -44,7 +44,9 @@ namespace Remnants
         public Level()
         {
             LevelData.Instance.InitValues();
-            LevelData.Instance.SetLimits(500);
+            LevelData.Instance.SetLimits(1000);
+			LevelData.Instance.resourceLimits[(int)resources.NUCLEAR] = 0;
+			LevelData.Instance.resourceLimits[(int)resources.ANTIMATTER] = 0;
 			LevelData.Instance.resourceLimits[(int)resources.POP] = 10;
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
