@@ -18,6 +18,7 @@ namespace Remnants
         public int team = 0;
         float moveSpeed = 1.0f;
         Path followedPath = null;
+        Texture2D pathNode, pathGoal;
 		public Unit(ContentManager Content) : base(Content)
         {
             alpha = 1.0f;
@@ -26,10 +27,13 @@ namespace Remnants
         }
 		public virtual void LoadContent(ContentManager content)
         {
-            //texture = content.Load<Texture2D>("buildings/battery_small");
+            pathNode = content.Load<Texture2D>("icons/debug_path_node");
+            pathGoal = content.Load<Texture2D>("icons/debug_path_goal");
             var p = new Vector2(position.X + 32, position.Y);
             
         }
+        //TURN THIS FALSE TO DISABLE SHOWING THE PATH A UNIT IS FINDING!
+        bool showPath = true;
 		public override void Draw(SpriteBatch spriteBatch)
         {
             /*if (animated)
@@ -40,7 +44,13 @@ namespace Remnants
             {
                 spriteBatch.Draw(texture, new Vector2(position.X + texture.Bounds.Width, position.Y), mask * alpha);
             }*/
+            
+            
 			base.Draw(spriteBatch);
+            if(showPath && followedPath != null)
+            {
+                followedPath.draw(spriteBatch, pathNode, pathGoal);
+            }
         }
         public override void Init()
         {
@@ -71,11 +81,16 @@ namespace Remnants
         {
             if(followedPath == null)
             {
-                followedPath = l.getPathToLocation(position, new Vector2(0, 0));
+                Vector2 target = new Vector2(position.X - (64 * 5), position.Y);
+                if(l.isPositionValid(target))
+                    followedPath = l.getPathToLocation(position, target);
             }
             else
             {
-                followedPath.followPath(this);
+                if(!followedPath.followPath(this))
+                {
+                    followedPath = null;
+                }
             }
         }
     }

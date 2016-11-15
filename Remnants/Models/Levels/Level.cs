@@ -120,14 +120,15 @@ namespace Remnants
                 this.y = y;
             }
         }
-        internal offset[] neighbors = { new  offset(-1, -1), new offset(-1, 1), new offset(1, -1), new offset(1, 1) };
+        internal offset[] neighbors = { new  offset(-1, 0), new offset(1, 0), new offset(0, -1), new offset(0, 1) };
         public Path getPathToLocation(Vector2 start, Vector2 goal)
         {
-            HashSet<tileCoords> closedSet = new HashSet<tileCoords>();
-            Dictionary<tileCoords, tileCoords> openSet = new Dictionary<tileCoords, tileCoords>();
+            Console.Out.WriteLine("Pathing to location...." + goal + " from " + start);
+            Dictionary<int, tileCoords> closedSet = new Dictionary<int, tileCoords>();
+            Dictionary<int, tileCoords> openSet = new Dictionary<int, tileCoords>();
             tileCoords s = new tileCoords(start);
             tileCoords g = new tileCoords(goal);
-            openSet.Add(s, s);
+            openSet.Add(s.GetHashCode(), s);
             //set start defaults
             s.gCost = 0;
             s.hCost = s.getHCostTo(g);
@@ -135,8 +136,9 @@ namespace Remnants
             //now for actaul A*
             while(openSet.Count != 0)
             {
+                //Console.Out.WriteLine("iteration!");
                 tileCoords cur = null;
-                foreach(tileCoords tc in openSet.Keys)
+                foreach(tileCoords tc in openSet.Values)
                 {
                     if(cur == null)
                     {
@@ -149,28 +151,31 @@ namespace Remnants
                 }
                 if(cur.GetHashCode() == g.GetHashCode())
                 {
+                    Console.Out.WriteLine("PATH FOUND!");
                     return reconPath(cur);
                 }
                 //make tile closed
-                openSet.Remove(cur);
-                closedSet.Add(cur);
+                openSet.Remove(cur.GetHashCode());
+                closedSet.Add(cur.GetHashCode(), cur);
+                //Console.Out.WriteLine("testing cur " + cur.x + ", " + cur.y);
                 //add in neighbors
-                for(int i = 0; i < neighbors.Length; i++)
+                for (int i = 0; i < neighbors.Length; i++)
                 {
                     tileCoords t = new tileCoords(cur);
                     t.x += neighbors[i].x;
                     t.y += neighbors[i].y;
-                    if(!closedSet.Contains(t) && t.x < map.tiles.Length && t.y < map.tiles[0].Length && t.x >= 0 && t.y >= 0 && map.tiles[t.x][t.y].canWalk)
+                    //Console.Out.WriteLine("testing "+ t.x + ", " + t.y);
+                    if(!closedSet.ContainsKey(t.GetHashCode()) && t.x < map.tiles.Length && t.y < map.tiles[0].Length && t.x >= 0 && t.y >= 0 && map.tiles[t.x][t.y].canWalk)
                     {
                         float tgs = cur.gCost + 10;
                         bool cont = true;
-                        if(!openSet.ContainsKey(t))
+                        if(!openSet.ContainsKey(t.GetHashCode()))
                         {
-                            openSet.Add(t, t);
+                            openSet.Add(t.GetHashCode(), t);
                         }
                         else
                         {
-                            tileCoords n = openSet[t];
+                            tileCoords n = openSet[t.GetHashCode()];
                             if (tgs <= n.gCost)
                             {
                                 cont = false;
@@ -188,6 +193,7 @@ namespace Remnants
                     }
                 }
             }
+            Console.Out.WriteLine("Path not found!");
             return null;
         }
 
