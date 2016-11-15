@@ -225,11 +225,15 @@ namespace Remnants
             }
         }
 
-        bool IsItemHovered()
+        public bool IsItemHovered()
         {
             //might need to transform screen to map or map to screen or maybe scale
             //determine mouse position relative to this item
             Vector2 mp = InputManager.Instance.MousePosition;
+            if(textureScale != null)
+            {
+                return (mp.X > position.X && mp.X < position.X + size.X * textureScale.X && mp.Y > position.Y && mp.Y < position.Y + size.Y * textureScale.Y);
+            }
             return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y);            
         }
     }

@@ -139,11 +139,11 @@ namespace Remnants
             }
             LevelData.Instance.Update();
             UI.Instance.Update(gameTime);
-
             Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
-
-            CheckBuilding(p, Content);
-
+            if (!UI.Instance.MouseOverUI())
+            {
+                CheckBuilding(p, Content);
+            }
             EnableOrDisableBuilding(p);
             if (!paused)
             {

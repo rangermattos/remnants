@@ -127,14 +127,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Effects\Animation.cs" />
-    <Compile Include="Models\Items\Buildings\AntimatterCreationLab.cs" />
-    <Compile Include="Models\Items\Buildings\NuclearPlant.cs" />
-    <Compile Include="Models\Items\Buildings\NuclearMine.cs" />
-    <Compile Include="Models\Items\Buildings\NuclearStorage.cs" />
-    <Compile Include="Models\Items\Buildings\AntimatterGenerator.cs" />
-    <Compile Include="Models\Items\Buildings\AntimatterContainmentUnit.cs" />
-    <Compile Include="Models\Items\HealthBar.cs" />
-    <Compile Include="Models\Items\Units\DefaultAlien.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
