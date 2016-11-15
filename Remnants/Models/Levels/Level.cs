@@ -152,10 +152,9 @@ namespace Remnants
                 UpdatePopulation(gameTime);
                 if(units.Count == 0)
                 {
-                    Unit u = new Unit();
-                    u.loadContent(Content);
-                    u.position = new Vector2(p.X, p.Y);
-                    units.Add(u);
+					DefaultAlien testAlien = new DefaultAlien(Content);
+					testAlien.position = new Vector2(p.X, p.Y);
+					units.Add(testAlien);
                 }
                 UpdateUnits(gameTime, p);
             }

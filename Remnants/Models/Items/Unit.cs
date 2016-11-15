@@ -12,9 +12,6 @@ namespace Remnants
 {
     public class Unit : Entity
     {
-        public Texture2D texture;
-        public Color mask = Color.White;
-        public float alpha = 1.0f;
         //team 0 = AGGRESSIVE TO ALL
         //team 1 = player owned
         //team 2+ = NPC owned
@@ -27,23 +24,22 @@ namespace Remnants
 			LoadContent(Content);
 			Init();
         }
-        public void LoadContent(ContentManager content)
+		public virtual void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("buildings/battery_small");
+            //texture = content.Load<Texture2D>("buildings/battery_small");
             var p = new Vector2(position.X + 32, position.Y);
             
         }
 		public override void Draw(SpriteBatch spriteBatch)
         {
-            if (animated)
+            /*if (animated)
             {
                 currentAnimation.Draw(spriteBatch, position, mask * alpha);
             }
             else
             {
                 spriteBatch.Draw(texture, new Vector2(position.X + texture.Bounds.Width, position.Y), mask * alpha);
-            }
-			//Console.Write("Calling base.Draw()\n");
+            }*/
 			base.Draw(spriteBatch);
         }
         public override void Init()
@@ -61,6 +57,11 @@ namespace Remnants
             if (!l.isPositionValid(position))
             {
                 position = lastPos;
+			}
+
+			if (animated)
+			{
+				currentAnimation.Update(gameTime);
 			}
 			healthBar.position = new Vector2(position.X + width/2 - healthBar.container.Width/2, position.Y);
 			base.Update(gameTime);

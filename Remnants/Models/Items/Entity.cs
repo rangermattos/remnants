@@ -32,6 +32,10 @@ namespace Remnants.Models
 		// entity animations, may have more than one
 		protected bool animated = false;
 		protected Animation currentAnimation;
+		// base texture and mask
+		public Texture2D texture;
+		public Color mask = Color.White;
+		public float alpha;
 
 		public Entity(ContentManager Content)
 		{
@@ -61,6 +65,14 @@ namespace Remnants.Models
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
+			if (animated)
+			{
+				currentAnimation.Draw(spriteBatch, position, mask * alpha);
+			}
+			else
+			{
+				spriteBatch.Draw(texture, position, mask * alpha);
+			}
 			healthBar.Draw(spriteBatch);
 		}
     }

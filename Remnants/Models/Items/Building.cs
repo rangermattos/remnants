@@ -9,7 +9,6 @@ namespace Remnants
 {
     public class Building : Entity
     {
-        public Texture2D texture;
         public int tilesWide;
         public int tilesHigh;
         public int populationHousing = 0;
@@ -18,13 +17,11 @@ namespace Remnants
         protected int[] resourceGain;
 		protected int[] resourceUsage;
         public int[] resourceChanges;
-        public float alpha;
         public float buildTime;
         public float elapsedProductionTime = 0f;
         public int status = -1;
 		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
         public ProgressBar progressBar;
-		public Color mask = Color.White;
 
 		public Building(ContentManager Content) : base(Content)
         {
@@ -138,21 +135,13 @@ namespace Remnants
         }
 
 		public override void Draw(SpriteBatch spriteBatch)
-        {
-			if (animated)
-			{
-				currentAnimation.Draw(spriteBatch, position, mask * alpha);
-			}
-			else
-			{
-            	spriteBatch.Draw(texture, position, mask * alpha);
-			}
+		{
+			base.Draw(spriteBatch);
 
 			if (progressBar.progress != 1.0f)
 			{
 				progressBar.Draw(spriteBatch);
 			}
-			base.Draw(spriteBatch);
         }
 
         public virtual bool Place(Map map)
