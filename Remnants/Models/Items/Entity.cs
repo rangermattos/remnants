@@ -57,7 +57,7 @@ namespace Remnants.Models
             hp -= damage;
         }
 
-		public virtual void Update(GameTime gameTime)
+		public virtual void Update(GameTime gameTime, Level level)
 		{
 			healthBar.percent = hp/hpMax;
 			healthBar.Update();

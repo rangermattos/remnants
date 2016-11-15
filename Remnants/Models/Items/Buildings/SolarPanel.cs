@@ -34,9 +34,9 @@ namespace Remnants
             base.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, Level level)
         {
-            base.Update(gameTime);
+            base.Update(gameTime, level);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

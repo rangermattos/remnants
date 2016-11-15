@@ -18,36 +18,12 @@ namespace Remnants
     {
         PathNode rootNode;
         float ldx = 0, ldy = 0;
-        public bool followPath(Entity e)
+        public bool followPath(Unit e)
         {
             if (rootNode == null)
                 return false;
             float dx = e.position.X - rootNode.position.X;
             float dy = e.position.Y - rootNode.position.Y;
-            int tridx = 0;
-            int tridy = 0;
-            int trildx = 0;
-            int trildy = 0;
-            if (dx > 0)
-                tridx = 1;
-            else if (dx < 0)
-                tridx = -1;
-
-            if (dy > 0)
-                tridy = 1;
-            else if (dy < 0)
-                tridy = -1;
-
-            if (ldx > 0)
-                trildx = 1;
-            else if (ldx < 0)
-                trildx = -1;
-
-            if (ldy > 0)
-                trildy = 1;
-            else if (ldy < 0)
-                trildy = -1;
-            Console.Out.WriteLine("dx : " + dx + " dy : " + dy);
             if(Math.Abs(dx) < 3 && Math.Abs(dy) < 3)
             {
                 Console.Out.WriteLine("POPPING NODE!");
@@ -57,21 +33,24 @@ namespace Remnants
                     return false;
                 dx = e.position.X - rootNode.position.X;
                 dy = e.position.Y - rootNode.position.Y;
-                tridx = 0;
-                tridy = 0;
-                trildx = 0;
-                trildy = 0;
-                if (dx > 0)
-                    tridx = 1;
-                else if (dx < 0)
-                    tridx = -1;
-
-                if (dy > 0)
-                    tridy = 1;
-                else if (dy < 0)
-                    tridy = -1;
             }
-            e.position = new Vector2(e.position.X - Math.Min(tridx, dx), e.position.Y - Math.Min(tridy, dy));
+            if(dx >= 0)
+            {
+                dx = Math.Min(e.moveSpeed, dx);
+            }
+            else
+            {
+                dx = Math.Max(-e.moveSpeed, dx);
+            }
+            if(dy >= 0)
+            {
+                dy = Math.Min(e.moveSpeed, dy);
+            }
+            else
+            {
+                dy = Math.Max(-e.moveSpeed, dy);
+            }
+            e.position = new Vector2(e.position.X - dx, e.position.Y - dy);
             ldx = dx;
             ldy = dy;
             return true;
@@ -105,14 +84,6 @@ namespace Remnants
                 n.nextNode = rootNode;
                 n.position = pos;
                 rootNode = n;
-                /*PathNode cur = rootNode;
-                while(cur.nextNode != null)
-                {
-                    cur = cur.nextNode;
-                }
-                PathNode toAdd = new PathNode();
-                toAdd.position = pos;
-                cur.nextNode = toAdd;*/
             }
         }
     }

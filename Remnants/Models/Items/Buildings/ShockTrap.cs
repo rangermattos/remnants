@@ -54,14 +54,15 @@ namespace Remnants
             base.UnloadContent();
         }
 
-		public override void Update(GameTime gameTime, List<Unit> enemyUnits)
+        /*public override void Update(GameTime gameTime, Level level)
         {
-			float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            base.Update(gameTime, level);
+            float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			lastDamageTime += deltaT;
-			if (status == (int)buildingStates.OPERATIONAL && enemyUnits.Count > 0 && lastDamageTime >= dmgInterval)
+			if (status == (int)buildingStates.OPERATIONAL && lastDamageTime >= dmgInterval)
             {
 				// find nearest unit
-				double minDist = double.MaxValue;
+				/*double minDist = double.MaxValue;
 				int minI = 0;
 				for (int i = 0; i < enemyUnits.Count; i++)
 				{
@@ -90,16 +91,17 @@ namespace Remnants
                         lb = null;
                     }
                 }
-				lastDamageTime = 0f;
-            }
+				lastDamageTime = 0f;*/
+
+            /*}
 			else
 			{
 				lb = null;
 			}
-            base.Update(gameTime);
-        }
-		public override void Update(GameTime gameTime, Vector2 p)
+        }*/
+		public override void Update(GameTime gameTime, Level level)
 		{
+            Vector2 p = level.getCameraVector();
 			float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			lastDamageTime += deltaT;
 			if (status == (int)buildingStates.OPERATIONAL)
@@ -124,7 +126,7 @@ namespace Remnants
 			{
 				lb = null;
 			}
-			base.Update(gameTime);
+			base.Update(gameTime, level);
 		}
 
         public override void Draw(SpriteBatch spriteBatch)

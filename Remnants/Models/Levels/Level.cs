@@ -102,14 +102,15 @@ namespace Remnants
             Queue<tileCoords> q = new Queue<tileCoords>();
             while(cur.last != null)
             {
-                q.Enqueue(cur);
+                //q.Enqueue(cur);
+                ret.addNode(new Vector2(cur.x * 64 + 32, cur.y * 64 + 32));
                 cur = cur.last;
             }
-            while(q.Count > 0)
+            /*while(q.Count > 0)
             {
                 tileCoords t = q.Dequeue();
-                ret.addNode(new Vector2(t.x * 64 + 32, t.y * 64 + 32));
-            }
+                
+            }*/
             return ret;
         }
         internal class offset
@@ -201,7 +202,7 @@ namespace Remnants
         internal bool isPositionValid(Vector2 position)
         {
             Tile t = map.GetTile(position);
-            if (t == null /*|| !t.canWalk*/)
+            if (t == null || !t.canWalk)
                 return false;
             return true;
         }
@@ -251,6 +252,10 @@ namespace Remnants
             //game.Content.Unload();
         }
 
+        public Vector2 getCameraVector()
+        {
+            return Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
+        }
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
@@ -310,14 +315,8 @@ namespace Remnants
         {
             foreach (Building b in buildings)
             {
-                if (b.GetType().Name == "ShockTrap")
-                {
-					b.Update(gameTime, enemyUnits);
-                }
-                else
-                {
-                    b.Update(gameTime);
-                }
+                //unified update.... finally..... ...... ..... ......
+				b.Update(gameTime, this);
             }
         }
 

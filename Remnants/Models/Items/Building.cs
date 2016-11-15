@@ -66,7 +66,7 @@ namespace Remnants
 
         }
 
-		public override void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime, Level level)
         {
             
             var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -126,18 +126,8 @@ namespace Remnants
 
 				break;
 			}
-			base.Update(gameTime);
+			base.Update(gameTime, level);
         }
-
-        public virtual void Update(GameTime gameTime, Vector2 point)
-        {
-
-        }
-
-		public virtual void Update(GameTime gameTime, List<Unit> enemyUnits)
-		{
-			
-		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{

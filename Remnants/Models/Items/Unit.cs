@@ -16,7 +16,7 @@ namespace Remnants
         //team 1 = player owned
         //team 2+ = NPC owned
         public int team = 0;
-        float moveSpeed = 1.0f;
+        public float moveSpeed = 1.0f;
         protected Path followedPath = null;
         protected Texture2D pathNode, pathGoal;
 		public Unit(ContentManager Content) : base(Content)
@@ -33,7 +33,7 @@ namespace Remnants
             
         }
         //TURN THIS FALSE TO DISABLE SHOWING THE PATH A UNIT IS FINDING!
-        bool showPath = false;
+        bool showPath = true;
 		public override void Draw(SpriteBatch spriteBatch)
         {
             /*if (animated)
@@ -45,12 +45,12 @@ namespace Remnants
                 spriteBatch.Draw(texture, new Vector2(position.X + texture.Bounds.Width, position.Y), mask * alpha);
             }*/
             
-            
-			base.Draw(spriteBatch);
             if(showPath && followedPath != null)
             {
                 followedPath.draw(spriteBatch, pathNode, pathGoal);
             }
+			base.Draw(spriteBatch);
+            
         }
         public override void Init()
         {
@@ -60,11 +60,11 @@ namespace Remnants
 			this.defenseStrength = 10;
 			base.Init();
         }
-        public virtual void Update(GameTime gameTime, Level l)
+        public override void Update(GameTime gameTime, Level level)
         {
             Vector2 lastPos = position;
-            unitUpdate(gameTime, l);
-            if (!l.isPositionValid(position))
+            unitUpdate(gameTime, level);
+            if (!level.isPositionValid(position))
             {
                 position = lastPos;
 			}
@@ -77,12 +77,23 @@ namespace Remnants
 			// update healthbar position
 			healthBar.position = new Vector2(position.X + width/2 - healthBar.container.Width/2, position.Y);
 
-			base.Update(gameTime);
+			base.Update(gameTime, level);
         }
         //do your AI logics here, so that collision occurs at the valid time
         public virtual void unitUpdate(GameTime gameTime, Level l)
         {
-            
+            if(followedPath == null)
+            {
+                Vector2 target = new Vector2(position.X + (5 * 64), position.Y);
+                followedPath = l.getPathToLocation(position, target);
+            }
+            else
+            {
+                if(!followedPath.followPath(this))
+                {
+                    followedPath = null;
+                }
+            }
         }
     }
 }

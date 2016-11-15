@@ -37,7 +37,7 @@ namespace Remnants
 			base.Draw(spriteBatch);
 		}
 
-		public override void unitUpdate(GameTime gameTime, Level l)
+		/*public override void unitUpdate(GameTime gameTime, Level l)
 		{
 			if(followedPath == null)
 			{
@@ -84,7 +84,7 @@ namespace Remnants
 					followedPath = null;
 				}
 			}
-		}
+		}*/
 	}
 }
 

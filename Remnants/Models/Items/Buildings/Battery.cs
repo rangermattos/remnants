@@ -34,12 +34,12 @@ namespace Remnants
 			base.UnloadContent();
 		}
 
-		public override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-		}
+        public override void Update(GameTime gameTime, Level level)
+        {
+            base.Update(gameTime, level);
+        }
 
-		public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
 		{
 			base.Draw(spriteBatch);
 		}
@@ -79,12 +79,12 @@ namespace Remnants
 			base.UnloadContent();
 		}
 
-		public override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-		}
+        public override void Update(GameTime gameTime, Level level)
+        {
+            base.Update(gameTime, level);
+        }
 
-		public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
 		{
 			base.Draw(spriteBatch);
 		}
@@ -124,12 +124,12 @@ namespace Remnants
 			base.UnloadContent();
 		}
 
-		public override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-		}
+        public override void Update(GameTime gameTime, Level level)
+        {
+            base.Update(gameTime, level);
+        }
 
-		public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
 		{
 			base.Draw(spriteBatch);
 		}
