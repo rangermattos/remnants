@@ -181,7 +181,19 @@ namespace Remnants
                 LevelData.Instance.resourceList[i] -= resourceCost[i];
             }
             //return true so level will build the building
+            SwapTileWalkBool(map);
             return true;
+        }
+
+        void SwapTileWalkBool(Map map)
+        {
+            for (int i = 0; i < tilesWide; i++)
+            {
+                for (int j = 0; j < tilesHigh; j++)
+                {
+                    map.tiles[i][j].canWalk = !map.tiles[i][j].canWalk;
+                }
+            }
         }
 
 		void completeConstruction()
