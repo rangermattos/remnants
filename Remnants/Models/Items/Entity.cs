@@ -21,15 +21,23 @@ namespace Remnants.Models
         public float hpMax;
         public float attackStrength;
         public float defenseStrength;
+		protected HealthBar healthBar;
         // The ID used for registry, note that building and unit registries will overlap
         public int ID;
         // unique name for unit / building, however may be contained in both unit and building registry
 		public String name;
 		// the entity's position in the world
 		public Vector2 position { get; set; }
+		protected int width = 32, height = 32; // defaults
 		// entity animations, may have more than one
 		protected bool animated = false;
 		protected Animation currentAnimation;
+
+		public Entity(ContentManager Content)
+		{
+			healthBar = new HealthBar(Content, position, position);
+		}
+
         //used to set up the unit / buildings stats
         public virtual void Init()
         {
@@ -44,5 +52,16 @@ namespace Remnants.Models
             float damage = (attacker.attackStrength / defenseStrength) * GLOBAL_DAMAGE;
             hp -= damage;
         }
+
+		public virtual void Update(GameTime gameTime)
+		{
+			healthBar.percent = hp/hpMax;
+			healthBar.Update();
+		}
+
+		public virtual void Draw(SpriteBatch spriteBatch)
+		{
+			healthBar.Draw(spriteBatch);
+		}
     }
 }

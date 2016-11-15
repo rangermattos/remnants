@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class Warehouse : Building
 	{
-		public Warehouse(ContentManager Content, Vector2 pos) : base()
+		public Warehouse(ContentManager Content, Vector2 pos) : base(Content)
         {
 			tilesWide = 1;
 			tilesHigh = 1;

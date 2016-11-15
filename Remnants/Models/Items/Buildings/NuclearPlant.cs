@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class NuclearPlant : Building
 	{
-		public NuclearPlant(ContentManager Content, Vector2 pos) : base()
+		public NuclearPlant(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 2;
 			tilesHigh = 2;

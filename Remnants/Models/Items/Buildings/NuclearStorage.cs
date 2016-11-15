@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class NuclearStorage : Building
 	{
-		public NuclearStorage (ContentManager Content, Vector2 pos) : base()
+		public NuclearStorage (ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 2;
 			tilesHigh = 1;

@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class Mine : Building
 	{
-		public Mine(ContentManager Content, Vector2 pos) : base()
+		public Mine(ContentManager Content, Vector2 pos) : base(Content)
         {
 			tilesWide = 2;
 			tilesHigh = 1;

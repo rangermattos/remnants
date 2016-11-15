@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class SmallBatteryFacility : Building
 	{
-		public SmallBatteryFacility(ContentManager Content, Vector2 pos) : base()
+		public SmallBatteryFacility(ContentManager Content, Vector2 pos) : base(Content)
         {
 			tilesWide = 1;
 			tilesHigh = 1;
@@ -52,7 +52,7 @@ namespace Remnants
 
 	class MediumBatteryFacility : Building
 	{
-		public MediumBatteryFacility(ContentManager Content, Vector2 pos)
+		public MediumBatteryFacility(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 1;
 			tilesHigh = 1;
@@ -97,7 +97,7 @@ namespace Remnants
 
 	class LargeBatteryFacility : Building
 	{
-		public LargeBatteryFacility(ContentManager Content, Vector2 pos)
+		public LargeBatteryFacility(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 1;
 			tilesHigh = 1;

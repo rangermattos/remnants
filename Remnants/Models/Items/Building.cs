@@ -26,7 +26,7 @@ namespace Remnants
         public ProgressBar progressBar;
 		public Color mask = Color.White;
 
-        public Building()
+		public Building(ContentManager Content) : base(Content)
         {
             resourceGain = new int[8];
 			resourceUsage = new int[8];
@@ -41,7 +41,12 @@ namespace Remnants
                 resourceCost[i] = 0;
                 resourceStorage[i] = 0;
             }
-			status = (int)buildingStates.CONSTRUCTING;
+			if (status == -1)
+				status = (int)buildingStates.CONSTRUCTING;
+
+			width = tilesWide * 64;
+			height = tilesHigh * 64;
+			Init();
         }
         public override void Init()
         {
@@ -56,6 +61,7 @@ namespace Remnants
 			var p = new Vector2(position.X + tilesWide * 32, position.Y);
 			progressBar = new ProgressBar(Content, p, p);
             progressBar.position = new Vector2(progressBar.position.X - progressBar.container.Width / 2, progressBar.position.Y);
+			healthBar.position = new Vector2(p.X - healthBar.container.Width/2, p.Y);
         }
 
         public virtual void UnloadContent()
@@ -63,7 +69,7 @@ namespace Remnants
 
         }
 
-        public virtual void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime)
         {
             
             var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -123,6 +129,7 @@ namespace Remnants
 
 				break;
 			}
+			base.Update(gameTime);
         }
 
         public virtual void Update(GameTime gameTime, Vector2 point)
@@ -130,7 +137,7 @@ namespace Remnants
 
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+		public override void Draw(SpriteBatch spriteBatch)
         {
 			if (animated)
 			{
@@ -143,9 +150,9 @@ namespace Remnants
 
 			if (progressBar.progress != 1.0f)
 			{
-				spriteBatch.Draw(progressBar.container, progressBar.position);
-				spriteBatch.Draw(progressBar.bar, progressBar.position, scale:progressBar.barScale);
+				progressBar.Draw(spriteBatch);
 			}
+			base.Draw(spriteBatch);
         }
 
         public virtual bool Place(Map map)

@@ -6,7 +6,7 @@ namespace Remnants
 {
     class SolarPanel : Building
     {
-        public SolarPanel(ContentManager Content, Vector2 pos) : base()
+		public SolarPanel(ContentManager Content, Vector2 pos) : base(Content)
         {
             tilesWide = 2;
             tilesHigh = 1;

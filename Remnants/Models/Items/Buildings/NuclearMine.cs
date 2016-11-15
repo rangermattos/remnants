@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class NuclearMine : Building
 	{
-		public NuclearMine(ContentManager Content, Vector2 pos) : base()
+		public NuclearMine(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 2;
 			tilesHigh = 1;

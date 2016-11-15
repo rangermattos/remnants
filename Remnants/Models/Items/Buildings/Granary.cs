@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class Granary : Building
 	{
-		public Granary (ContentManager Content, Vector2 pos) : base()
+		public Granary (ContentManager Content, Vector2 pos) : base(Content)
         {
 			tilesWide = 2;
 			tilesHigh = 1;

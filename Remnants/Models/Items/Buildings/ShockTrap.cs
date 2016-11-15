@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
+using System;
 
 namespace Remnants
 {
@@ -17,8 +19,10 @@ namespace Remnants
         public Texture2D lightningSegment;
         LightningBolt lb;
         Circle range;
+		float dmgInterval = 1f;
+		float lastDamageTime = 0f;
 
-        public ShockTrap(ContentManager Content, Vector2 pos) : base()
+		public ShockTrap(ContentManager Content, Vector2 pos) : base(Content)
         {
             tilesWide = 1;
             tilesHigh = 1;
@@ -34,6 +38,7 @@ namespace Remnants
             range.Center = position + new Vector2(texture.Width / 2, texture.Height / 2);
             range.Radius = 350f;
             //lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), Position + new Vector2(200, 200), Color.LightCyan);
+			attackStrength = 10;
         }
 
         public override void LoadContent(ContentManager Content)

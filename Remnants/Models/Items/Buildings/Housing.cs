@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class SmallHouse : Building
 	{
-		public SmallHouse(ContentManager Content, Vector2 pos) : base()
+		public SmallHouse(ContentManager Content, Vector2 pos) : base(Content)
         {
 			tilesWide = 1;
 			tilesHigh = 1;
@@ -52,7 +52,7 @@ namespace Remnants
 
 	class MediumHouse : Building
 	{
-		public MediumHouse(ContentManager Content, Vector2 pos)
+		public MediumHouse(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 2;
 			tilesHigh = 1;
@@ -95,7 +95,7 @@ namespace Remnants
 
 	class LargeHouse : Building
 	{
-		public LargeHouse(ContentManager Content, Vector2 pos)
+		public LargeHouse(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 2;
 			tilesHigh = 1;

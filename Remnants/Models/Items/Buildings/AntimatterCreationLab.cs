@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class AntimatterCreationLab : Building
 	{
-		public AntimatterCreationLab (ContentManager Content, Vector2 pos) : base()
+		public AntimatterCreationLab (ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 1;
 			tilesHigh = 1;

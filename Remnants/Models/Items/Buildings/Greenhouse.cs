@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class Greenhouse : Building
 	{
-		public Greenhouse (ContentManager Content, Vector2 pos) : base()
+		public Greenhouse (ContentManager Content, Vector2 pos) : base(Content)
         {
 			tilesWide = 1;
 			tilesHigh = 1;

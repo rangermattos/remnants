@@ -20,17 +20,20 @@ namespace Remnants
         //team 2+ = NPC owned
         public int team = 0;
         float moveSpeed = 1.0f;
-        public Unit()
+
+		public Unit(ContentManager Content) : base(Content)
         {
             alpha = 1.0f;
+			LoadContent(Content);
+			Init();
         }
-        public void loadContent(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("buildings/battery_small");
             var p = new Vector2(position.X + 32, position.Y);
             
         }
-        public virtual void Draw(SpriteBatch spriteBatch)
+		public override void Draw(SpriteBatch spriteBatch)
         {
             if (animated)
             {
@@ -40,14 +43,16 @@ namespace Remnants
             {
                 spriteBatch.Draw(texture, new Vector2(position.X + texture.Bounds.Width, position.Y), mask * alpha);
             }
+			//Console.Write("Calling base.Draw()\n");
+			base.Draw(spriteBatch);
         }
         public override void Init()
         {
-            base.Init();
             this.hp = 100;
             this.hpMax = 100;
             this.attackStrength = 10;
-            this.defenseStrength = 10;
+			this.defenseStrength = 10;
+			base.Init();
         }
         public virtual void Update(GameTime gameTime, Level l)
         {
@@ -56,7 +61,9 @@ namespace Remnants
             if (!l.isPositionValid(position))
             {
                 position = lastPos;
-            }
+			}
+			healthBar.position = new Vector2(position.X + width/2 - healthBar.container.Width/2, position.Y);
+			base.Update(gameTime);
         }
     }
 }

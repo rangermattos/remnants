@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class AntimatterGenerator : Building
 	{
-		public AntimatterGenerator(ContentManager Content, Vector2 pos) : base()
+		public AntimatterGenerator(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 2;
 			tilesHigh = 2;

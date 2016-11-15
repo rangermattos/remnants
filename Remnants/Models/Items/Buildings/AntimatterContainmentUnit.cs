@@ -7,7 +7,7 @@ namespace Remnants
 {
 	class AntimatterContainmentUnit : Building
 	{
-		public AntimatterContainmentUnit(ContentManager Content, Vector2 pos) : base()
+		public AntimatterContainmentUnit(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			tilesWide = 1;
 			tilesHigh = 1;
