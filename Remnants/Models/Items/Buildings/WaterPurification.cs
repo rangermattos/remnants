@@ -19,6 +19,8 @@ namespace Remnants
 			resourceCost[(int)resources.METAL] = 100;
 			resourceGain[(int)resources.WATER] = 10;
 			resourceUsage[(int)resources.ENERGY] = 5;
+			animated = true;
+			currentAnimation = new Animation(Content, "buildings/water_purification_spritesheet", 0.1f, 5, tilesHigh*64, tilesWide*64, true, true);
 			LoadContent(Content);
 		}
 		public override void LoadContent(ContentManager Content)

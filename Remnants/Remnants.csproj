@@ -84,6 +84,12 @@
     <Compile Include="Models\Effects\LightningBolt.cs" />
     <Compile Include="Models\Effects\Line.cs" />
     <Compile Include="Models\Items\BuildingRegistry.cs" />
+    <Compile Include="Models\Items\Buildings\AntimatterContainmentUnit.cs" />
+    <Compile Include="Models\Items\Buildings\AntimatterCreationLab.cs" />
+    <Compile Include="Models\Items\Buildings\AntimatterGenerator.cs" />
+    <Compile Include="Models\Items\Buildings\NuclearMine.cs" />
+    <Compile Include="Models\Items\Buildings\NuclearPlant.cs" />
+    <Compile Include="Models\Items\Buildings\NuclearStorage.cs" />
     <Compile Include="Models\Items\Entity.cs" />
     <Compile Include="Models\Items\Building.cs" />
     <Compile Include="Models\Items\Buildings\Battery.cs" />
@@ -97,6 +103,7 @@
     <Compile Include="Models\Items\Buildings\WaterPurification.cs" />
     <Compile Include="Models\Items\Buildings\WaterTower.cs" />
     <Compile Include="Models\Items\Buildings\WindTurbine.cs" />
+    <Compile Include="Models\Items\HealthBar.cs" />
     <Compile Include="Models\Items\MenuItem.cs" />
     <Compile Include="Models\Items\MessageQueue.cs" />
     <Compile Include="Models\Items\ProgressBar.cs" />
@@ -106,6 +113,7 @@
     <Compile Include="Models\Items\Tiles\Ore.cs" />
     <Compile Include="Models\Items\Tiles\Water.cs" />
     <Compile Include="Models\Items\UIItem.cs" />
+    <Compile Include="Models\Items\Units\DefaultAlien.cs" />
     <Compile Include="Models\Levels\Level.cs" />
     <Compile Include="Models\Levels\Map.cs" />
     <Compile Include="Models\Levels\LevelData.cs" />
@@ -119,14 +127,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Effects\Animation.cs" />
-    <Compile Include="Models\Items\Buildings\AntimatterCreationLab.cs" />
-    <Compile Include="Models\Items\Buildings\NuclearPlant.cs" />
-    <Compile Include="Models\Items\Buildings\NuclearMine.cs" />
-    <Compile Include="Models\Items\Buildings\NuclearStorage.cs" />
-    <Compile Include="Models\Items\Buildings\AntimatterGenerator.cs" />
-    <Compile Include="Models\Items\Buildings\AntimatterContainmentUnit.cs" />
-    <Compile Include="Models\Items\HealthBar.cs" />
-    <Compile Include="Models\Items\Units\DefaultAlien.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -268,9 +268,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Items\Units\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <PublishFile Include="NVorbis">
       <Visible>False</Visible>

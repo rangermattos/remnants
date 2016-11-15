@@ -242,5 +242,13 @@ namespace Remnants
 		{
 			((MessageQueue)UIItemList[11]).addMessage(msg);
 		}
+
+        public bool MouseOverUI()
+        {
+            if (UIItemList[0].IsItemHovered() || UIItemList[1].IsItemHovered() || UIItemList[10].IsItemHovered())
+                return true;
+            
+            return false;
+        }
     }
 }

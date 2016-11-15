@@ -254,11 +254,11 @@ namespace Remnants
             }
             LevelData.Instance.Update();
             UI.Instance.Update(gameTime);
-
             Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
-
-            CheckBuilding(p, Content);
-
+            if (!UI.Instance.MouseOverUI())
+            {
+                CheckBuilding(p, Content);
+            }
             EnableOrDisableBuilding(p);
             if (!paused)
             {
@@ -352,6 +352,7 @@ namespace Remnants
                         tempBuilding.progressBar = new ProgressBar(Content, prog, prog);
                         tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
                         buildings.Add(tempBuilding);
+                        LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
                     }
 				}
 				else
@@ -504,6 +505,7 @@ namespace Remnants
         {
             foreach(Building b in buildings)
             {
+                LevelData.Instance.buildingList = new List<LevelData.buildingData>();
                 LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
 
