@@ -47,16 +47,29 @@ namespace Remnants
                 trildy = 1;
             else if (ldy < 0)
                 trildy = -1;
-
-            if (ldx == 0 && ldy == 0)
+            Console.Out.WriteLine("dx : " + dx + " dy : " + dy);
+            if(Math.Abs(dx) < 3 && Math.Abs(dy) < 3)
             {
-                ldx = dx;
-                ldy = dy;
-            }
-            else if(Math.Abs(dx) < 3 && Math.Abs(dy) < 3)
-            {
+                Console.Out.WriteLine("POPPING NODE!");
                 //we passed the node, so pop it off, if this happens to be the last node, return false
                 rootNode = rootNode.nextNode;
+                if (rootNode == null)
+                    return false;
+                dx = e.position.X - rootNode.position.X;
+                dy = e.position.Y - rootNode.position.Y;
+                tridx = 0;
+                tridy = 0;
+                trildx = 0;
+                trildy = 0;
+                if (dx > 0)
+                    tridx = 1;
+                else if (dx < 0)
+                    tridx = -1;
+
+                if (dy > 0)
+                    tridy = 1;
+                else if (dy < 0)
+                    tridy = -1;
             }
             e.position = new Vector2(e.position.X - Math.Min(tridx, dx), e.position.Y - Math.Min(tridy, dy));
             ldx = dx;
@@ -88,14 +101,18 @@ namespace Remnants
             }
             else
             {
-                PathNode cur = rootNode;
+                PathNode n = new PathNode();
+                n.nextNode = rootNode;
+                n.position = pos;
+                rootNode = n;
+                /*PathNode cur = rootNode;
                 while(cur.nextNode != null)
                 {
                     cur = cur.nextNode;
                 }
                 PathNode toAdd = new PathNode();
                 toAdd.position = pos;
-                cur.nextNode = toAdd;
+                cur.nextNode = toAdd;*/
             }
         }
     }

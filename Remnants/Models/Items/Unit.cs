@@ -81,7 +81,7 @@ namespace Remnants
         {
             if(followedPath == null)
             {
-                Vector2 target = new Vector2(position.X - (64 * 5), position.Y);
+                Vector2 target = new Vector2(position.X - (64 * 5), position.Y + 64);
                 if(l.isPositionValid(target))
                     followedPath = l.getPathToLocation(position, target);
             }

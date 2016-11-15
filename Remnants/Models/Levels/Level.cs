@@ -105,8 +105,9 @@ namespace Remnants
                 q.Enqueue(cur);
                 cur = cur.last;
             }
-            foreach(tileCoords t in q)
+            while(q.Count > 0)
             {
+                tileCoords t = q.Dequeue();
                 ret.addNode(new Vector2(t.x * 64 + 32, t.y * 64 + 32));
             }
             return ret;
