@@ -119,6 +119,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Effects\Animation.cs" />
+    <Compile Include="Models\Items\Buildings\AntimatterCreationLab.cs" />
+    <Compile Include="Models\Items\Buildings\NuclearPlant.cs" />
+    <Compile Include="Models\Items\Buildings\NuclearMine.cs" />
+    <Compile Include="Models\Items\Buildings\NuclearStorage.cs" />
+    <Compile Include="Models\Items\Buildings\AntimatterGenerator.cs" />
+    <Compile Include="Models\Items\Buildings\AntimatterContainmentUnit.cs" />
+    <Compile Include="Models\Items\HealthBar.cs" />
+    <Compile Include="Models\Items\Units\DefaultAlien.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -201,6 +209,50 @@
     </None>
     <None Include="packages.config" />
     <None Include="Content\tiles\ore.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\units\unnamed_alien\unnamed_alien_sharpened.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\units\unnamed_alien\unnamed_alien_walk_left_spritesheet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\units\unnamed_alien\unnamed_alien_walk_right_spritesheet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\battery_large_spritesheet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\battery_medium_spritesheet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\battery_small_spritesheet.png" />
+    <None Include="Content\buildings\water_tower_spritesheet.png" />
+    <None Include="Content\buildings\antimatter_containment_unit_placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\antimatter_creation_lab_placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\antimatter_generator_placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\nuclear_mine_placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\nuclear_plant_placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\nuclear_storage_placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\health_bar_container.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\health_bar_pixel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\buildings\water_purification_spritesheet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
