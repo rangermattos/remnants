@@ -16,7 +16,7 @@ namespace Remnants
     float xOffset;
     float yOffset;
             /*/
-        Tile[][] tiles;
+        public Tile[][] tiles;
 
         public Map()
         {

@@ -10,6 +10,30 @@ using System;
 using System.Reflection;
 using Remnants.Models;
 
+internal class tileCoords
+{
+    public tileCoords(Vector2 vec)
+    {
+        x = (int)(vec.X / 64);
+        y = (int)(vec.Y / 64);
+    }
+    public tileCoords(tileCoords tc)
+    {
+        x = tc.x;
+        y = tc.y;
+    }
+    public int x, y;
+    public float gCost, fCost, hCost;
+    public tileCoords last;
+    public override int GetHashCode()
+    {
+        return x * 391939 + y;
+    }
+    public int getHCostTo(tileCoords tc)
+    {
+        return (Math.Abs(x - tc.x) * 10) + (Math.Abs(y - tc.y) * 10);
+    }
+}
 namespace Remnants
 {
     public class Level
@@ -71,8 +95,99 @@ namespace Remnants
             UI.Create(Content);
             //UI.Instance.isActive = true;
         }
-        public Path getPathToLocation(Vector2 position)
+        internal Path reconPath(tileCoords tc)
         {
+            tileCoords cur = tc;
+            Path ret = new Path();
+            Queue<tileCoords> q = new Queue<tileCoords>();
+            while(cur.last != null)
+            {
+                q.Enqueue(cur);
+                cur = cur.last;
+            }
+            foreach(tileCoords t in q)
+            {
+                ret.addNode(new Vector2(t.x * 64 + 32, t.y * 64 + 32));
+            }
+            return ret;
+        }
+        internal class offset
+        {
+            public int x, y;
+            public offset(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
+        internal offset[] neighbors = { new  offset(-1, -1), new offset(-1, 1), new offset(1, -1), new offset(1, 1) };
+        public Path getPathToLocation(Vector2 start, Vector2 goal)
+        {
+            HashSet<tileCoords> closedSet = new HashSet<tileCoords>();
+            Dictionary<tileCoords, tileCoords> openSet = new Dictionary<tileCoords, tileCoords>();
+            tileCoords s = new tileCoords(start);
+            tileCoords g = new tileCoords(goal);
+            openSet.Add(s, s);
+            //set start defaults
+            s.gCost = 0;
+            s.hCost = s.getHCostTo(g);
+            s.fCost = s.hCost;
+            //now for actaul A*
+            while(openSet.Count != 0)
+            {
+                tileCoords cur = null;
+                foreach(tileCoords tc in openSet.Keys)
+                {
+                    if(cur == null)
+                    {
+                        cur = tc;
+                    }
+                    else if(tc.fCost < cur.fCost)
+                    {
+                        cur = tc;
+                    }
+                }
+                if(cur.GetHashCode() == g.GetHashCode())
+                {
+                    return reconPath(cur);
+                }
+                //make tile closed
+                openSet.Remove(cur);
+                closedSet.Add(cur);
+                //add in neighbors
+                for(int i = 0; i < neighbors.Length; i++)
+                {
+                    tileCoords t = new tileCoords(cur);
+                    t.x += neighbors[i].x;
+                    t.y += neighbors[i].y;
+                    if(!closedSet.Contains(t) && t.x < map.tiles.Length && t.y < map.tiles[0].Length && t.x >= 0 && t.y >= 0 && map.tiles[t.x][t.y].canWalk)
+                    {
+                        float tgs = cur.gCost + 10;
+                        bool cont = true;
+                        if(!openSet.ContainsKey(t))
+                        {
+                            openSet.Add(t, t);
+                        }
+                        else
+                        {
+                            tileCoords n = openSet[t];
+                            if (tgs <= n.gCost)
+                            {
+                                cont = false;
+                            }
+                            else
+                                t = n;
+                        }
+                        if(cont)
+                        {
+                            t.last = cur;
+                            t.gCost = tgs;
+                            t.hCost = t.getHCostTo(g);
+                            t.fCost = t.gCost + t.hCost;
+                        }
+                    }
+                }
+            }
             return null;
         }
 

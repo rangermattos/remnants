@@ -17,7 +17,7 @@ namespace Remnants
         //team 2+ = NPC owned
         public int team = 0;
         float moveSpeed = 1.0f;
-
+        Path followedPath = null;
 		public Unit(ContentManager Content) : base(Content)
         {
             alpha = 1.0f;
@@ -53,7 +53,7 @@ namespace Remnants
         public virtual void Update(GameTime gameTime, Level l)
         {
             Vector2 lastPos = position;
-            position = new Vector2(position.X + moveSpeed, position.Y);
+            unitUpdate(gameTime, l);
             if (!l.isPositionValid(position))
             {
                 position = lastPos;
@@ -65,6 +65,18 @@ namespace Remnants
 			}
 			healthBar.position = new Vector2(position.X + width/2 - healthBar.container.Width/2, position.Y);
 			base.Update(gameTime);
+        }
+        //do your AI logics here, so that collision occurs at the valid time
+        public virtual void unitUpdate(GameTime gameTime, Level l)
+        {
+            if(followedPath == null)
+            {
+                followedPath = l.getPathToLocation(position, new Vector2(0, 0));
+            }
+            else
+            {
+                followedPath.followPath(this);
+            }
         }
     }
 }

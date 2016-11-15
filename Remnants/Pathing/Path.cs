@@ -10,8 +10,8 @@ namespace Remnants
 {
     class PathNode
     {
-        PathNode nextNode;
-        Vector3 position;
+        public PathNode nextNode = null;
+        public Vector2 position;
     }
     public class Path
     {
@@ -22,6 +22,25 @@ namespace Remnants
                 return false;
             
             return false;
+        }
+        public void addNode(Vector2 pos)
+        {
+            if(rootNode == null)
+            {
+                rootNode = new PathNode();
+                rootNode.position = pos;
+            }
+            else
+            {
+                PathNode cur = rootNode;
+                while(cur.nextNode != null)
+                {
+                    cur = cur.nextNode;
+                }
+                PathNode toAdd = new PathNode();
+                toAdd.position = pos;
+                cur.nextNode = toAdd;
+            }
         }
     }
 }
