@@ -42,7 +42,7 @@ namespace Remnants
         StorageDevice device;
         Map map;
         List<Building> buildings = new List<Building>();
-        List<Unit> units = new List<Unit>();
+        List<Unit> enemyUnits = new List<Unit>();
         SpriteFont font = MenuController.Instance.font;
 		float lastPopulationGrowth = 0f;
 		float meanGrowthTime = 10f;
@@ -55,7 +55,7 @@ namespace Remnants
             List<Entity> ret = new List<Entity>();
             //search entities first
             int dsq = range * range;
-            foreach(Unit i in units)
+            foreach(Unit i in enemyUnits)
             {
                 if(u != i && (u.position - i.position).LengthSquared() <= dsq)
                 {
@@ -201,7 +201,7 @@ namespace Remnants
         internal bool isPositionValid(Vector2 position)
         {
             Tile t = map.GetTile(position);
-            if (t == null || !t.canWalk)
+            if (t == null /*|| !t.canWalk*/)
                 return false;
             return true;
         }
@@ -272,11 +272,15 @@ namespace Remnants
                 UpdateBuildings(gameTime, p);
 
                 UpdatePopulation(gameTime);
-                if(units.Count == 0)
+
+                //if(enemyUnits.Count == 0)
+
+				// press U to spawn a unit
+				if (InputManager.Instance.PressRelease(Keys.U))
                 {
 					DefaultAlien testAlien = new DefaultAlien(Content);
 					testAlien.position = new Vector2(p.X, p.Y);
-					units.Add(testAlien);
+					enemyUnits.Add(testAlien);
                 }
                 UpdateUnits(gameTime, p);
             }
@@ -293,7 +297,7 @@ namespace Remnants
             {
                 b.Draw(spriteBatch);
             }
-            foreach(Unit u in units)
+            foreach(Unit u in enemyUnits)
             {
                 u.Draw(spriteBatch);
             }
@@ -308,7 +312,7 @@ namespace Remnants
             {
                 if (b.GetType().Name == "ShockTrap")
                 {
-                    b.Update(gameTime, p);
+					b.Update(gameTime, enemyUnits);
                 }
                 else
                 {
@@ -319,9 +323,15 @@ namespace Remnants
 
         public void UpdateUnits(GameTime gameTime, Vector2 p)
         {
-            foreach (Unit u in units)
+			for (int i = 0; i < enemyUnits.Count; i++)
             {
-                u.Update(gameTime, this);
+				enemyUnits[i].Update(gameTime, this);
+				if (enemyUnits[i].hp <= 0) // if dead, remove
+				{
+					enemyUnits.RemoveAt(i);
+					i--; // hack to go offset removal
+					UI.Instance.EnqueueMessage("Enemy killed");
+				}
             }
         }
 
@@ -350,7 +360,7 @@ namespace Remnants
                 {
                     throw;
                 }
-				if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.POP_PER_BUILDING))
+				if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.BUILDINGS_PER_POP))
 				{
 	                if (tempBuilding.Place(map))
                     {

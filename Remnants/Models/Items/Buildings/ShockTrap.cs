@@ -54,16 +54,33 @@ namespace Remnants
             base.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, Vector2 point)
+		public override void Update(GameTime gameTime, List<Unit> enemyUnits)
         {
-			if (status == (int)buildingStates.OPERATIONAL)
+			float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			lastDamageTime += deltaT;
+			if (status == (int)buildingStates.OPERATIONAL && enemyUnits.Count > 0 && lastDamageTime >= dmgInterval)
             {
-                if (WithinRange(point))
+				// find nearest unit
+				double minDist = double.MaxValue;
+				int minI = 0;
+				for (int i = 0; i < enemyUnits.Count; i++)
+				{
+					double dist;
+					if ((dist = (enemyUnits[i].position - range.Center).Length()) < minDist)
+					{
+						minDist = dist;
+						minI = i;
+					}
+				}
+
+				if (WithinRange(enemyUnits[minI].position))
                 {
                     if (lb == null)
                     {
-                        lb = new LightningBolt(position + new Vector2(texture.Width / 2, texture.Height / 2), point, Color.LightCyan);
+						lb = new LightningBolt(position + new Vector2(texture.Width / 2, texture.Height / 2), enemyUnits[minI].position, Color.LightCyan);
                     }
+					// deal damage
+					enemyUnits[minI].dealDamage(this);
                 }
                 if (lb != null)
                 {
@@ -73,6 +90,7 @@ namespace Remnants
                         lb = null;
                     }
                 }
+				lastDamageTime = 0f;
             }
 			else
 			{
@@ -80,6 +98,34 @@ namespace Remnants
 			}
             base.Update(gameTime);
         }
+		public override void Update(GameTime gameTime, Vector2 p)
+		{
+			float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			lastDamageTime += deltaT;
+			if (status == (int)buildingStates.OPERATIONAL)
+			{
+				if (WithinRange(p))
+				{
+					if (lb == null)
+					{
+						lb = new LightningBolt(position + new Vector2(texture.Width / 2, texture.Height / 2), p, Color.LightCyan);
+					}
+				}
+				if (lb != null)
+				{
+					lb.Update();
+					if (lb.Alpha <= 0)
+					{
+						lb = null;
+					}
+				}
+			}
+			else
+			{
+				lb = null;
+			}
+			base.Update(gameTime);
+		}
 
         public override void Draw(SpriteBatch spriteBatch)
         {

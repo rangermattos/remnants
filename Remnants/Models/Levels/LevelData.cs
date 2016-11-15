@@ -59,16 +59,17 @@ namespace Remnants
         public int wood;
         public int nuclear;
 
-        public List<buildingData> buildingList = new List<buildingData>();
+		public List<buildingData> buildingList = new List<buildingData>();
         public List<tileData> tileList = new List<tileData>();
         public List<int> resourceList;
         public List<int> resourceLimits;
 
-		public int POP_PER_BUILDING = 2;
+		public int BUILDINGS_PER_POP = 1;
 
         public Vector2 mapSize;
         
-        [NonSerialized]
+		[NonSerialized]
+		public List<Unit> enemyUnits = new List<Unit>();
         private static LevelData instance;
         public string[] resourceNames = new string[8] { "food", "water", "energy", "nuclear fuel", "antimatter", "wood", "metal", "population" };
 

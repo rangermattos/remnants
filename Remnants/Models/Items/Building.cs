@@ -134,6 +134,11 @@ namespace Remnants
 
         }
 
+		public virtual void Update(GameTime gameTime, List<Unit> enemyUnits)
+		{
+			
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			base.Draw(spriteBatch);
@@ -166,13 +171,14 @@ namespace Remnants
                     }
                 }
             }
-            //if they can, set all of these tiles canBuild variable to false so we can't overlap buildings
+            //if they can, set all of these tiles canBuild and canWalk variable to false so we can't overlap buildings
 
             for (int i = 0; i < tilesWide; i++)
             {
                 for (int j = 0; j < tilesHigh; j++)
                 {
                     map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild = false;
+					//map.GetTile(position + new Vector2(i * 64, j * 64)).canWalk = false;
                 }
             }
             for (int i = 0; i < 8; i++)
@@ -181,7 +187,7 @@ namespace Remnants
                 LevelData.Instance.resourceList[i] -= resourceCost[i];
             }
             //return true so level will build the building
-            SwapTileWalkBool(map);
+            //SwapTileWalkBool(map);
             return true;
         }
 

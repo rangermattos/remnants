@@ -17,8 +17,8 @@ namespace Remnants
         //team 2+ = NPC owned
         public int team = 0;
         float moveSpeed = 1.0f;
-        Path followedPath = null;
-        Texture2D pathNode, pathGoal;
+        protected Path followedPath = null;
+        protected Texture2D pathNode, pathGoal;
 		public Unit(ContentManager Content) : base(Content)
         {
             alpha = 1.0f;
@@ -33,7 +33,7 @@ namespace Remnants
             
         }
         //TURN THIS FALSE TO DISABLE SHOWING THE PATH A UNIT IS FINDING!
-        bool showPath = true;
+        bool showPath = false;
 		public override void Draw(SpriteBatch spriteBatch)
         {
             /*if (animated)
@@ -69,29 +69,20 @@ namespace Remnants
                 position = lastPos;
 			}
 
+			// update animation
 			if (animated)
 			{
 				currentAnimation.Update(gameTime);
 			}
+			// update healthbar position
 			healthBar.position = new Vector2(position.X + width/2 - healthBar.container.Width/2, position.Y);
+
 			base.Update(gameTime);
         }
         //do your AI logics here, so that collision occurs at the valid time
         public virtual void unitUpdate(GameTime gameTime, Level l)
         {
-            if(followedPath == null)
-            {
-                Vector2 target = new Vector2(position.X - (64 * 5), position.Y + 64);
-                if(l.isPositionValid(target))
-                    followedPath = l.getPathToLocation(position, target);
-            }
-            else
-            {
-                if(!followedPath.followPath(this))
-                {
-                    followedPath = null;
-                }
-            }
+            
         }
     }
 }
