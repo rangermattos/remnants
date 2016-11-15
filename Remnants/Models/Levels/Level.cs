@@ -237,6 +237,7 @@ namespace Remnants
                         tempBuilding.progressBar = new ProgressBar(Content, prog, prog);
                         tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
                         buildings.Add(tempBuilding);
+                        LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
                     }
 				}
 				else
@@ -389,6 +390,7 @@ namespace Remnants
         {
             foreach(Building b in buildings)
             {
+                LevelData.Instance.buildingList = new List<LevelData.buildingData>();
                 LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
 
