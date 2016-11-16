@@ -12,13 +12,12 @@ namespace Remnants
 {
     public class Unit : Entity
     {
-        //team 0 = AGGRESSIVE TO ALL
-        //team 1 = player owned
-        //team 2+ = NPC owned
-        public int team = 0;
         public float moveSpeed = 1.0f;
         protected Path followedPath = null;
         protected Texture2D pathNode, pathGoal;
+        protected Entity target;
+        protected float attackInterval = 1.0f;
+        protected float elapsedTimeSinceLastAttack = 0;
 		public Unit(ContentManager Content) : base(Content)
         {
             alpha = 1.0f;
@@ -33,7 +32,7 @@ namespace Remnants
             
         }
         //TURN THIS FALSE TO DISABLE SHOWING THE PATH A UNIT IS FINDING!
-        bool showPath = true;
+        bool showPath = false;
 		public override void Draw(SpriteBatch spriteBatch)
         {
             /*if (animated)
@@ -54,14 +53,15 @@ namespace Remnants
         }
         public override void Init()
         {
+            base.Init();
             this.hp = 100;
             this.hpMax = 100;
-            this.attackStrength = 10;
+            this.attackStrength = 100;
 			this.defenseStrength = 10;
-			base.Init();
         }
         public override void Update(GameTime gameTime, Level level)
         {
+            float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 lastPos = position;
             unitUpdate(gameTime, level);
             if (!level.isPositionValid(position))
@@ -82,16 +82,39 @@ namespace Remnants
         //do your AI logics here, so that collision occurs at the valid time
         public virtual void unitUpdate(GameTime gameTime, Level l)
         {
-            if(followedPath == null)
+            float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(followedPath == null && !(this.target != null && (position - this.target.position).LengthSquared() <= 64*64))
             {
-                Vector2 target = new Vector2(position.X + (5 * 64), position.Y);
-                followedPath = l.getPathToLocation(position, target);
+                if(this.target == null)
+                {
+                    this.target = l.getNearestEnemy(this, 64*40);
+                }
+                if(target != null)
+                    followedPath = l.getPathToLocation(position, this.target.position);
+                if (followedPath == null)
+                {
+                    Vector2 target = new Vector2(position.X + (5 * 64), position.Y);
+                    followedPath = l.getPathToLocation(position, target);
+                }
             }
-            else
+            else if(followedPath != null)
             {
                 if(!followedPath.followPath(this))
                 {
                     followedPath = null;
+                }
+            }
+            elapsedTimeSinceLastAttack += deltaT;
+            if(this.target != null && (position - this.target.position).LengthSquared() <= 64*64 && elapsedTimeSinceLastAttack >= attackInterval)
+            {
+                elapsedTimeSinceLastAttack = 0;
+                this.target.dealDamage(this);
+            }
+            if(this.target != null)
+            {
+                if(this.target.hp <= 0)
+                {
+                    this.target = null;
                 }
             }
         }

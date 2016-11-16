@@ -50,21 +50,56 @@ namespace Remnants
 		float elapsedConsumptionTime = 0f;
         public bool paused = false;
 
-        public List<Entity> getNearbyEntities(Unit u, int range)
+        public List<Entity> getNearbyEntities(Entity u, float range)
         {
             List<Entity> ret = new List<Entity>();
             //search entities first
-            int dsq = range * range;
+            float dsq = range * range;
             foreach(Unit i in enemyUnits)
             {
-                if(u != i && (u.position - i.position).LengthSquared() <= dsq)
+                if (u != i && (u.position - i.position).LengthSquared() <= dsq)
+                {
+                    ret.Add(i);
+                }
+            }
+            foreach(Building i in buildings)
+            {
+                if (u != i && (u.position - i.position).LengthSquared() <= dsq)
                 {
                     ret.Add(i);
                 }
             }
             return ret;
         }
-
+        public List<Entity> getNearbyEnemies(Entity e, float range)
+        {
+            List<Entity> res = getNearbyEntities(e, range);
+            List<Entity> ret = new List<Entity>();
+            foreach(Entity ent in res)
+            {
+                if(ent.team != e.team)
+                {
+                    ret.Add(ent);
+                }
+            }
+            return ret;
+        }
+        public Entity getNearestEnemy(Entity e, float maxRange)
+        {
+            List<Entity> toCheck = getNearbyEnemies(e, maxRange);
+            float minDist = float.MaxValue;
+            Entity ret = null;
+            foreach (Entity ent in toCheck)
+            {
+                float dist = (ent.position - e.position).LengthSquared();
+                if (dist < minDist)
+                {
+                    ret = ent;
+                    minDist = dist;
+                }
+            }
+            return ret;
+        }
         public Level()
         {
             LevelData.Instance.InitValues();
@@ -313,10 +348,17 @@ namespace Remnants
 
         public void UpdateBuildings(GameTime gameTime, Vector2 p)
         {
-            foreach (Building b in buildings)
+            for (int i = 0; i < buildings.Count; i++)
             {
                 //unified update.... finally..... ...... ..... ......
+                Building b = buildings[i];
 				b.Update(gameTime, this);
+                if(b.hp <= 0)
+                {
+                    buildings.RemoveAt(i);
+                    i--;
+                    UI.Instance.EnqueueMessage("your " + b.name + " was destroyed");
+                }
             }
         }
 

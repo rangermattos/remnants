@@ -14,6 +14,10 @@ namespace Remnants.Models
     {
         //GlobalDamage as defined in the GDD
         public static float GLOBAL_DAMAGE = 10.0f;
+        //team 0 = AGGRESSIVE TO ALL
+        //team 1 = player owned
+        //team 2+ = NPC owned
+        public int team = 0;
         //used to show damage as a smooth missing chunk, rather than just dissapearing immediatly
         public float barhp;
         public float hp;
@@ -54,6 +58,7 @@ namespace Remnants.Models
         public void dealDamage(Entity attacker)
         {
             float damage = (attacker.attackStrength / defenseStrength) * GLOBAL_DAMAGE;
+            Console.Out.WriteLine("dealing " + damage + " damage attack str : " + attacker.attackStrength + " defense stregngth : " + defenseStrength);
             hp -= damage;
         }
 

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System;
+using Remnants.Models;
 
 namespace Remnants
 {
@@ -27,7 +28,7 @@ namespace Remnants
             tilesWide = 1;
             tilesHigh = 1;
             position = pos;
-            buildTime = 10f;
+            buildTime = 0f;//10f;
 			resourceUsage[(int)resources.ENERGY] = 10;
             //metalCost = 100;
             //energyCost = 100;
@@ -126,6 +127,18 @@ namespace Remnants
 			{
 				lb = null;
 			}
+            //find nearby enemies to attack
+            lastDamageTime += deltaT;
+            if (status == (int)buildingStates.OPERATIONAL && lastDamageTime >= dmgInterval)
+            {
+                lastDamageTime = 0;
+                List<Entity> toAttack = level.getNearbyEnemies(this, 64*5);
+                foreach (Entity e in toAttack)
+                {
+                    e.dealDamage(this);
+                    Console.Out.WriteLine("DAMAGING UNIT!");
+                }
+            }
 			base.Update(gameTime, level);
 		}
 

@@ -25,6 +25,7 @@ namespace Remnants
 
 		public Building(ContentManager Content) : base(Content)
         {
+            team = 1;
             resourceGain = new int[8];
 			resourceUsage = new int[8];
             resourceCost = new int[8];
