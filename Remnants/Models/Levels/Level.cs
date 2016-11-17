@@ -354,10 +354,18 @@ namespace Remnants
                 Building b = buildings[i];
 				b.Update(gameTime, this);
                 if(b.hp <= 0)
-                {
+				{
+					// set tiles to be buildable again
+					for (int j = 0; j < b.tilesWide; j++)
+					{
+						for (int k = 0; k < b.tilesHigh; k++)
+						{
+							map.GetTile(b.position + new Vector2(j * 64, k * 64)).canBuild = true;
+						}
+					}
                     buildings.RemoveAt(i);
                     i--;
-                    UI.Instance.EnqueueMessage("your " + b.name + " was destroyed");
+                    UI.Instance.EnqueueMessage("Your " + b.name + " was destroyed");
                 }
             }
         }

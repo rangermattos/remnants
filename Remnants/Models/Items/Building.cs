@@ -158,6 +158,7 @@ namespace Remnants
                     }
                     if (!map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild)
                     {
+						UI.Instance.EnqueueMessage("Cannot construct building on that location");
                         return false;
                     }
                 }
