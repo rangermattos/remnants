@@ -22,6 +22,7 @@ namespace Remnants
         public int status = -1;
 		public enum buildingStates { CONSTRUCTING, OPERATIONAL, IDLE, DISABLED };
         public ProgressBar progressBar;
+		protected bool canDisable = true;
 
 		public Building(ContentManager Content) : base(Content)
         {
@@ -207,32 +208,34 @@ namespace Remnants
 
 		public void enable()
 		{
+			if (isConstructing() || !canDisable)
+			{
+				return;
+			}
+
 			// enable storage
 			for (int i = 0; i < 7; i++) // exclude pop
 			{
 				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
 			}
 
-			if (isConstructing())
-			{
-				return;
-			}
 			mask = Color.White;
 			status = (int)buildingStates.OPERATIONAL;
 		}
 
 		public void disable()
 		{
+			if (isConstructing() || !canDisable)
+			{
+				return;
+			}
+
 			// disable storage
 			for (int i = 0; i < 7; i++) // exclude pop
 			{
 				LevelData.Instance.resourceLimits[i] -= resourceStorage[i];
 			}
 
-			if (isConstructing())
-			{
-				return;
-			}
 			mask = Color.Red;
 			status = (int)buildingStates.DISABLED;
 		}
