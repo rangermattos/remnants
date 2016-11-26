@@ -33,21 +33,21 @@ namespace Remnants
 			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenus(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
 			UIItemList[1].active = true;
             //food
-            AddItem(LevelData.Instance.resourceList[0], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.FOOD], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
             //water
-            AddItem(LevelData.Instance.resourceList[1], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.WATER], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
             //energy
-            AddItem(LevelData.Instance.resourceList[2], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.ENERGY], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
             //antimatter
-            AddItem(LevelData.Instance.resourceList[3], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.ANTIMATTER], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
             //nuclear
-            AddItem(LevelData.Instance.resourceList[4], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.NUCLEAR], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
             //wood
-            AddItem(LevelData.Instance.resourceList[5], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.WOOD], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
             //Metal
-            AddItem(LevelData.Instance.resourceList[6], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.METAL], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
             //Population
-            AddItem(LevelData.Instance.resourceList[7], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
+			AddItem(LevelData.Instance.resourceList[(int)resources.POP], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
 
             //construction popupmenu
             Vector2 temp = Vector2.Transform(new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2)), Camera.Instance.viewportScale);

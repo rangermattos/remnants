@@ -15,7 +15,7 @@ namespace Remnants
 			buildTime = 10f;
 			resourceCost[(int)resources.ENERGY] = 100;
 			resourceCost[(int)resources.METAL] = 100;
-			resourceStorage[(int)resources.FOOD] = 200;
+			resourceStorage[(int)resources.NUCLEAR] = 200;
 			resourceUsage[(int)resources.ENERGY] = 2;
 
 			LoadContent(Content);

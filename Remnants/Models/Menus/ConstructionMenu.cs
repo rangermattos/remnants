@@ -35,6 +35,12 @@ namespace Remnants
             l.Add("Granary");
             l.Add("Water Tower");
             l.Add("Warehouse");
+			l.Add("Antimatter Containment Unit");
+			l.Add("Antimatter Creation Lab");
+			l.Add("Antimatter Generator");
+			l.Add("Nuclear Mine");
+			l.Add("Nuclear Plant");
+			l.Add("Nuclear Storage");
 
             float ftotHeight = 0f;
             float fmaxWidth = 0f;
