@@ -207,6 +207,12 @@ namespace Remnants
 
 		public void enable()
 		{
+			// enable storage
+			for (int i = 0; i < 7; i++) // exclude pop
+			{
+				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
+			}
+
 			if (isConstructing())
 			{
 				return;
@@ -217,6 +223,12 @@ namespace Remnants
 
 		public void disable()
 		{
+			// disable storage
+			for (int i = 0; i < 7; i++) // exclude pop
+			{
+				LevelData.Instance.resourceLimits[i] -= resourceStorage[i];
+			}
+
 			if (isConstructing())
 			{
 				return;
