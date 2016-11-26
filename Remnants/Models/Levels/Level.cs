@@ -409,7 +409,8 @@ namespace Remnants
                 {
                     throw;
                 }
-				if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.BUILDINGS_PER_POP))
+				if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.BUILDINGS_PER_POP)
+					|| tempBuilding is SmallHouse || tempBuilding is MediumHouse || tempBuilding is LargeHouse)
 				{
 	                if (tempBuilding.Place(map))
                     {
@@ -423,7 +424,7 @@ namespace Remnants
 				}
 				else
 				{
-					UI.Instance.EnqueueMessage("Insufficient population to support new building");
+					UI.Instance.EnqueueMessage("Insufficient population to support new building, try building some housing");
 				}
             }
             if (InputManager.Instance.RightPressRelease())
