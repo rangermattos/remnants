@@ -19,9 +19,10 @@ namespace Remnants
         private ConstructionMenu()
         {
             scale = 0.3f;
-            List<string> l = new List<string>();
+			List<string> l = new List<string>();
+			l.Add("Lander Base");
+			l.Add("Shock Trap");
             l.Add("Solar Panel");
-            l.Add("Shock Trap");
             l.Add("Wind Turbine");
             l.Add("Small Battery Facility");
             l.Add("Medium Battery Facility");

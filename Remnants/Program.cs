@@ -21,7 +21,8 @@ namespace Remnants
 
             catch (Exception e)
             {
-                System.Windows.Forms.MessageBox.Show(e.ToString());
+				Console.Write(e.ToString());
+                //System.Windows.Forms.MessageBox.Show(e.ToString());
             }
         }
     }
