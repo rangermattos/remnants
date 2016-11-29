@@ -149,20 +149,9 @@ namespace Remnants
                 return false;
 			}
             //check that all tiles the building will be on can be built on
-            for(int i = 0; i < tilesWide; i++)
+            if (!CanPlace(map))
             {
-                for(int j = 0; j < tilesHigh; j++)
-                {
-                    if(map.GetTile(position + new Vector2(i * 64, j * 64)) == null)
-                    {
-                        return false;
-                    }
-                    if (!map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild)
-                    {
-						UI.Instance.EnqueueMessage("Cannot construct building on that location");
-                        return false;
-                    }
-                }
+                return false;
             }
             //if they can, set all of these tiles canBuild and canWalk variable to false so we can't overlap buildings
 
@@ -181,6 +170,25 @@ namespace Remnants
             }
             //return true so level will build the building
             //SwapTileWalkBool(map);
+            return true;
+        }
+
+        public bool CanPlace(Map map)
+        {
+            for (int i = 0; i < tilesWide; i++)
+            {
+                for (int j = 0; j < tilesHigh; j++)
+                {
+                    if (map.GetTile(position + new Vector2(i * 64, j * 64)) == null)
+                    {
+                        return false;
+                    }
+                    if (!map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild)
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 

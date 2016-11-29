@@ -49,57 +49,11 @@ namespace Remnants
 		int[] populationGrowthCost = new int[8] { 20, 20, 0, 0, 0, 0, 0, 0 };
 		float elapsedConsumptionTime = 0f;
         public bool paused = false;
+        Texture2D buildingPlacementTexture;
+        Color placementMask;
+        float placementAlpha = 0.65f;
+        Building tempBuilding;
 
-        public List<Entity> getNearbyEntities(Entity u, float range)
-        {
-            List<Entity> ret = new List<Entity>();
-            //search entities first
-            float dsq = range * range;
-            foreach(Unit i in enemyUnits)
-            {
-                if (u != i && (u.position - i.position).LengthSquared() <= dsq)
-                {
-                    ret.Add(i);
-                }
-            }
-            foreach(Building i in buildings)
-            {
-                if (u != i && (u.position - i.position).LengthSquared() <= dsq)
-                {
-                    ret.Add(i);
-                }
-            }
-            return ret;
-        }
-        public List<Entity> getNearbyEnemies(Entity e, float range)
-        {
-            List<Entity> res = getNearbyEntities(e, range);
-            List<Entity> ret = new List<Entity>();
-            foreach(Entity ent in res)
-            {
-                if(ent.team != e.team)
-                {
-                    ret.Add(ent);
-                }
-            }
-            return ret;
-        }
-        public Entity getNearestEnemy(Entity e, float maxRange)
-        {
-            List<Entity> toCheck = getNearbyEnemies(e, maxRange);
-            float minDist = float.MaxValue;
-            Entity ret = null;
-            foreach (Entity ent in toCheck)
-            {
-                float dist = (ent.position - e.position).LengthSquared();
-                if (dist < minDist)
-                {
-                    ret = ent;
-                    minDist = dist;
-                }
-            }
-            return ret;
-        }
         public Level()
         {
             LevelData.Instance.InitValues();
@@ -130,118 +84,7 @@ namespace Remnants
             UI.Create(Content);
             //UI.Instance.isActive = true;
         }
-        internal Path reconPath(tileCoords tc)
-        {
-            tileCoords cur = tc;
-            Path ret = new Path();
-            Queue<tileCoords> q = new Queue<tileCoords>();
-            while(cur.last != null)
-            {
-                //q.Enqueue(cur);
-                ret.addNode(new Vector2(cur.x * 64 + 32, cur.y * 64 + 32));
-                cur = cur.last;
-            }
-            /*while(q.Count > 0)
-            {
-                tileCoords t = q.Dequeue();
-                
-            }*/
-            return ret;
-        }
-        internal class offset
-        {
-            public int x, y;
-            public offset(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-        }
-        internal offset[] neighbors = { new  offset(-1, 0), new offset(1, 0), new offset(0, -1), new offset(0, 1) };
-        public Path getPathToLocation(Vector2 start, Vector2 goal)
-        {
-            Console.Out.WriteLine("Pathing to location...." + goal + " from " + start);
-            Dictionary<int, tileCoords> closedSet = new Dictionary<int, tileCoords>();
-            Dictionary<int, tileCoords> openSet = new Dictionary<int, tileCoords>();
-            tileCoords s = new tileCoords(start);
-            tileCoords g = new tileCoords(goal);
-            openSet.Add(s.GetHashCode(), s);
-            //set start defaults
-            s.gCost = 0;
-            s.hCost = s.getHCostTo(g);
-            s.fCost = s.hCost;
-            //now for actaul A*
-            while(openSet.Count != 0)
-            {
-                //Console.Out.WriteLine("iteration!");
-                tileCoords cur = null;
-                foreach(tileCoords tc in openSet.Values)
-                {
-                    if(cur == null)
-                    {
-                        cur = tc;
-                    }
-                    else if(tc.fCost < cur.fCost)
-                    {
-                        cur = tc;
-                    }
-                }
-                if(cur.GetHashCode() == g.GetHashCode())
-                {
-                    Console.Out.WriteLine("PATH FOUND!");
-                    return reconPath(cur);
-                }
-                //make tile closed
-                openSet.Remove(cur.GetHashCode());
-                closedSet.Add(cur.GetHashCode(), cur);
-                //Console.Out.WriteLine("testing cur " + cur.x + ", " + cur.y);
-                //add in neighbors
-                for (int i = 0; i < neighbors.Length; i++)
-                {
-                    tileCoords t = new tileCoords(cur);
-                    t.x += neighbors[i].x;
-                    t.y += neighbors[i].y;
-                    //Console.Out.WriteLine("testing "+ t.x + ", " + t.y);
-                    if(!closedSet.ContainsKey(t.GetHashCode()) && t.x < map.tiles.Length && t.y < map.tiles[0].Length && t.x >= 0 && t.y >= 0 && map.tiles[t.x][t.y].canWalk)
-                    {
-                        float tgs = cur.gCost + 10;
-                        bool cont = true;
-                        if(!openSet.ContainsKey(t.GetHashCode()))
-                        {
-                            openSet.Add(t.GetHashCode(), t);
-                        }
-                        else
-                        {
-                            tileCoords n = openSet[t.GetHashCode()];
-                            if (tgs <= n.gCost)
-                            {
-                                cont = false;
-                            }
-                            else
-                                t = n;
-                        }
-                        if(cont)
-                        {
-                            t.last = cur;
-                            t.gCost = tgs;
-                            t.hCost = t.getHCostTo(g);
-                            t.fCost = t.gCost + t.hCost;
-                        }
-                    }
-                }
-            }
-            Console.Out.WriteLine("Path not found!");
-            return null;
-        }
-
-        internal bool isPositionValid(Vector2 position)
-        {
-            Tile t = map.GetTile(position);
-            if (t == null || !t.canWalk)
-                return false;
-            return true;
-        }
-
+        
         void LoadBuildings(ContentManager Content)
         {
             object[] po = new object[2];
@@ -287,10 +130,6 @@ namespace Remnants
             //game.Content.Unload();
         }
 
-        public Vector2 getCameraVector()
-        {
-            return Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
-        }
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
@@ -333,6 +172,11 @@ namespace Remnants
         {
             spriteBatch.Begin(transformMatrix: Camera.Instance.cam.GetViewMatrix());
             map.Draw(spriteBatch);
+            if(tempBuilding != null)
+            {
+                //draw indicator of where building will be placed
+                spriteBatch.Draw(tempBuilding.texture, tempBuilding.position, placementMask * placementAlpha);
+            }
             foreach (Building b in buildings)
             {
                 b.Draw(spriteBatch);
@@ -344,6 +188,11 @@ namespace Remnants
             spriteBatch.End();
 
             UI.Instance.Draw(spriteBatch);
+        }
+
+        public Vector2 getCameraVector()
+        {
+            return Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
         }
 
         public void UpdateBuildings(GameTime gameTime, Vector2 p)
@@ -387,29 +236,48 @@ namespace Remnants
         public void CheckBuilding(Vector2 p, ContentManager Content)
         {
             string buildingString = UI.Instance.buildingSelected;
-            if (buildingString != "" && InputManager.Instance.LeftPressRelease())
+
+            if (tempBuilding != null)
             {
-                //gets the mouses position in the world and sets it in p
-                //get the tile x and y position
+                //update position of temp building which is used in placement indicator
                 int x = (int)Math.Floor(p.X / 64);
                 int y = (int)Math.Floor(p.Y / 64);
                 //scale back up, p will now be in line with the tiles
                 p = new Vector2(x * 64f, y * 64f);
+                tempBuilding.position = p;
+                //if it can't be placed in that spot, give it a red hue
+                if (tempBuilding.CanPlace(map))
+                {
+                    placementMask = Color.White;
+                }
+                else
+                {
+                    placementMask = Color.Red;
+                }
+            }
 
-                object[] po = new object[2];
-                po[0] = Content;
-                po[1] = p;
-                Building tempBuilding;
-                try
+            if (buildingString != "")
+            {
+                //if we change our selected building to be build, make a new temp building
+                if (tempBuilding == null)
                 {
-                    //magic?
-                    tempBuilding = (Building)Activator.CreateInstance(Type.GetType("Remnants." + buildingString), po);
+                    newTempBuilding(p, Content);
                 }
-                catch (Exception)
+                else if (("Remnants." + buildingString) != tempBuilding.GetType().ToString())
                 {
-                    throw;
+                    newTempBuilding(p, Content);
                 }
-				if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.BUILDINGS_PER_POP)
+            }
+            else if(buildingString == "")
+            {
+                buildingPlacementTexture = null;
+            }
+            if (buildingString != "" && InputManager.Instance.LeftPressRelease() )
+            {
+                tempBuilding = null;
+                newTempBuilding(p, Content);
+
+                if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.BUILDINGS_PER_POP)
 					|| tempBuilding is SmallHouse || tempBuilding is MediumHouse || tempBuilding is LargeHouse)
 				{
 	                if (tempBuilding.Place(map))
@@ -420,6 +288,11 @@ namespace Remnants
                         tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
                         buildings.Add(tempBuilding);
                         LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
+                        tempBuilding = null;
+                    }
+                    else
+                    {
+                        UI.Instance.EnqueueMessage("Cannot construct building on that location");
                     }
 				}
 				else
@@ -432,11 +305,90 @@ namespace Remnants
                 //if right click, no building selected, and close building selection menu
                 UI.Instance.buildingSelected = "";
                 UI.Instance.UIItemList[10].active = false;
+                buildingPlacementTexture = null;
+                tempBuilding = null;
                 MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
             }
         }
 
-		public void UpdatePopulation(GameTime gameTime)
+        void newTempBuilding(Vector2 p, ContentManager Content)
+        {
+            //gets the mouses position in the world and sets it in p
+            //get the tile x and y position
+            int x = (int)Math.Floor(p.X / 64);
+            int y = (int)Math.Floor(p.Y / 64);
+            //scale back up, p will now be in line with the tiles
+            p = new Vector2(x * 64f, y * 64f);
+            object[] po = new object[2];
+            po[0] = Content;
+            po[1] = p;
+            try
+            {
+                //magic?
+                tempBuilding = (Building)Activator.CreateInstance(Type.GetType("Remnants." + UI.Instance.buildingSelected), po);
+                buildingPlacementTexture = tempBuilding.texture;
+                placementMask = Color.Red;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<Entity> getNearbyEntities(Entity u, float range)
+        {
+            List<Entity> ret = new List<Entity>();
+            //search entities first
+            float dsq = range * range;
+            foreach (Unit i in enemyUnits)
+            {
+                if (u != i && (u.position - i.position).LengthSquared() <= dsq)
+                {
+                    ret.Add(i);
+                }
+            }
+            foreach (Building i in buildings)
+            {
+                if (u != i && (u.position - i.position).LengthSquared() <= dsq)
+                {
+                    ret.Add(i);
+                }
+            }
+            return ret;
+        }
+
+        public List<Entity> getNearbyEnemies(Entity e, float range)
+        {
+            List<Entity> res = getNearbyEntities(e, range);
+            List<Entity> ret = new List<Entity>();
+            foreach (Entity ent in res)
+            {
+                if (ent.team != e.team)
+                {
+                    ret.Add(ent);
+                }
+            }
+            return ret;
+        }
+
+        public Entity getNearestEnemy(Entity e, float maxRange)
+        {
+            List<Entity> toCheck = getNearbyEnemies(e, maxRange);
+            float minDist = float.MaxValue;
+            Entity ret = null;
+            foreach (Entity ent in toCheck)
+            {
+                float dist = (ent.position - e.position).LengthSquared();
+                if (dist < minDist)
+                {
+                    ret = ent;
+                    minDist = dist;
+                }
+            }
+            return ret;
+        }
+
+        public void UpdatePopulation(GameTime gameTime)
 		{
 			var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			elapsedConsumptionTime += deltaT;
@@ -488,7 +440,122 @@ namespace Remnants
 			}
 		}
 
-		public void EnableOrDisableBuilding(Vector2 p)
+        internal Path reconPath(tileCoords tc)
+        {
+            tileCoords cur = tc;
+            Path ret = new Path();
+            Queue<tileCoords> q = new Queue<tileCoords>();
+            while (cur.last != null)
+            {
+                //q.Enqueue(cur);
+                ret.addNode(new Vector2(cur.x * 64 + 32, cur.y * 64 + 32));
+                cur = cur.last;
+            }
+            /*while(q.Count > 0)
+            {
+                tileCoords t = q.Dequeue();
+                
+            }*/
+            return ret;
+        }
+
+        internal class offset
+        {
+            public int x, y;
+            public offset(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        internal offset[] neighbors = { new offset(-1, 0), new offset(1, 0), new offset(0, -1), new offset(0, 1) };
+
+        public Path getPathToLocation(Vector2 start, Vector2 goal)
+        {
+            //Console.Out.WriteLine("Pathing to location...." + goal + " from " + start);
+            Dictionary<int, tileCoords> closedSet = new Dictionary<int, tileCoords>();
+            Dictionary<int, tileCoords> openSet = new Dictionary<int, tileCoords>();
+            tileCoords s = new tileCoords(start);
+            tileCoords g = new tileCoords(goal);
+            openSet.Add(s.GetHashCode(), s);
+            //set start defaults
+            s.gCost = 0;
+            s.hCost = s.getHCostTo(g);
+            s.fCost = s.hCost;
+            //now for actaul A*
+            while (openSet.Count != 0)
+            {
+                //Console.Out.WriteLine("iteration!");
+                tileCoords cur = null;
+                foreach (tileCoords tc in openSet.Values)
+                {
+                    if (cur == null)
+                    {
+                        cur = tc;
+                    }
+                    else if (tc.fCost < cur.fCost)
+                    {
+                        cur = tc;
+                    }
+                }
+                if (cur.GetHashCode() == g.GetHashCode())
+                {
+                    //Console.Out.WriteLine("PATH FOUND!");
+                    return reconPath(cur);
+                }
+                //make tile closed
+                openSet.Remove(cur.GetHashCode());
+                closedSet.Add(cur.GetHashCode(), cur);
+                //Console.Out.WriteLine("testing cur " + cur.x + ", " + cur.y);
+                //add in neighbors
+                for (int i = 0; i < neighbors.Length; i++)
+                {
+                    tileCoords t = new tileCoords(cur);
+                    t.x += neighbors[i].x;
+                    t.y += neighbors[i].y;
+                    //Console.Out.WriteLine("testing "+ t.x + ", " + t.y);
+                    if (!closedSet.ContainsKey(t.GetHashCode()) && t.x < map.tiles.Length && t.y < map.tiles[0].Length && t.x >= 0 && t.y >= 0 && map.tiles[t.x][t.y].canWalk)
+                    {
+                        float tgs = cur.gCost + 10;
+                        bool cont = true;
+                        if (!openSet.ContainsKey(t.GetHashCode()))
+                        {
+                            openSet.Add(t.GetHashCode(), t);
+                        }
+                        else
+                        {
+                            tileCoords n = openSet[t.GetHashCode()];
+                            if (tgs <= n.gCost)
+                            {
+                                cont = false;
+                            }
+                            else
+                                t = n;
+                        }
+                        if (cont)
+                        {
+                            t.last = cur;
+                            t.gCost = tgs;
+                            t.hCost = t.getHCostTo(g);
+                            t.fCost = t.gCost + t.hCost;
+                        }
+                    }
+                }
+            }
+            //Console.Out.WriteLine("Path not found!");
+            return null;
+        }
+
+        internal bool isPositionValid(Vector2 position)
+        {
+            Tile t = map.GetTile(position);
+            if (t == null || !t.canWalk)
+                return false;
+            return true;
+        }
+
+        public void EnableOrDisableBuilding(Vector2 p)
 		{
 			// if no building selected and m1 pressed
 			if (UI.Instance.buildingSelected == "" && InputManager.Instance.LeftPressRelease())
@@ -615,18 +682,5 @@ namespace Remnants
             container.Dispose();
         }
         
-        /*
-        void SetResources()
-        {
-            resourceList[0] = food;
-            resourceList[1] = water;
-            resourceList[2] = energy;
-            resourceList[3] = antimatter;
-            resourceList[4] = nuclear;
-            resourceList[5] = wood;
-            resourceList[6] = metal;
-            resourceList[7] = pop;
-        }
-        */
     }
 }
