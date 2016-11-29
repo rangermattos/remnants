@@ -53,6 +53,9 @@ namespace Remnants
         Color placementMask;
         float placementAlpha = 0.65f;
         Building tempBuilding;
+        double UnitSpawnTime = 45;
+        double timePassed = 40;
+        int spawnIterations = 0;
 
         public Level()
         {
@@ -133,6 +136,11 @@ namespace Remnants
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
+            timePassed += deltaT;
+            if(timePassed >= UnitSpawnTime)
+            {
+                spawnUnits(Content);
+            }
             //if (InputManager.Instance.SpacePressRelease())
             if (InputManager.Instance.PressRelease(Keys.Space))
             {
@@ -157,9 +165,6 @@ namespace Remnants
 				// press U to spawn a unit
 				if (InputManager.Instance.PressRelease(Keys.U))
                 {
-					DefaultAlien testAlien = new DefaultAlien(Content);
-					testAlien.position = new Vector2(p.X, p.Y);
-					enemyUnits.Add(testAlien);
                 }
                 UpdateUnits(gameTime, p);
             }
@@ -335,6 +340,22 @@ namespace Remnants
             }
         }
 
+        void spawnUnits(ContentManager Content)
+        {
+            var r = new Random();
+            spawnIterations++;
+            for (int i = 0; i < spawnIterations * 15; i++)
+            {
+                int x = r.Next(50);
+                int y = r.Next(50);
+                DefaultAlien testAlien = new DefaultAlien(Content);
+                //testAlien.position = Vector2.Zero;
+                testAlien.position = new Vector2((float) x, (float) y);
+                enemyUnits.Add(testAlien);
+            }
+            timePassed = 0;
+        }
+
         public List<Entity> getNearbyEntities(Entity u, float range)
         {
             List<Entity> ret = new List<Entity>();
@@ -356,7 +377,6 @@ namespace Remnants
             }
             return ret;
         }
-
         public List<Entity> getNearbyEnemies(Entity e, float range)
         {
             List<Entity> res = getNearbyEntities(e, range);
@@ -409,7 +429,7 @@ namespace Remnants
 						if (LevelData.Instance.checkResources(populationGrowthCost))
 						{
 							lastPopulationGrowth += elapsedConsumptionTime;
-							Console.Write("lastPopulationGrowth: " + lastPopulationGrowth + "\n");
+							//Console.Write("lastPopulationGrowth: " + lastPopulationGrowth + "\n");
 							double prob = 1 - Math.Pow(Math.E,-(lastPopulationGrowth/meanGrowthTime)); // exponential distribution
 							if (r.NextDouble() < prob)
 							{

@@ -39,7 +39,7 @@ namespace Remnants
             range.Center = position + new Vector2(texture.Width / 2, texture.Height / 2);
             range.Radius = 350f;
             //lb = new LightningBolt(Position + new Vector2(texture.Width / 2, texture.Height / 2), Position + new Vector2(200, 200), Color.LightCyan);
-			attackStrength = 10;
+			attackStrength = 25;
         }
 
         public override void LoadContent(ContentManager Content)
@@ -105,40 +105,39 @@ namespace Remnants
             Vector2 p = level.getCameraVector();
 			float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			lastDamageTime += deltaT;
-			if (status == (int)buildingStates.OPERATIONAL)
-			{
-				if (WithinRange(p))
-				{
-					if (lb == null)
-					{
-						lb = new LightningBolt(position + new Vector2(texture.Width / 2, texture.Height / 2), p, Color.LightCyan);
-					}
-				}
-				if (lb != null)
-				{
-					lb.Update();
-					if (lb.Alpha <= 0)
-					{
-						lb = null;
-					}
-				}
+            if (lb != null)
+            {
+                lb.Update();
+                if (lb.Alpha <= 0)
+                {
+                    lb = null;
+                }
+            }
+            if (status == (int)buildingStates.OPERATIONAL)
+            {
+                if (lastDamageTime >= dmgInterval)
+                {
+                    //find nearby enemies to attack
+                    lastDamageTime = 0;
+                    List<Entity> toAttack = level.getNearbyEnemies(this, 64 * 5);
+                    foreach (Entity e in toAttack)
+                    {
+                        if (WithinRange(e.position))
+                        {
+                            if (lb == null)
+                            {
+                                e.dealDamage(this);
+                                lb = new LightningBolt(position + new Vector2(texture.Width / 2, texture.Height / 2), e.position, Color.LightCyan);
+                            }
+                        }
+                        //Console.Out.WriteLine("DAMAGING UNIT!");
+                    }
+                }
 			}
 			else
 			{
 				lb = null;
 			}
-            //find nearby enemies to attack
-            lastDamageTime += deltaT;
-            if (status == (int)buildingStates.OPERATIONAL && lastDamageTime >= dmgInterval)
-            {
-                lastDamageTime = 0;
-                List<Entity> toAttack = level.getNearbyEnemies(this, 64*5);
-                foreach (Entity e in toAttack)
-                {
-                    e.dealDamage(this);
-                    Console.Out.WriteLine("DAMAGING UNIT!");
-                }
-            }
 			base.Update(gameTime, level);
 		}
 

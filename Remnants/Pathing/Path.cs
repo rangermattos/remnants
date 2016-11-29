@@ -26,7 +26,7 @@ namespace Remnants
             float dy = e.position.Y - rootNode.position.Y;
             if(Math.Abs(dx) < 3 && Math.Abs(dy) < 3)
             {
-                Console.Out.WriteLine("POPPING NODE!");
+                //Console.Out.WriteLine("POPPING NODE!");
                 //we passed the node, so pop it off, if this happens to be the last node, return false
                 rootNode = rootNode.nextNode;
                 if (rootNode == null)

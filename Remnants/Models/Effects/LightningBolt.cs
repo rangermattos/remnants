@@ -33,7 +33,7 @@ namespace Remnants
                 return;
 
             foreach (var segment in Segments)
-                segment.Draw(spriteBatch, Tint * (Alpha * 0.6f), h, l);
+                segment.Draw(spriteBatch, Tint * (Alpha), h, l);
         }
 
         public virtual void Update()
