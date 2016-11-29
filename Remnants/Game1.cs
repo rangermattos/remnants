@@ -103,10 +103,6 @@ namespace Remnants
 
         public void Quit()
         {
-            if (LevelController.Instance.levelOpen)
-            {
-                LevelController.Instance.SaveGame();
-            }
             UnloadContent();
             this.Exit();
         }

@@ -19,6 +19,7 @@ namespace Remnants
         System.Func<Game1, int> Action1;
         System.Func<Game1, MenuController, int> Action2;
         System.Func<string> Action3;
+        System.Func<int> Action4;
         MouseState prevState;
         bool offset = true;
         Building buildingRepresented;
@@ -55,6 +56,19 @@ namespace Remnants
             position = incposition;
             color = Color.White;
             Action1 = menuItemAction;
+        }
+
+        public MenuItem(string inctext, SpriteFont incfont, Vector2 incposition, System.Func<int> menuItemAction)
+        {
+            scale = 1f;
+            text = inctext;
+            font = incfont;
+            size = font.MeasureString(text) * scale;
+            origin = size * 0.5f;
+            alpha = 1.0f;
+            position = incposition;
+            color = Color.White;
+            Action4 = menuItemAction;
         }
         /*/
         public MenuItem(float scale, string inctext, SpriteFont incfont, Vector2 incposition, System.Func<int> menuItemAction)
@@ -139,6 +153,10 @@ namespace Remnants
                         string s = Action3();
                         Console.WriteLine("action 3 returning: " + s);
                         return s;
+                    }
+                    else if (Action4 != null)
+                    {
+                        Action4();
                     }
                 }
             }

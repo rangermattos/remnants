@@ -78,16 +78,16 @@ namespace Remnants
                         UnloadContent(ConstructionMenu.Instance);
                         return "";
                     }
-                    if (!MainMenu.Instance.isActive && !ConstructionMenu.Instance.isActive)
+                    if (!EscapeMenu.Instance.isActive && !ConstructionMenu.Instance.isActive)
                     {
-                        UI.Instance.isActive = false;
-                        SetMenu(MainMenu.Instance);
+                        LevelController.Instance.PauseGame();
+                        SetMenu(EscapeMenu.Instance);
                         return "";
                     }
-                    if (MainMenu.Instance.isActive && LevelController.Instance.levelOpen)
+                    if (EscapeMenu.Instance.isActive && LevelController.Instance.levelOpen)
                     {
-                        UnloadContent(MainMenu.Instance);
-                        UI.Instance.isActive = true;
+                        UnloadContent(EscapeMenu.Instance);
+                        LevelController.Instance.PauseGame();
                         return "";
                     }
                     else

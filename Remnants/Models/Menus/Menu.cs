@@ -42,6 +42,14 @@ namespace Remnants
             menuHeight += item.GetSize().Y;
             return 1;
         }
+
+        protected int AddItem(string text, SpriteFont font, Vector2 position, System.Func<int> menuItemAction)
+        {
+            MenuItem item = new MenuItem(text, font, position, menuItemAction);
+            menuItemList.Add(item);
+            menuHeight += item.GetSize().Y;
+            return 1;
+        }
         /*
         protected int AddItem(float scale, string text, SpriteFont font, Vector2 position, System.Func<int> menuItemAction)
         {

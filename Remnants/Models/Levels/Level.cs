@@ -136,11 +136,6 @@ namespace Remnants
         public void Update(GameTime gameTime, ContentManager Content)
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
-            timePassed += deltaT;
-            if(timePassed >= UnitSpawnTime)
-            {
-                spawnUnits(Content);
-            }
             //if (InputManager.Instance.SpacePressRelease())
             if (InputManager.Instance.PressRelease(Keys.Space))
             {
@@ -149,23 +144,24 @@ namespace Remnants
             LevelData.Instance.Update();
             UI.Instance.Update(gameTime);
             Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
-            if (!UI.Instance.MouseOverUI())
+            if (!EscapeMenu.Instance.isActive && !UI.Instance.MouseOverUI())
             {
                 CheckBuilding(p, Content);
+                EnableOrDisableBuilding(p);
             }
-            EnableOrDisableBuilding(p);
+
             if (!paused)
             {
+                timePassed += deltaT;
+                if (timePassed >= UnitSpawnTime)
+                {
+                    spawnUnits(Content);
+                }
+
                 UpdateBuildings(gameTime, p);
 
                 UpdatePopulation(gameTime);
-
-                //if(enemyUnits.Count == 0)
-
-				// press U to spawn a unit
-				if (InputManager.Instance.PressRelease(Keys.U))
-                {
-                }
+                
                 UpdateUnits(gameTime, p);
             }
 

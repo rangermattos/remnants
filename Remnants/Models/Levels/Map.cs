@@ -122,6 +122,7 @@ namespace Remnants
         {
             foreach (LevelData.tileData tile in LevelData.Instance.tileList)
             {
+                //tiles[tile.xPosition][tile.yPosition] = new Grass(Content);
                 if (tile.type == "Grass")
                     tiles[tile.xPosition][tile.yPosition] = new Grass(Content);
 				else if (tile.type == "Ore")

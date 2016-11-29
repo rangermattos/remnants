@@ -95,6 +95,11 @@ namespace Remnants
             instance = d;
         }
 
+        public void Reset()
+        {
+            instance = new LevelData();
+        }
+
         public void InitValues()
         {
             food = 10000;

@@ -76,7 +76,8 @@ namespace Remnants
         {
             if (instance != null)
             {
-                throw new Exception("Object already created");
+                return;
+                //throw new Exception("Object already created");
             }
             instance = new UI(Content);
         }

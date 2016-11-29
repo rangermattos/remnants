@@ -91,6 +91,11 @@ namespace Remnants
             currentLevel.SaveGame();
         }
 
+        public void PauseGame()
+        {
+            currentLevel.paused = !currentLevel.paused;
+        }
+
         public void LoadNewLevel(ContentManager Content)
         {
             LoadContent(Content);
@@ -113,6 +118,20 @@ namespace Remnants
             //set Camera.Instance.cam to center of map
             //Camera.Instance.cam.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y / 2);
             //set zoom
+
+            currentLevel.LoadContent(Content);
+            levelOpen = true;
+            //loading = true;
+            UI.Instance.isActive = true;
+        }
+
+        public void Restart(ContentManager Content)
+        {
+            LevelData.Instance.Reset();
+            levelOpen = false;
+            currentLevel = new Level();
+            //set Camera.Instance.cam to center of map
+            //Camera.Instance.cam.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
 
             currentLevel.LoadContent(Content);
             levelOpen = true;
