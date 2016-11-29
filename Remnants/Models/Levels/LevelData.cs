@@ -188,7 +188,7 @@ namespace Remnants
 			{
 				if (resourceList[i] < resourceUse[i])
 				{
-					UI.Instance.EnqueueMessage("Insufficient " + resourceNames[i]);
+					//UI.Instance.EnqueueMessage("Insufficient " + resourceNames[i]);
 					return false;
 				}
 			}

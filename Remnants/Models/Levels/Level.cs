@@ -646,11 +646,7 @@ namespace Remnants
             XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
 
             LevelData data = (LevelData)serializer.Deserialize(stream);
-            for (int i = 0; i < 8; i++)
-            {
-                Console.WriteLine(data.resourceList[i].ToString());
-                Console.WriteLine(data.resourceLimits[i].ToString());
-            }
+
             // Close the file.
             stream.Close();
             // Dispose the container.
@@ -663,10 +659,9 @@ namespace Remnants
             LevelData.Instance.buildingList = new List<LevelData.buildingData>();
             foreach (Building b in buildings)
             {
-                //LevelData.Instance.buildingList = new List<LevelData.buildingData>();
                 LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
-            Console.WriteLine("saving " + LevelData.Instance.buildingList.Count + "buildings");
+            //Console.WriteLine("saving " + LevelData.Instance.buildingList.Count + "buildings");
 
             for (int i = 0; i < 8; i++)
             {

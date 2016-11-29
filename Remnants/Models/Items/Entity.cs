@@ -58,7 +58,7 @@ namespace Remnants.Models
         public void dealDamage(Entity attacker)
         {
             float damage = (attacker.attackStrength / defenseStrength) * GLOBAL_DAMAGE;
-            Console.Out.WriteLine("dealing " + damage + " damage attack str : " + attacker.attackStrength + " defense stregngth : " + defenseStrength);
+            //Console.Out.WriteLine("dealing " + damage + " damage attack str : " + attacker.attackStrength + " defense stregngth : " + defenseStrength);
             hp -= damage;
         }
 
