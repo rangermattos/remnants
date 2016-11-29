@@ -82,6 +82,7 @@ namespace Remnants
 
             if(LevelData.Instance.buildingList.Count > 0)
             {
+                Console.WriteLine("loading " + LevelData.Instance.buildingList.Count + "buildings");
                 LoadBuildings(Content);
             }
             UI.Create(Content);
@@ -229,7 +230,7 @@ namespace Remnants
 				{
 					enemyUnits.RemoveAt(i);
 					i--; // hack to go offset removal
-					UI.Instance.EnqueueMessage("Enemy killed");
+					//UI.Instance.EnqueueMessage("Enemy killed");
 				}
             }
         }
@@ -342,12 +343,19 @@ namespace Remnants
             spawnIterations++;
             for (int i = 0; i < spawnIterations * 15; i++)
             {
-                int x = r.Next(50);
-                int y = r.Next(50);
-                DefaultAlien testAlien = new DefaultAlien(Content);
-                //testAlien.position = Vector2.Zero;
-                testAlien.position = new Vector2((float) x, (float) y);
-                enemyUnits.Add(testAlien);
+                int x = r.Next(200);
+                int y = r.Next(200);
+                Vector2 va = new Vector2((float)x, (float)y);
+                if (isPositionValid(va)) {
+                    DefaultAlien testAlien = new DefaultAlien(Content);
+                    //testAlien.position = Vector2.Zero;
+                    testAlien.position = va;
+                    enemyUnits.Add(testAlien);
+                }
+                else
+                {
+                    i--;
+                }
             }
             timePassed = 0;
         }
@@ -614,8 +622,7 @@ namespace Remnants
             device = getStorageDevice();
 
             // Open a storage container.
-            IAsyncResult result =
-                device.BeginOpenContainer("StorageDemo", null, null);
+            IAsyncResult result = device.BeginOpenContainer("StorageDemo", null, null);
 
             // Wait for the WaitHandle to become signaled.
             result.AsyncWaitHandle.WaitOne();
@@ -653,11 +660,13 @@ namespace Remnants
 
         public void SaveGame()
         {
-            foreach(Building b in buildings)
+            LevelData.Instance.buildingList = new List<LevelData.buildingData>();
+            foreach (Building b in buildings)
             {
-                LevelData.Instance.buildingList = new List<LevelData.buildingData>();
+                //LevelData.Instance.buildingList = new List<LevelData.buildingData>();
                 LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
+            Console.WriteLine("saving " + LevelData.Instance.buildingList.Count + "buildings");
 
             for (int i = 0; i < 8; i++)
             {

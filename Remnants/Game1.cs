@@ -103,7 +103,7 @@ namespace Remnants
 
         public void Quit()
         {
-            UnloadContent();
+            //UnloadContent();
             this.Exit();
         }
 

@@ -69,7 +69,6 @@ namespace Remnants
         public Vector2 mapSize;
         
 		[NonSerialized]
-		public List<Unit> enemyUnits = new List<Unit>();
         private static LevelData instance;
         public string[] resourceNames = new string[8] { "food", "water", "energy", "nuclear fuel", "antimatter", "wood", "metal", "population" };
 
