@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		Animation walkLeftAnimation;
 		Animation walkRightAnimation;
+		bool right;
 
 		public DefaultAlien (ContentManager Content) : base(Content)
 		{
@@ -17,7 +18,8 @@ namespace Remnants
 			animated = true;
 			walkLeftAnimation = new Animation(Content, "units/unnamed_alien/unnamed_alien_walk_left_spritesheet", .25f, 4, width, height, true, false);
 			walkRightAnimation = new Animation(Content, "units/unnamed_alien/unnamed_alien_walk_right_spritesheet", .25f, 4, width, height, true, true);
-			currentAnimation = walkLeftAnimation;
+			currentAnimation = walkRightAnimation;
+			right = true;
 			LoadContent(Content);
 		}
 
@@ -29,19 +31,17 @@ namespace Remnants
 
 		public override void Update(GameTime gameTime, Level l)
 		{
-			if (position.X > lastPos.X)
+			if (position.X > lastPos.X && !right)
 			{
 				// walking right
-				currentAnimation = walkRightAnimation;
-				Console.Write("Right: ");
-				currentAnimation.printDebugInfo();
+				right = true;
+				currentAnimation.Hflip = false;
 			}
-			else if (position.X < lastPos.X)
+			else if (position.X < lastPos.X && right)
 			{
 				// walking left
-				currentAnimation = walkLeftAnimation;
-				Console.Write("Left: ");
-				currentAnimation.printDebugInfo();
+				right = false;
+				currentAnimation.Hflip = true;
 			}
 			base.Update(gameTime, l);
 		}
