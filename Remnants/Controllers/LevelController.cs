@@ -16,6 +16,7 @@ namespace Remnants
         float loadTime = 5.0f;
         float elapsedLoadTime = 0.0f;
         SpriteFont font;
+        public int diff = 0;
 
         private static LevelController instance;
         private LevelController()
@@ -99,6 +100,7 @@ namespace Remnants
 
         public void LoadNewLevel(ContentManager Content)
         {
+            diff += LevelData.Instance.difficulty;
             LoadContent(Content);
             //send viewport and mapsize to Camera.Instance.cam2d
             currentLevel = new Level();

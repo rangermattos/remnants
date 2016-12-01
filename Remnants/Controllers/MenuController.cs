@@ -122,7 +122,7 @@ namespace Remnants
                 if (currentMenu is MainMenu)
                     currentMenu.Update(game, this);
                 if(currentMenu is Settings)
-                    currentMenu.Update();
+                    currentMenu.Update(game);
             }
             return "";
         }

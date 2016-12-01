@@ -117,6 +117,10 @@ namespace Remnants
                         break;
                     }
                 }
+                if (IsItemActive())
+                {
+
+                }
             }
             if (IsItemActive())
             {
@@ -156,7 +160,7 @@ namespace Remnants
             return "";
         }
 
-        public void Update()
+        public void Update(Game1 game)
         {
             if (IsItemActive())
             {
@@ -167,7 +171,12 @@ namespace Remnants
                 if (InputManager.Instance.LeftPressRelease())
                 {
                     //run through the possible actions and find the one that isn't null. run that one
-                    if (Action4 != null)
+
+                    if (Action1 != null)
+                    {
+                        int i = Action1(game);
+                    }
+                    else if (Action4 != null)
                     {
                         Action4();
                     }
