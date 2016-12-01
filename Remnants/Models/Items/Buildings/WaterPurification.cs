@@ -45,7 +45,28 @@ namespace Remnants
 		}
 
 		public override bool Place(Map map)
-		{
+		{// must be built on at least 1 ore tile
+			// check that all tiles the building will be on can be built on
+			bool nextToWater = false;
+			for(int i = -1; i < tilesWide+1; i++)
+			{
+				for(int j = -1; j < tilesHigh+1; j++)
+				{
+					if(map.GetTile(position + new Vector2(i * 64, j * 64)) == null)
+					{
+						return false;
+					}
+					if (map.GetTile(position + new Vector2(i * 64, j * 64)) is Water)
+					{
+						nextToWater = true;
+					}
+				}
+			}
+			if (!nextToWater)
+			{
+				UI.Instance.EnqueueMessage("Water Purification Facility must be built next to at least 1 water tile");
+				return false;
+			}
 			return base.Place(map);
 		}
 	}
