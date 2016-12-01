@@ -57,7 +57,7 @@ namespace Remnants
             }
             fmaxWidth += 4f;
 
-            totHeight = ftotHeight / Camera.Instance.viewportScale.Scale.Y;
+            totHeight = ftotHeight;// / Camera.Instance.viewportScale.Scale.Y;
             maxWidth = fmaxWidth / Camera.Instance.viewportScale.Scale.X;
 
             //var v = Vector2.Transform(Vector2.Zero, Matrix.Invert(Camera.Instance.cam.GetViewMatrix()));

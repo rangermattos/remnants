@@ -237,9 +237,9 @@ namespace Remnants
             
             if (offset)
             {
-                return (mp.X > (position.X - (size.X / 2)) && mp.X < (position.X + (size.X / 2)) && mp.Y > (position.Y - (size.Y / 2)) && mp.Y < (position.Y + (size.Y / 2)));
+                return (mp.X > (position.X - (size.X * Camera.Instance.viewportScale.Scale.X / 2)) && mp.X < (position.X + (size.X * Camera.Instance.viewportScale.Scale.X / 2)) && mp.Y > (position.Y - (size.Y * Camera.Instance.viewportScale.Scale.Y / 2)) && mp.Y < (position.Y + (size.Y * Camera.Instance.viewportScale.Scale.Y / 2)));
             }
-            return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y);
+            return (mp.X > position.X && mp.X < position.X + size.X * Camera.Instance.viewportScale.Scale.X && mp.Y > position.Y && mp.Y < position.Y + size.Y * Camera.Instance.viewportScale.Scale.Y);
             //return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y);
         }
 
@@ -280,7 +280,7 @@ namespace Remnants
             if (buildingRepresented != null && IsItemActive())
             {
                 spriteBatch.Draw(buildingRepresented.texture, buildingStatsPosition);
-                Vector2 p = new Vector2(buildingStatsPosition.X + buildingRepresented.texture.Width * Camera.Instance.viewportScale.Scale.X, buildingStatsPosition.Y);
+                Vector2 p = new Vector2(buildingStatsPosition.X + buildingRepresented.texture.Width, buildingStatsPosition.Y);
                 int j = 0;
                 foreach (int i in buildingRepresented.resourceCost)
                 {

@@ -55,17 +55,17 @@ namespace Remnants
 
         public UIItem(Vector2 tl, Vector2 incposition, Texture2D txt, System.Func<bool, int> UIItemAction)
         {
-            position = incposition;
+            position = new Vector2(0 ,(Camera.Instance.cam.Origin.Y * 2) - 32);
             topLeft = tl;
             texture = txt;
             textureScale = new Vector2(1f, 1f);
-            textureScale = Vector2.Transform(textureScale, Camera.Instance.viewportScale);
+            //textureScale = Vector2.Transform(textureScale, Camera.Instance.viewportScale);
             color = Color.White;
 
             Action2 = UIItemAction;
             active = true;
             size = new Vector2((float)texture.Width, (float)texture.Height);
-            size = Vector2.Transform(size, Camera.Instance.viewportScale);
+            //size = Vector2.Transform(size, Camera.Instance.viewportScale);
         }
 
         public UIItem(Vector2 tl, Vector2 incposition, Vector2 textureScale, Texture2D txt, bool active)
