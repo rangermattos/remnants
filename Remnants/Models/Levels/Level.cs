@@ -62,14 +62,27 @@ namespace Remnants
 
         public Level()
         {
-            MainMenu.Instance.isActive = false;
-            Settings.Instance.isActive = false;
             LevelData.Instance.InitValues();
             LevelData.Instance.SetLimits(0);
 			LevelData.Instance.resourceLimits[(int)resources.NUCLEAR] = 0;
 			LevelData.Instance.resourceLimits[(int)resources.ANTIMATTER] = 0;
 			LevelData.Instance.resourceLimits[(int)resources.POP] = 0;
             difficulty = LevelData.Instance.difficulty;
+            map = new Map();
+            Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
+            UnitSpawnCount *= LevelData.Instance.difficulty;
+            UnitSpawnTime += 120 - 30 * LevelData.Instance.difficulty;
+        }
+
+        public Level(int diff)
+        {
+            LevelData.Instance.InitValues();
+            LevelData.Instance.SetLimits(0);
+            LevelData.Instance.resourceLimits[(int)resources.NUCLEAR] = 0;
+            LevelData.Instance.resourceLimits[(int)resources.ANTIMATTER] = 0;
+            LevelData.Instance.resourceLimits[(int)resources.POP] = 0;
+            LevelData.Instance.difficulty = diff;
+            difficulty = diff;
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
             UnitSpawnCount *= LevelData.Instance.difficulty;
@@ -726,16 +739,20 @@ namespace Remnants
             // Dispose the container.
             container.Dispose();
             LevelData.SetLevelData(data);
+            difficulty = LevelData.Instance.difficulty;
+            landed = LevelData.Instance.landed;
         }
 
         public void SaveGame()
         {
+            UI.Instance.EnqueueMessage("Saving Game");
             LevelData.Instance.buildingList = new List<LevelData.buildingData>();
+            LevelData.Instance.landed = landed;
             foreach (Building b in buildings)
             {
                 LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
-            //Console.WriteLine("saving " + LevelData.Instance.buildingList.Count + "buildings");
+            Console.WriteLine("saving " + LevelData.Instance.buildingList.Count + "buildings");
 
             for (int i = 0; i < 8; i++)
             {

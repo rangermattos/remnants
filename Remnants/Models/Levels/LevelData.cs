@@ -59,6 +59,7 @@ namespace Remnants
         public int wood;
         public int nuclear;
         public int difficulty = 2;
+        public bool landed;
 
 		public List<buildingData> buildingList = new List<buildingData>();
         public List<tileData> tileList = new List<tileData>();
@@ -98,6 +99,8 @@ namespace Remnants
         public void Reset()
         {
             instance = new LevelData();
+            //LevelData.Instance.tileList = null;
+            //LevelData.Instance.tileList = new List<tileData>();
         }
 
         public void InitValues()

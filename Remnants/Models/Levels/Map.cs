@@ -47,7 +47,11 @@ namespace Remnants
             tileList.Add(new Water(Content));
 			tileList.Add(new Grass(Content));
 			tileList.Add(new Ore(Content));
-            if(LevelData.Instance.tileList.Count == 0)
+            for (int i = 0; i < xTiles; i++)
+            {
+                tiles[i] = new Tile[yTiles];
+            }
+            if (LevelData.Instance.tileList.Count == 0)
                 GenerateMap(Content);
             else
             {
@@ -102,7 +106,6 @@ namespace Remnants
 
             for (int i = 0; i < xTiles; i++)
             {
-                tiles[i] = new Tile[yTiles];
                 for (int j = 0; j < yTiles; j++)
                 {
                     //make sure the outside edge is clear
@@ -131,7 +134,6 @@ namespace Remnants
         {
             foreach (LevelData.tileData tile in LevelData.Instance.tileList)
             {
-                //tiles[tile.xPosition][tile.yPosition] = new Grass(Content);
                 if (tile.type == "Grass")
                     tiles[tile.xPosition][tile.yPosition] = new Grass(Content);
 				else if (tile.type == "Ore")

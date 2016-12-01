@@ -118,7 +118,7 @@ namespace Remnants
             return menuItemList;
         }
 
-        public virtual void Update()
+        public virtual void Update(Game1 game)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -127,7 +127,7 @@ namespace Remnants
             menuItemList[LevelData.Instance.difficulty - 1].color = Color.Green;
             foreach (MenuItem item in menuItemList)
             {
-                item.Update();
+                item.Update(game);
             }
         }
 
