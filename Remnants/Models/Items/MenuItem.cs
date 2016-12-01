@@ -336,7 +336,7 @@ namespace Remnants
                 }
                 spriteBatch.DrawString(
                     font, 
-                    " Health: " + buildingRepresented.hpMax.ToString(),
+                    "Health: " + buildingRepresented.hpMax.ToString(),
                     p,
                     Color.Black * 1.0f, 0f, GetOrigin(), scale, SpriteEffects.None, 0.0f);
             }
