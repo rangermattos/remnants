@@ -29,7 +29,7 @@ namespace Remnants
             tilesWide = 1;
             tilesHigh = 1;
             position = pos;
-            buildTime = 0f;//10f;
+            buildTime = 10f;
 			resourceUsage[(int)resources.ENERGY] = 10;
             //metalCost = 100;
             //energyCost = 100;
