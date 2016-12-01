@@ -58,6 +58,7 @@ namespace Remnants
         public int antimatter;
         public int wood;
         public int nuclear;
+        public int difficulty = 2;
 
 		public List<buildingData> buildingList = new List<buildingData>();
         public List<tileData> tileList = new List<tileData>();

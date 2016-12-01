@@ -13,7 +13,7 @@ namespace Remnants
             position = pos;
             //Position = Vector2.Zero;
             buildTime = 10f;
-			resourceGain[(int)resources.ENERGY] = 10;
+			resourceGain[(int)resources.ENERGY] = 15;
             //metalCost = 100;
             //energyCost = 100;
 			resourceCost[(int)resources.ENERGY] = 100;

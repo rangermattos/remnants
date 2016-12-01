@@ -118,6 +118,19 @@ namespace Remnants
             return menuItemList;
         }
 
+        public virtual void Update()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                menuItemList[i].color = Color.White;
+            }
+            menuItemList[LevelData.Instance.difficulty - 1].color = Color.Green;
+            foreach (MenuItem item in menuItemList)
+            {
+                item.Update();
+            }
+        }
+
         public virtual string Update(Game1 game, MenuController mc)
         {
             string s = "";

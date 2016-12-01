@@ -13,9 +13,9 @@ namespace Remnants
 			tilesHigh = 2;
 			position = pos;
 			buildTime = 10f;
-			resourceCost[(int)resources.ENERGY] = 100;
-			resourceCost[(int)resources.METAL] = 100;
-			resourceGain[(int)resources.ENERGY] = 25;
+			resourceCost[(int)resources.ENERGY] = 200;
+			resourceCost[(int)resources.METAL] = 200;
+			resourceGain[(int)resources.ENERGY] = 30;
 			resourceUsage[(int)resources.NUCLEAR] = 5;
 			LoadContent(Content);
 		}

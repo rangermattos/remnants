@@ -121,6 +121,7 @@
     <Compile Include="Models\Menus\EscapeMenu.cs" />
     <Compile Include="Models\Menus\MainMenu.cs" />
     <Compile Include="Models\Menus\Menu.cs" />
+    <Compile Include="Models\Menus\Settings.cs" />
     <Compile Include="Models\UI.cs" />
     <Compile Include="Models\Items\Unit.cs" />
     <Compile Include="Pathing\Path.cs" />

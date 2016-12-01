@@ -70,20 +70,7 @@ namespace Remnants
             color = Color.White;
             Action4 = menuItemAction;
         }
-        /*/
-        public MenuItem(float scale, string inctext, SpriteFont incfont, Vector2 incposition, System.Func<int> menuItemAction)
-        {
-            text = inctext;
-            font = incfont;
-            size = font.MeasureString(text) * scale;
-            origin = size * scale;
-            font = incfont;
-            alpha = 1.0f;
-            position = incposition;
-            color = Color.White;
-            Action3 = menuItemAction;
-        }
-        /*/
+
         public MenuItem(Building b, float sc, string inctext, SpriteFont incfont, Vector2 incposition, System.Func<string> menuItemAction)
         {
             buildingRepresented = b;
@@ -168,6 +155,31 @@ namespace Remnants
             }
             return "";
         }
+
+        public void Update()
+        {
+            if (IsItemActive())
+            {
+                //pulse effect if hovered over
+                Pulse();
+                //if clicked run the proper function
+
+                if (InputManager.Instance.LeftPressRelease())
+                {
+                    //run through the possible actions and find the one that isn't null. run that one
+                    if (Action4 != null)
+                    {
+                        Action4();
+                    }
+                }
+            }
+            else
+            {
+                //if the mouse isn't over this menuItem, reset the pulse variables
+                alpha = 1.0f;
+                sign = -1;
+            }
+        }
         /*
         public string Update(MouseState state)
         {
@@ -197,7 +209,7 @@ namespace Remnants
             return "";
         }
         */
-        
+
         public void Pulse()
         {
             alpha += sign * 0.01f;

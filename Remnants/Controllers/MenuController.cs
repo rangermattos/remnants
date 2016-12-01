@@ -62,7 +62,7 @@ namespace Remnants
         {
             ActiveMenus.Remove(m);
             m.isActive = false;
-            currentMenu = null;
+            currentMenu = prevMenu;
             menuOpen = false;
         }
 
@@ -99,27 +99,31 @@ namespace Remnants
                 {
                     game.Quit();
                 }
-            }
 
-            if (menuOpen && !MainMenu.Instance.isActive)
-            {
-            }
-            if (menuOpen)
-            {
-                string s;
-                int c = ActiveMenus.Count;
-                foreach(Menu m in ActiveMenus)
+                if (menuOpen)
                 {
-                    s = m.Update(game, this);
-                    if(s != "")
-                    {
-                        return s;
-                    }
-                    if (ActiveMenus.Count != c)
-                        break;
+                    string s;
+                    int c = ActiveMenus.Count;
+                        foreach (Menu m in ActiveMenus)
+                        {
+                            s = m.Update(game, this);
+                            if (s != "")
+                            {
+                                return s;
+                            }
+                            if (ActiveMenus.Count != c)
+                                break;
+                        }
+                    
                 }
             }
-
+            else
+            {
+                if (currentMenu is MainMenu)
+                    currentMenu.Update(game, this);
+                if(currentMenu is Settings)
+                    currentMenu.Update();
+            }
             return "";
         }
 
@@ -127,18 +131,38 @@ namespace Remnants
         {
             if (menuOpen)
             {
-                //spriteBatch.Begin(transformMatrix: Camera.Instance.viewportScale);
                 spriteBatch.Begin();
-                //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
-                if (MainMenu.Instance.isActive)
+                if (!LevelController.Instance.levelOpen)
                 {
                     spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
+                    currentMenu.Draw(spriteBatch);
                 }
-                foreach (Menu m in ActiveMenus)
+                else
                 {
-                    m.Draw(spriteBatch);
-                    //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition() - item.GetOrigin(), item.GetColor() * item.alpha, 0.0f, Vector2.Zero, item.scale, SpriteEffects.None, 0.0f);
-                    //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition(), item.GetColor() * item.alpha, 0.0f, item.GetOrigin(), 1.0f, SpriteEffects.None, 0.0f);
+                    //spriteBatch.Begin(transformMatrix: Camera.Instance.viewportScale);
+                    //spriteBatch.Draw(backGround, new Rectangle(0, 0, 5760, 3240), Color.White);
+                    /*/
+                    if (MainMenu.Instance.isActive)
+                    {
+                    }
+                    if (Settings.Instance.isActive)
+                    {
+                        spriteBatch.Draw(backGround, Vector2.Zero, Color.White);
+                        Settings.Instance.Draw(spriteBatch);
+                    }
+                    /*/
+                    //else
+                    //{
+                    foreach (Menu m in ActiveMenus)
+                    {
+                        if (!(m is MainMenu || m is Settings))
+                        {
+                            m.Draw(spriteBatch);
+                        }
+                        //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition() - item.GetOrigin(), item.GetColor() * item.alpha, 0.0f, Vector2.Zero, item.scale, SpriteEffects.None, 0.0f);
+                        //spriteBatch.DrawString(item.GetFont(), item.GetText(), item.GetPosition(), item.GetColor() * item.alpha, 0.0f, item.GetOrigin(), 1.0f, SpriteEffects.None, 0.0f);
+                    }
+                    //}
                 }
                 spriteBatch.End();
             }
@@ -148,9 +172,15 @@ namespace Remnants
         {
             m.isActive = true;
             ActiveMenus.Add(m);
+            prevMenu = null;
+            if (m is Settings && currentMenu is MainMenu)
+            {
+                prevMenu = currentMenu;
+                //Settings.Instance.isActive = false;
+                Console.WriteLine("setting prevMenu to " + prevMenu.GetType().ToString());
+            }
             currentMenu = m;
             menuOpen = true;
-            Console.WriteLine("menuOpen: " + menuOpen);
         }
     }
 }

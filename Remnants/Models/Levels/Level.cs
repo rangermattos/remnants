@@ -53,18 +53,23 @@ namespace Remnants
         float placementAlpha = 0.65f;
         Building tempBuilding;
         double UnitSpawnTime = 60;
+        int UnitSpawnCount = 5;
         double timePassed = 0;
         int spawnIterations = 0;
+        int difficulty;
         bool warned = false;
         bool landed = false;
 
         public Level()
         {
+            MainMenu.Instance.isActive = false;
+            Settings.Instance.isActive = false;
             LevelData.Instance.InitValues();
             LevelData.Instance.SetLimits(0);
 			LevelData.Instance.resourceLimits[(int)resources.NUCLEAR] = 0;
 			LevelData.Instance.resourceLimits[(int)resources.ANTIMATTER] = 0;
 			LevelData.Instance.resourceLimits[(int)resources.POP] = 0;
+            difficulty = LevelData.Instance.difficulty;
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
         }
@@ -72,6 +77,8 @@ namespace Remnants
         //level constructer with loadgame
         public Level(string filename)
         {
+            MainMenu.Instance.isActive = false;
+            Settings.Instance.isActive = false;
             LoadGame(filename);
             map = new Map(LevelData.Instance.mapSize);
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
@@ -81,13 +88,16 @@ namespace Remnants
         {
             map.LoadContent(Content);
 
-            if(LevelData.Instance.buildingList.Count > 0)
+            UI.Create(Content);
+            if (LevelData.Instance.buildingList.Count > 0)
             {
                 Console.WriteLine("loading " + LevelData.Instance.buildingList.Count + "buildings");
                 LoadBuildings(Content);
             }
-            UI.Create(Content);
-            UI.Instance.buildingSelected = "LanderBase";
+            else
+            {
+                UI.Instance.buildingSelected = "LanderBase";
+            }
             //UI.Instance.isActive = true;
         }
         
@@ -369,7 +379,7 @@ namespace Remnants
         {
             var r = new Random();
             spawnIterations++;
-            for (int i = 0; i < spawnIterations * 15; i++)
+            for (int i = 0; i < spawnIterations * UnitSpawnCount; i++)
             {
                 int tblr = r.Next(4);
                 int x = r.Next((map.xTiles - 1) * 64);
