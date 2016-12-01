@@ -73,6 +73,7 @@ namespace Remnants
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
             UnitSpawnCount *= LevelData.Instance.difficulty;
+            UnitSpawnTime += 120 - 30 * LevelData.Instance.difficulty;
         }
 
         //level constructer with loadgame
