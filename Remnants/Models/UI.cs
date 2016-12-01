@@ -52,7 +52,7 @@ namespace Remnants
             Vector2 temp = Vector2.Transform(new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2)), Camera.Instance.viewportScale);
             //Vector2 temp = new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2));
             textureScale = Vector2.Transform(new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight), Camera.Instance.viewportScale);
-            // 12
+            //
             AddItem(topLeft, temp, textureScale, Content.Load<Texture2D>("grayDot"), false);
 
 			// Message Queue

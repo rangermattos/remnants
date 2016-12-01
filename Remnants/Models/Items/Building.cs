@@ -14,8 +14,8 @@ namespace Remnants
         public int populationHousing = 0;
         public int[] resourceCost;
         public int[] resourceStorage;
-        protected int[] resourceGain;
-		protected int[] resourceUsage;
+        public int[] resourceGain;
+		public int[] resourceUsage;
         public int[] resourceChanges;
         public float buildTime;
         public float elapsedProductionTime = 0f;
@@ -50,8 +50,8 @@ namespace Remnants
         public override void Init()
         {
             base.Init();
-            this.hp = 1000;
-            this.hpMax = 1000;
+            this.hp = 100;
+            this.hpMax = 100;
             this.attackStrength = 10;
             this.defenseStrength = 10;
         }

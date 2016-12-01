@@ -85,11 +85,11 @@ namespace Remnants
                     throw;
                 }
 
-                itemCount += AddItem(tempBuilding, scale, s, MenuController.Instance.font, center, () => { /*MenuController.Instance.UnloadContent();*/ return s.Replace(" ", ""); });
+                itemCount += AddItem(tempBuilding, totHeight, scale, s, MenuController.Instance.font, center, () => { /*MenuController.Instance.UnloadContent();*/ return s.Replace(" ", ""); });
             }
             SetPositions(center, 0);
 
-            foreach(MenuItem i in menuItemList)
+            foreach (MenuItem i in menuItemList)
             {
                 //i.origin = Vector2.Zero;
             }
