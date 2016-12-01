@@ -48,6 +48,7 @@ namespace Remnants
 
 			animated = true;
 			currentAnimation = new Animation(Content, "buildings/base_spritesheet", 1f, 2, tilesHigh*64, tilesWide*64, true, true);
+			canDisable = false;
 		}
 
 		public override void LoadContent(ContentManager Content)
