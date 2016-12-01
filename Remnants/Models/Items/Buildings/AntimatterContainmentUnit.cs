@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public AntimatterContainmentUnit(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Antimatter Containment Unit";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;
@@ -21,7 +22,7 @@ namespace Remnants
 		}
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("buildings/antimatter_containment_unit_placeholder");
+			texture = Content.Load<Texture2D>("buildings/antimatter_containment_unit");
 			base.LoadContent(Content);
 		}
 

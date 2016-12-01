@@ -205,7 +205,7 @@ namespace Remnants
 
 		void completeConstruction()
 		{
-			UI.Instance.EnqueueMessage("Construtction completed");
+			UI.Instance.EnqueueMessage("Construction completed");
 			for (int i = 0; i < 8; i++)
 			{
 				//add buildings storage capacity to resource limits
@@ -250,7 +250,7 @@ namespace Remnants
 
 		public void idle()
 		{
-			if (isConstructing())
+			if (isConstructing() || !canDisable)
 			{
 				return;
 			}

@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public SmallBatteryFacility(ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Small Battery Facility";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;
@@ -54,6 +55,7 @@ namespace Remnants
 	{
 		public MediumBatteryFacility(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Medium Battery Facility";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;
@@ -99,6 +101,7 @@ namespace Remnants
 	{
 		public LargeBatteryFacility(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Large Battery Facility";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;

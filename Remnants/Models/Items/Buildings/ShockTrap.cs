@@ -25,6 +25,7 @@ namespace Remnants
 
 		public ShockTrap(ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Shock Trap";
             tilesWide = 1;
             tilesHigh = 1;
             position = pos;

@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public AntimatterGenerator(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Antimatter Generator";
 			tilesWide = 2;
 			tilesHigh = 2;
 			position = pos;
@@ -21,7 +22,7 @@ namespace Remnants
 		}
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("buildings/antimatter_generator_placeholder");
+			texture = Content.Load<Texture2D>("buildings/antimatter_generator");
 			base.LoadContent(Content);
 		}
 

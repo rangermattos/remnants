@@ -8,6 +8,7 @@ namespace Remnants
     {
 		public SolarPanel(ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Solar Panel";
             tilesWide = 2;
             tilesHigh = 1;
             position = pos;

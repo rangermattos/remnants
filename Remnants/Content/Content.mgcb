@@ -398,7 +398,7 @@
 /processorParam:TextureFormat=Color
 /build:buildings/ShockTrap.png
 
-#begin buildings/antimatter_containment_unit_placeholder.png
+#begin buildings/antimatter_containment_unit.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -408,9 +408,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:buildings/antimatter_containment_unit_placeholder.png
+/build:buildings/antimatter_containment_unit.png
 
-#begin buildings/antimatter_creation_lab_placeholder.png
+#begin buildings/antimatter_creation_lab.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -420,9 +420,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:buildings/antimatter_creation_lab_placeholder.png
+/build:buildings/antimatter_creation_lab.png
 
-#begin buildings/antimatter_generator_placeholder.png
+#begin buildings/antimatter_generator.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -432,7 +432,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:buildings/antimatter_generator_placeholder.png
+/build:buildings/antimatter_generator.png
 
 #begin buildings/base.png
 /importer:TextureImporter

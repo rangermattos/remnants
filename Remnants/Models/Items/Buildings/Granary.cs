@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public Granary (ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Granary";
 			tilesWide = 2;
 			tilesHigh = 1;
 			position = pos;

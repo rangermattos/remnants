@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public SmallHouse(ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Small House";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;
@@ -55,6 +56,7 @@ namespace Remnants
 	{
 		public MediumHouse(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Medium House";
 			tilesWide = 2;
 			tilesHigh = 1;
 			position = pos;
@@ -100,6 +102,7 @@ namespace Remnants
 	{
 		public LargeHouse(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Large House";
 			tilesWide = 2;
 			tilesHigh = 1;
 			position = pos;

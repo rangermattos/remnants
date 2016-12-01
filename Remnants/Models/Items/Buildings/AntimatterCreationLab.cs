@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public AntimatterCreationLab (ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Antimatter Creation Lab";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;
@@ -22,7 +23,7 @@ namespace Remnants
 
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("buildings/antimatter_creation_lab_placeholder");
+			texture = Content.Load<Texture2D>("buildings/antimatter_creation_lab");
 			base.LoadContent(Content);
 		}
 

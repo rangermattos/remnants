@@ -266,6 +266,15 @@ namespace Remnants
 							map.GetTile(b.position + new Vector2(j * 64, k * 64)).canBuild = true;
 						}
 					}
+					int popDiff = LevelData.Instance.resourceLimits[(int)resources.POP] - (LevelData.Instance.resourceList[(int)resources.POP] - b.resourceStorage[(int)resources.POP]);
+					if (popDiff > 0)
+					{
+						UI.Instance.EnqueueMessage(popDiff + " citizens were killed!");
+					}
+					for (int j = 0; j < 8; j++)
+					{
+						LevelData.Instance.resourceLimits[j] -= b.resourceStorage[j];
+					}
                     buildings.RemoveAt(i);
                     i--;
                     UI.Instance.EnqueueMessage("Your " + b.name + " was destroyed");
