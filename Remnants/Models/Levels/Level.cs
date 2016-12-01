@@ -189,7 +189,7 @@ namespace Remnants
 
                 UpdatePopulation(gameTime);
                 
-                UpdateUnits(gameTime, p);
+                UpdateUnits(gameTime);
             }
 
             /*
@@ -257,7 +257,7 @@ namespace Remnants
             }
         }
 
-        public void UpdateUnits(GameTime gameTime, Vector2 p)
+        public void UpdateUnits(GameTime gameTime)
         {
 			for (int i = 0; i < enemyUnits.Count; i++)
             {
@@ -342,7 +342,7 @@ namespace Remnants
 					UI.Instance.EnqueueMessage("Insufficient population to support new building, try building some housing");
 				}
             }
-            if (InputManager.Instance.RightPressRelease())
+            if (InputManager.Instance.RightPressRelease() && buildingString != "LanderBase")
             {
                 //if right click, no building selected, and close building selection menu
                 UI.Instance.buildingSelected = "";
