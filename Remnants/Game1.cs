@@ -25,6 +25,8 @@ namespace Remnants
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             //Window.AllowUserResizing = true;
+            //graphics.PreferredBackBufferWidth = 1366;
+            //graphics.PreferredBackBufferHeight = 768;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             Window.IsBorderless = true;
