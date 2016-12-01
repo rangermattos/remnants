@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public WaterPurification(ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Water Purification facility";
 			tilesWide = 2;
 			tilesHigh = 2;
 			position = pos;

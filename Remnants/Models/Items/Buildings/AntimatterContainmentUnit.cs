@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public AntimatterContainmentUnit(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Antimatter Containment Unit";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;

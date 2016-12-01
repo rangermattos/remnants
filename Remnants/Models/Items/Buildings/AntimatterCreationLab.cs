@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public AntimatterCreationLab (ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Antimatter Creation Lab";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;

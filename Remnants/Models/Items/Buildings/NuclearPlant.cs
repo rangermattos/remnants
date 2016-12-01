@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public NuclearPlant(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Nuclear Plant";
 			tilesWide = 2;
 			tilesHigh = 2;
 			position = pos;

@@ -8,6 +8,7 @@ namespace Remnants
 	{
 		public WindTurbine (ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Wind Turbine";
 			tilesWide = 2;
 			tilesHigh = 2;
 			//pos.Y -= (tilesHigh-1) * 64;

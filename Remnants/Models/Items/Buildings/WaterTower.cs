@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public WaterTower (ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Water Tower";
 			tilesWide = 1;
 			tilesHigh = 2;
 			position = pos;

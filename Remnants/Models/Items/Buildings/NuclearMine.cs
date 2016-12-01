@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public NuclearMine(ContentManager Content, Vector2 pos) : base(Content)
 		{
+			name = "Nuclear Mine";
 			tilesWide = 2;
 			tilesHigh = 1;
 			position = pos;

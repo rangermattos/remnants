@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public Mine(ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Mine";
 			tilesWide = 2;
 			tilesHigh = 1;
 			position = pos;

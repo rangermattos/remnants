@@ -9,6 +9,7 @@ namespace Remnants
 	{
 		public Greenhouse (ContentManager Content, Vector2 pos) : base(Content)
         {
+			name = "Greenhouse";
 			tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;
