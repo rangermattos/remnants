@@ -93,7 +93,8 @@ namespace Remnants
 
         public void PauseGame()
         {
-            currentLevel.paused = !currentLevel.paused;
+            if(!(currentLevel.paused && !EscapeMenu.Instance.isActive))
+                currentLevel.paused = !currentLevel.paused;
         }
 
         public void LoadNewLevel(ContentManager Content)

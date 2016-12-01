@@ -137,28 +137,28 @@ namespace Remnants
         {
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
             //if (InputManager.Instance.SpacePressRelease())
-            if (InputManager.Instance.PressRelease(Keys.Space))
-            {
-                paused = !paused;
-            }
             LevelData.Instance.Update();
             UI.Instance.Update(gameTime);
             Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
-            if (!EscapeMenu.Instance.isActive && !UI.Instance.MouseOverUI())
+            if (!EscapeMenu.Instance.isActive)
             {
-                CheckBuilding(p, Content);
-                EnableOrDisableBuilding(p);
+                if (InputManager.Instance.PressRelease(Keys.Space))
+                    paused = !paused;
+                if(!UI.Instance.MouseOverUI())
+                    CheckBuilding(p, Content);
             }
 
             if (!paused)
             {
                 timePassed += deltaT;
 
-                //if (timePassed >= UnitSpawnTime)
-                if (InputManager.Instance.PressRelease(Keys.U))
+                if (timePassed >= UnitSpawnTime)
+                //if (InputManager.Instance.PressRelease(Keys.U))
                 {
                     spawnUnits(Content);
                 }
+
+                EnableOrDisableBuilding(p);
 
                 UpdateBuildings(gameTime, p);
 

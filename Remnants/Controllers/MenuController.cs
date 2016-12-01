@@ -86,8 +86,8 @@ namespace Remnants
                     }
                     if (EscapeMenu.Instance.isActive && LevelController.Instance.levelOpen)
                     {
-                        UnloadContent(EscapeMenu.Instance);
                         LevelController.Instance.PauseGame();
+                        UnloadContent(EscapeMenu.Instance);
                         return "";
                     }
                     else
