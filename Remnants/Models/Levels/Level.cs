@@ -72,6 +72,7 @@ namespace Remnants
             difficulty = LevelData.Instance.difficulty;
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
+            UnitSpawnCount *= LevelData.Instance.difficulty;
         }
 
         //level constructer with loadgame

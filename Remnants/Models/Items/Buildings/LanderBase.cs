@@ -29,13 +29,14 @@ namespace Remnants
 			tilesHigh = 4;
 			position = pos;
 			buildTime = 0f;
-			// costs nothing to build
-			resourceStorage[(int)resources.FOOD] = 1000;
-			resourceStorage[(int)resources.WATER] = 1000;
-			resourceStorage[(int)resources.ENERGY] = 1000;
-			resourceStorage[(int)resources.WOOD] = 1000;
-			resourceStorage[(int)resources.METAL] = 1000;
-			resourceStorage[(int)resources.POP] = 10;
+            // costs nothing to build
+            int diffMult = LevelData.Instance.difficulty;
+			resourceStorage[(int)resources.FOOD] = 2000 - 500 * diffMult;
+			resourceStorage[(int)resources.WATER] = 2000 - 500 * diffMult;
+            resourceStorage[(int)resources.ENERGY] = 2000 - 500 * diffMult;
+            resourceStorage[(int)resources.WOOD] = 1000;
+			resourceStorage[(int)resources.METAL] = 2000 - 500 * diffMult;
+            resourceStorage[(int)resources.POP] = 10;
 
 			LoadContent(Content);
 
