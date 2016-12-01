@@ -16,6 +16,7 @@ namespace Remnants
 		public Texture2D texture;
 		public bool looping;
 		public bool active;
+		public bool Hflip = false;
 
 		public Animation (ContentManager Content, string spriteSheet, float frameTime, int totalFrames, int frameHeight, int frameWidth, bool looping, bool active)
 		{
@@ -65,12 +66,17 @@ namespace Remnants
 		public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
 		{
 			if (active)
-				spriteBatch.Draw(texture, position, frame, color);
+			{
+				if (Hflip)
+					spriteBatch.Draw(texture, position:position, sourceRectangle:frame, color:color, effects:SpriteEffects.FlipHorizontally);
+				else
+					spriteBatch.Draw(texture, position, frame, color);
+			}
 		}
 
 		public void printDebugInfo()
 		{
-			Console.Write("Frame index: " + frameIndex + "\n");
+			Console.Write("Frame index: " + frameIndex + " Frame time: " + currFrameTime + "\n");
 		}
 	}
 }

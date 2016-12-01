@@ -26,6 +26,8 @@ namespace Remnants
             missions.Add(new Mission("You still have no source of food." + "\n                            " + "Construct a Greenhouse", new string[1] { "Greenhouse" }, 1));
             missions.Add(new Mission("You still have no way to create clean water" + "\n                            " + "Construct a Water Purification plant", new string[1] { "WaterPurification" }, 1));
             missions.Add(new Mission("You're running low on building materials!" + "\n                            " + "Construct a Mine to collect metal", new string[1] { "Mine" }, 1));
+			missions.Add(new Mission("Your citizens need additional living spaces to grow." + "\n                            " + "Construct some housing", new string[3] { "SmallHouse", "MediumHouse", "LargeHouse"}, 3));
+			missions.Add(new Mission("The aliens will be invading soon!" + "\n                            " + "Construct Shock Traps to defend your base", new string[1] { "ShockTrap" }, 1));
             currentMission = 0;
             missionActive = true;
         }
