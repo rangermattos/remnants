@@ -117,7 +117,7 @@ namespace Remnants
 
             currentLevel.LoadContent(Content);
             levelOpen = true;
-            //loading = true;
+            loading = true;
             UI.Instance.isActive = true;
         }
 
@@ -140,7 +140,7 @@ namespace Remnants
 
             currentLevel.LoadContent(Content);
             levelOpen = true;
-            //loading = true;
+            loading = true;
             UI.Instance.isActive = true;
         }
 
@@ -154,7 +154,7 @@ namespace Remnants
 
             currentLevel.LoadContent(Content);
             levelOpen = true;
-            //loading = true;
+            loading = true;
             UI.Instance.isActive = true;
         }
     }

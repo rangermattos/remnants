@@ -237,9 +237,9 @@ namespace Remnants
             
             if (offset)
             {
-                return (mp.X > (position.X - (size.X * Camera.Instance.viewportScale.Scale.X / 2)) && mp.X < (position.X + (size.X * Camera.Instance.viewportScale.Scale.X / 2)) && mp.Y > (position.Y - (size.Y * Camera.Instance.viewportScale.Scale.Y / 2)) && mp.Y < (position.Y + (size.Y * Camera.Instance.viewportScale.Scale.Y / 2)));
+                return (mp.X > (position.X - (size.X/ 2)) && mp.X < (position.X + (size.X / 2)) && mp.Y > (position.Y - (size.Y * Camera.Instance.viewportScale.Scale.Y / 2)) && mp.Y < (position.Y + (size.Y * Camera.Instance.viewportScale.Scale.Y / 2)));
             }
-            return (mp.X > position.X && mp.X < position.X + size.X * Camera.Instance.viewportScale.Scale.X && mp.Y > position.Y && mp.Y < position.Y + size.Y * Camera.Instance.viewportScale.Scale.Y);
+            return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y * Camera.Instance.viewportScale.Scale.Y);
             //return (mp.X > position.X && mp.X < position.X + size.X && mp.Y > position.Y && mp.Y < position.Y + size.Y);
         }
 
