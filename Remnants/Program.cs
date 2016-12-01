@@ -17,6 +17,7 @@ namespace Remnants
             {
                 using (Game1 game = new Game1())
                     game.Run();
+				Console.Write("Program.cs done\n");
             }
 
 
@@ -25,8 +26,8 @@ namespace Remnants
                 Console.Write(e.ToString());
                 //System.Windows.Forms.MessageBox.Show(e.ToString());
             }
-            Console.Write("End of Program.Main()\n");
-            System.Environment.Exit(0);
+			Console.Write("End of Program.Main()\n");
+			System.Environment.Exit(0);
         }
     }
 }

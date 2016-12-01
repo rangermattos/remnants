@@ -47,7 +47,7 @@ namespace Remnants
 			var deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			// animation frame changes
 			currFrameTime += deltaT;
-			while (currFrameTime > frameTime)
+			if (currFrameTime > frameTime)
 			{
 				frameIndex++;
 				//currFrameTime -= frameTime;
@@ -66,6 +66,11 @@ namespace Remnants
 		{
 			if (active)
 				spriteBatch.Draw(texture, position, frame, color);
+		}
+
+		public void printDebugInfo()
+		{
+			Console.Write("Frame index: " + frameIndex + "\n");
 		}
 	}
 }

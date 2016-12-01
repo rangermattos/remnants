@@ -22,7 +22,7 @@ namespace Remnants
 			scale = 0.3f;
             missions = new List<Mission>();
             missions.Add(new Mission("Choose a landing site to get started!", new string[1] { "LanderBase" }, 1));
-            missions.Add(new Mission("You need to generate energy before your battery stores run out." + "\n                            " + "Construct a Solar Panel or Wind Turbine", new string[2] { "SolarPanel", "WindTurbine"}, 2));
+            missions.Add(new Mission("You need to generate energy before your battery stores run out." + "\n                            " + "Click the Hammer icon in the bottom left and Construct a Solar Panel or Wind Turbine", new string[2] { "SolarPanel", "WindTurbine"}, 2));
             missions.Add(new Mission("You still have no source of food." + "\n                            " + "Construct a Greenhouse", new string[1] { "Greenhouse" }, 1));
             missions.Add(new Mission("You still have no way to create clean water" + "\n                            " + "Construct a Water Purification plant", new string[1] { "WaterPurification" }, 1));
             missions.Add(new Mission("You're running low on building materials!" + "\n                            " + "Construct a Mine to collect metal", new string[1] { "Mine" }, 1));
