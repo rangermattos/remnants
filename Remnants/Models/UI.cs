@@ -154,7 +154,7 @@ namespace Remnants
 
         void AddItem(int v, int vl, Vector2 tl, Vector2 position, Texture2D texture, System.Func<int> UIItemAction)
         {
-            float scale = 0.275f;
+            float scale = 0.275f * Camera.Instance.viewportScale.Scale.X;
             UIItem item = new UIItem(scale, v, vl, tl, position, texture, UIItemAction);
             UIItemList.Add(item);
         }
@@ -169,9 +169,14 @@ namespace Remnants
         {
             Vector2 tempVect = new Vector2(0, 0);
             UIItemList[0].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
+
+            //textureScale = Vector2.Transform(
+            //new Vector2(ConstructionMenu.Instance.maxWidth, 
+            //ConstructionMenu.Instance.totHeight), Camera.Instance.viewportScale);
+
             tempVect = new Vector2(0, viewport.Y - 32);
             UIItemList[1].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
-            float scale = Camera.Instance.viewportScale.Scale.X;
+            //float scale = Camera.Instance.viewportScale.Scale.X;
             //32 for icon width, 1 for spacing between, 128 for readout text width
             // - (32 * scale + 1 + 128 * scale) * 7
             float x = (32 + 1 + 100);

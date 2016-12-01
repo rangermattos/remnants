@@ -89,6 +89,7 @@ namespace Remnants
             font = MenuController.Instance.font;
             readOut = v.ToString() + " / " + vl.ToString();
             size = font.MeasureString(readOut) * scale;
+
             valuePosition = new Vector2(0, (32 - size.Y) / 2);
             valueLimitPosition = new Vector2((valuePosition.X + (font.MeasureString(v.ToString())).X) * scale, valuePosition.Y);
 
