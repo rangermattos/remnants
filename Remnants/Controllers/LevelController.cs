@@ -100,6 +100,14 @@ namespace Remnants
 
         public void LoadNewLevel(ContentManager Content)
         {
+            if (MainMenu.Instance.isActive)
+            {
+                MenuController.Instance.UnloadContent(MainMenu.Instance);
+            }
+            if (Settings.Instance.isActive)
+            {
+                MenuController.Instance.UnloadContent(Settings.Instance);
+            }
             diff += LevelData.Instance.difficulty;
             LoadContent(Content);
             //send viewport and mapsize to Camera.Instance.cam2d
@@ -115,6 +123,14 @@ namespace Remnants
 
         public void LoadLevel(ContentManager Content, string filename)
         {
+            if (MainMenu.Instance.isActive)
+            {
+                MenuController.Instance.UnloadContent(MainMenu.Instance);
+            }
+            if (Settings.Instance.isActive)
+            {
+                MenuController.Instance.UnloadContent(Settings.Instance);
+            }
             LoadContent(Content);
             //send viewport and mapsize to Camera.Instance.cam2d
             currentLevel = new Level(filename);
@@ -132,7 +148,7 @@ namespace Remnants
         {
             LevelData.Instance.Reset();
             levelOpen = false;
-            currentLevel = new Level();
+            currentLevel = new Level(diff);
             //set Camera.Instance.cam to center of map
             //Camera.Instance.cam.Position = new Vector2(currentLevel.mapSize.X / 2, currentLevel.mapSize.Y/2);
 

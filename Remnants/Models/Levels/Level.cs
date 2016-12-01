@@ -62,8 +62,6 @@ namespace Remnants
 
         public Level()
         {
-            MainMenu.Instance.isActive = false;
-            Settings.Instance.isActive = false;
             LevelData.Instance.InitValues();
             LevelData.Instance.SetLimits(0);
 			LevelData.Instance.resourceLimits[(int)resources.NUCLEAR] = 0;
@@ -78,13 +76,12 @@ namespace Remnants
 
         public Level(int diff)
         {
-            MainMenu.Instance.isActive = false;
-            Settings.Instance.isActive = false;
             LevelData.Instance.InitValues();
             LevelData.Instance.SetLimits(0);
             LevelData.Instance.resourceLimits[(int)resources.NUCLEAR] = 0;
             LevelData.Instance.resourceLimits[(int)resources.ANTIMATTER] = 0;
             LevelData.Instance.resourceLimits[(int)resources.POP] = 0;
+            LevelData.Instance.difficulty = diff;
             difficulty = diff;
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
