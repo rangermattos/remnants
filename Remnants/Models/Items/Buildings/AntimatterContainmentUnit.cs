@@ -21,7 +21,7 @@ namespace Remnants
 		}
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("buildings/antimatter_containment_unit_placeholder");
+			texture = Content.Load<Texture2D>("buildings/antimatter_containment_unit");
 			base.LoadContent(Content);
 		}
 

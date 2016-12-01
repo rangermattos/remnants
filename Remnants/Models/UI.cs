@@ -37,10 +37,10 @@ namespace Remnants
 			AddItem(LevelData.Instance.resourceList[(int)resources.WATER], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
             //energy 4 
 			AddItem(LevelData.Instance.resourceList[(int)resources.ENERGY], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
-            //antimatter 6
-			AddItem(LevelData.Instance.resourceList[(int)resources.ANTIMATTER], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
-            //nuclear 7
+            //nuclear 6
 			AddItem(LevelData.Instance.resourceList[(int)resources.NUCLEAR], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
+			//antimatter 7
+			AddItem(LevelData.Instance.resourceList[(int)resources.ANTIMATTER], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
             //wood
 			//AddItem(LevelData.Instance.resourceList[(int)resources.WOOD], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
             //Metal 8

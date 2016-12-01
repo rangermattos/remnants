@@ -22,7 +22,7 @@ namespace Remnants
 
 		public override void LoadContent(ContentManager Content)
 		{
-			texture = Content.Load<Texture2D>("buildings/antimatter_creation_lab_placeholder");
+			texture = Content.Load<Texture2D>("buildings/antimatter_creation_lab");
 			base.LoadContent(Content);
 		}
 
