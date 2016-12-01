@@ -55,14 +55,16 @@ namespace Remnants
         double UnitSpawnTime = 60;
         double timePassed = 0;
         int spawnIterations = 0;
+        bool warned = false;
+        bool landed = false;
 
         public Level()
         {
             LevelData.Instance.InitValues();
-            LevelData.Instance.SetLimits(1000);
+            LevelData.Instance.SetLimits(0);
 			LevelData.Instance.resourceLimits[(int)resources.NUCLEAR] = 0;
 			LevelData.Instance.resourceLimits[(int)resources.ANTIMATTER] = 0;
-			LevelData.Instance.resourceLimits[(int)resources.POP] = 10;
+			LevelData.Instance.resourceLimits[(int)resources.POP] = 0;
             map = new Map();
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
         }
@@ -85,6 +87,7 @@ namespace Remnants
                 LoadBuildings(Content);
             }
             UI.Create(Content);
+            UI.Instance.buildingSelected = "LanderBase";
             //UI.Instance.isActive = true;
         }
         
@@ -138,7 +141,8 @@ namespace Remnants
             var deltaT = gameTime.ElapsedGameTime.TotalSeconds;
             //if (InputManager.Instance.SpacePressRelease())
             LevelData.Instance.Update();
-            UI.Instance.Update(gameTime);
+            UI.Instance.Update(gameTime, landed);
+
             Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
             if (!EscapeMenu.Instance.isActive)
             {
@@ -148,14 +152,23 @@ namespace Remnants
                     CheckBuilding(p, Content);
             }
 
-            if (!paused)
+            if (!paused && landed)
             {
                 timePassed += deltaT;
 
+                if(timePassed >= UnitSpawnTime - 10)
+                {
+                    if (!warned)
+                    {
+                        UI.Instance.EnqueueMessage("WARNING: Attack incoming in 10 seconds!");
+                        warned = true;
+                    }
+                }
                 if (timePassed >= UnitSpawnTime)
                 //if (InputManager.Instance.PressRelease(Keys.U))
                 {
                     spawnUnits(Content);
+                    warned = false;
                 }
 
                 EnableOrDisableBuilding(p);
@@ -291,7 +304,7 @@ namespace Remnants
                 newTempBuilding(p, Content);
 
                 if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.BUILDINGS_PER_POP)
-					|| tempBuilding is SmallHouse || tempBuilding is MediumHouse || tempBuilding is LargeHouse)
+					|| tempBuilding is SmallHouse || tempBuilding is MediumHouse || tempBuilding is LargeHouse || tempBuilding is LanderBase)
 				{
 	                if (tempBuilding.Place(map))
                     {
@@ -301,6 +314,10 @@ namespace Remnants
                         tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
                         buildings.Add(tempBuilding);
                         LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
+                        if (tempBuilding.GetType().ToString() == "Remnants.LanderBase")
+                        {
+                            processLanding();
+                        }
                         tempBuilding = null;
                     }
                     else
@@ -317,7 +334,7 @@ namespace Remnants
             {
                 //if right click, no building selected, and close building selection menu
                 UI.Instance.buildingSelected = "";
-                UI.Instance.UIItemList[10].active = false;
+                UI.Instance.UIItemList[9].active = false;
                 buildingPlacementTexture = null;
                 tempBuilding = null;
                 MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
@@ -406,6 +423,7 @@ namespace Remnants
             }
             return ret;
         }
+
         public List<Entity> getNearbyEnemies(Entity e, float range)
         {
             List<Entity> res = getNearbyEntities(e, range);
@@ -472,7 +490,7 @@ namespace Remnants
 						}
 						else
 						{
-							UI.Instance.EnqueueMessage("Population cannot grow");
+							//UI.Instance.EnqueueMessage("Population cannot grow");
 						}
 					}
 				}
@@ -629,6 +647,16 @@ namespace Remnants
 				}
 			}
 		}
+
+        void processLanding()
+        {
+            landed = true;
+            for(int i = 0; i < 8; i++)
+            {
+                LevelData.Instance.resourceList[i] = tempBuilding.resourceStorage[i];
+            }
+            UI.Instance.buildingSelected = "";
+        }
 
         private StorageDevice getStorageDevice()
         {

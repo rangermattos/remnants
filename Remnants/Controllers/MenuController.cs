@@ -73,7 +73,7 @@ namespace Remnants
                 {
                     if (ConstructionMenu.Instance.isActive)
                     {
-                        UI.Instance.UIItemList[10].active = false;
+                        UI.Instance.UIItemList[9].active = false;
                         UI.Instance.buildingSelected = "";
                         UnloadContent(ConstructionMenu.Instance);
                         return "";

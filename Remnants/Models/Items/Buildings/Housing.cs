@@ -16,8 +16,8 @@ namespace Remnants
             //woodCost = 100;
             //energyCost = 100;
 			resourceCost[(int)resources.ENERGY] = 100;
-			resourceCost[(int)resources.WOOD] = 100;
-			//resourceCost[(int)resources.METAL] = 100;
+			//resourceCost[(int)resources.WOOD] = 100;
+			resourceCost[(int)resources.METAL] = 50;
 			resourceUsage[(int)resources.ENERGY] = 3;
 			resourceStorage[(int)resources.POP] = 2;
 			canDisable = false;

@@ -20,7 +20,6 @@ namespace Remnants
         {
             scale = 0.3f;
 			List<string> l = new List<string>();
-			l.Add("Lander Base");
 			l.Add("Shock Trap");
             l.Add("Solar Panel");
             l.Add("Wind Turbine");

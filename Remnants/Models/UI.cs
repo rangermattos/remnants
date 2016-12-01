@@ -25,33 +25,34 @@ namespace Remnants
             topLeft = Vector2.Zero;
             isActive = false;
 
-            //UIBar
+            //UIBar 0
             Vector2 textureScale = Vector2.Transform(new Vector2(Camera.Instance.cam.Origin.X * 2, 32), Camera.Instance.viewportScale);
             AddItem(topLeft, Vector2.Zero, textureScale, Content.Load<Texture2D>("grayDot"), true);
-            //construct
+            //construct 1
 			AddItem(topLeft, position, Content.Load<Texture2D>("icons/hammer"), (bool active) => { ConstructionMenus(active); Console.Write("construction icon clicked:" + active + "\n"); return 0; });
 			UIItemList[1].active = true;
-            //food
+            //food 2
 			AddItem(LevelData.Instance.resourceList[(int)resources.FOOD], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/food_icon"), () => { OnClickConstruct(); return 0; });
-            //water
+            //water 3
 			AddItem(LevelData.Instance.resourceList[(int)resources.WATER], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/water_icon"), () => { OnClickConstruct(); return 0; });
-            //energy
+            //energy 4 
 			AddItem(LevelData.Instance.resourceList[(int)resources.ENERGY], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/energy_icon"), () => { OnClickConstruct(); return 0; });
-            //antimatter
+            //antimatter 6
 			AddItem(LevelData.Instance.resourceList[(int)resources.ANTIMATTER], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/antimatter_icon"), () => { OnClickConstruct(); return 0; });
-            //nuclear
+            //nuclear 7
 			AddItem(LevelData.Instance.resourceList[(int)resources.NUCLEAR], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/nuclear_icon"), () => { OnClickConstruct(); return 0; });
             //wood
-			AddItem(LevelData.Instance.resourceList[(int)resources.WOOD], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
-            //Metal
+			//AddItem(LevelData.Instance.resourceList[(int)resources.WOOD], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/wood_icon"), () => { OnClickConstruct(); return 0; });
+            //Metal 8
 			AddItem(LevelData.Instance.resourceList[(int)resources.METAL], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/metal_icon"), () => { OnClickConstruct(); return 0; });
-            //Population
+            //Population 9
 			AddItem(LevelData.Instance.resourceList[(int)resources.POP], LevelData.Instance.resourceLimits[0], topLeft, position, Content.Load<Texture2D>("icons/pop_icon"), () => { OnClickConstruct(); return 0; });
 
-            //construction popupmenu
+            //construction popupmenu 11
             Vector2 temp = Vector2.Transform(new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2)), Camera.Instance.viewportScale);
             //Vector2 temp = new Vector2(0, ConstructionMenu.Instance.center.Y - (ConstructionMenu.Instance.totHeight / 2));
             textureScale = Vector2.Transform(new Vector2(ConstructionMenu.Instance.maxWidth, ConstructionMenu.Instance.totHeight), Camera.Instance.viewportScale);
+            // 12
             AddItem(topLeft, temp, textureScale, Content.Load<Texture2D>("grayDot"), false);
 
 			// Message Queue
@@ -82,7 +83,7 @@ namespace Remnants
             instance = new UI(Content);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, bool landed)
         {
             if (isActive)
             {
@@ -91,16 +92,27 @@ namespace Remnants
                 foreach (UIItem i in UIItemList)
                 {
                     //if (i != UIItemList[0] && i != UIItemList[1])
-                    if (k > 1 && k < 10)
+                    if (k > 1 && k < 9)
                     {
+                        if(k == 7)
+                        {
+                            j++;
+                        }
                         i.Update(LevelData.Instance.resourceList[j], LevelData.Instance.resourceLimits[j]);
                         j++;
                     }
-					else if (k == 11) // message queue
+					else if (k == 10) // message queue
 					{
 						i.Update(gameTime);
-					}
-					else
+                    }
+                    else if (k == 1)
+                    {
+                        if (landed)
+                        {
+                            i.Update();
+                        }
+                    }
+                    else
                     {
                         i.Update();
                     }
@@ -162,7 +174,7 @@ namespace Remnants
             float scale = Camera.Instance.viewportScale.Scale.X;
             //32 for icon width, 1 for spacing between, 128 for readout text width
             // - (32 * scale + 1 + 128 * scale) * 7
-            float x = (32 + 1 + 96);
+            float x = (32 + 1 + 100);
 
             int k = 0;
             /*/
@@ -181,22 +193,22 @@ namespace Remnants
             foreach (UIItem i in UIItemList)
             {
                 //if (i != UIItemList[0] && i != UIItemList[1] && i != UIItemList[9] && i != UIItemList[10])
-                if (k > 1 && k < 9)
+                if (k > 1 && k < 8)
                 {
                     i.position = new Vector2(x, 0);
                     i.valuePosition = new Vector2(x + 34, i.valuePosition.Y);
                     i.position = Vector2.Transform(i.position, Camera.Instance.viewportScale);
                     i.valuePosition = Vector2.Transform(i.valuePosition, Camera.Instance.viewportScale);
                     //i.valueLimitPosition = new Vector2((i.valuePosition.X + (font.MeasureString(i.value.ToString())).X) * scale, i.valuePosition.Y);
-                    x += (32 + 1 + 96);
+                    x += (32 + 1 + 100);
                 }
                 k++;
             }
 
             tempVect = new Vector2(0, 0);
-            UIItemList[9].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
-            tempVect = new Vector2(34, UIItemList[9].valuePosition.Y);
-            UIItemList[9].valuePosition = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
+            UIItemList[8].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
+            tempVect = new Vector2(34, UIItemList[8].valuePosition.Y);
+            UIItemList[8].valuePosition = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
 
             //UIItemList[10].position = Vector2.Transform()
         }
@@ -210,8 +222,8 @@ namespace Remnants
         {
 			Console.Write("Making construction UI active: " + active + "\n");
 			
-            UIItemList[10].active = !UIItemList[10].active;
-            if (!UIItemList[10].active)
+            UIItemList[9].active = !UIItemList[9].active;
+            if (!UIItemList[9].active)
             {
                 MenuController.Instance.UnloadContent(ConstructionMenu.Instance);
             }
@@ -219,8 +231,8 @@ namespace Remnants
 
         void ConstructionMenus(bool active)
         {
-            UIItemList[10].active = !UIItemList[10].active;
-            if (UIItemList[10].active)
+            UIItemList[9].active = !UIItemList[9].active;
+            if (UIItemList[9].active)
             {
                 //Menu m = ConstructionMenu.Instance;
                 MenuController.Instance.SetMenu(ConstructionMenu.Instance);
@@ -240,12 +252,12 @@ namespace Remnants
 
 		public void EnqueueMessage(string msg)
 		{
-			((MessageQueue)UIItemList[11]).addMessage(msg);
+			((MessageQueue)UIItemList[10]).addMessage(msg);
 		}
 
         public bool MouseOverUI()
         {
-            if (UIItemList[0].IsItemHovered() || UIItemList[1].IsItemHovered() || UIItemList[10].IsItemHovered())
+            if (UIItemList[0].IsItemHovered() || UIItemList[1].IsItemHovered() || UIItemList[9].IsItemHovered())
                 return true;
             
             return false;
