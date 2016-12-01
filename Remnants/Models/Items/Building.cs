@@ -250,7 +250,7 @@ namespace Remnants
 
 		public void idle()
 		{
-			if (isConstructing())
+			if (isConstructing() || !canDisable)
 			{
 				return;
 			}
