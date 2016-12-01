@@ -50,8 +50,8 @@ namespace Remnants
         public override void Init()
         {
             base.Init();
-            this.hp = 100;
-            this.hpMax = 100;
+            this.hp = 1000;
+            this.hpMax = 1000;
             this.attackStrength = 10;
             this.defenseStrength = 10;
         }

@@ -104,6 +104,7 @@ namespace Remnants
             text = inctext;
             font = incfont;
 			size = font.MeasureString(text) * scale;
+            //size = new Vector2(font.MeasureString(text).X * scale, font.MeasureString(text));
             origin = size * 0.5f;
             alpha = 1.0f;
             position = incposition;
@@ -279,7 +280,7 @@ namespace Remnants
             if (buildingRepresented != null && IsItemActive())
             {
                 spriteBatch.Draw(buildingRepresented.texture, buildingStatsPosition);
-                Vector2 p = new Vector2(buildingStatsPosition.X + buildingRepresented.texture.Width, buildingStatsPosition.Y);
+                Vector2 p = new Vector2(buildingStatsPosition.X + buildingRepresented.texture.Width * Camera.Instance.viewportScale.Scale.X, buildingStatsPosition.Y);
                 int j = 0;
                 foreach (int i in buildingRepresented.resourceCost)
                 {
@@ -288,7 +289,8 @@ namespace Remnants
                         spriteBatch.DrawString(
                             font,
                             Enum.GetName(typeof(resources), j) + " cost: " + i.ToString(),
-                            Vector2.Transform(p, Camera.Instance.viewportScale),
+                            p,
+                            //Vector2.Transform(p, Camera.Instance.viewportScale),
                             Color.Black * 1.0f, 0f, GetOrigin(), scale, SpriteEffects.None, 0.0f);
                         p = new Vector2(p.X, p.Y + font.MeasureString(i.ToString()).Y * scale);
                     }
@@ -302,7 +304,8 @@ namespace Remnants
                         spriteBatch.DrawString(
                             font,
                             Enum.GetName(typeof(resources), j) + " use: " + i.ToString(),
-                            Vector2.Transform(p, Camera.Instance.viewportScale),
+                            p,
+                            //Vector2.Transform(p, Camera.Instance.viewportScale),
                             Color.Black * 1.0f, 0f, GetOrigin(), scale, SpriteEffects.None, 0.0f);
                         p = new Vector2(p.X, p.Y + font.MeasureString(i.ToString()).Y * scale);
                     }
@@ -316,7 +319,8 @@ namespace Remnants
                         spriteBatch.DrawString(
                             font,
                             Enum.GetName(typeof(resources), j) + " gain: " + i.ToString(),
-                            Vector2.Transform(p, Camera.Instance.viewportScale),
+                            p,
+                            //Vector2.Transform(p, Camera.Instance.viewportScale),
                             Color.Black * 1.0f, 0f, GetOrigin(), scale, SpriteEffects.None, 0.0f);
                         p = new Vector2(p.X, p.Y + font.MeasureString(i.ToString()).Y * scale);
                     }
@@ -330,7 +334,8 @@ namespace Remnants
                         spriteBatch.DrawString(
                             font,
                             Enum.GetName(typeof(resources), j) + " storage: " + i.ToString(),
-                            Vector2.Transform(p, Camera.Instance.viewportScale),
+                            p,
+                            //Vector2.Transform(p, Camera.Instance.viewportScale),
                             Color.Black * 1.0f, 0f, GetOrigin(), scale, SpriteEffects.None, 0.0f);
                         p = new Vector2(p.X, p.Y + font.MeasureString(i.ToString()).Y * scale);
                     }
@@ -339,7 +344,8 @@ namespace Remnants
                 spriteBatch.DrawString(
                     font, 
                     "Health: " + buildingRepresented.hpMax.ToString(),
-                    Vector2.Transform(p, Camera.Instance.viewportScale),
+                    p,
+                    //Vector2.Transform(p, Camera.Instance.viewportScale),
                     Color.Black * 1.0f, 0f, GetOrigin(), scale, SpriteEffects.None, 0.0f);
             }
         }
