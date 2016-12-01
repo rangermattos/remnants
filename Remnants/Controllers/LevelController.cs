@@ -80,6 +80,10 @@ namespace Remnants
                 {
                     spriteBatch.Begin();
                     spriteBatch.DrawString(font, loadString, Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+					spriteBatch.DrawString(font, "Use WASD to move the camera", new Vector2(0,50), Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+					spriteBatch.DrawString(font, "Click the hammer icon in the bottom left to construct buildings", new Vector2(0,100), Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+					spriteBatch.DrawString(font, "Right click to exit build mode", new Vector2(0,150), Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+					spriteBatch.DrawString(font, "Disable and enable buildings with left click while not in build mode", new Vector2(0,200), Color.WhiteSmoke, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
                     spriteBatch.End();
                 }
                 else
