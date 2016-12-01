@@ -18,6 +18,7 @@ namespace Remnants
         protected Entity target;
         protected float attackInterval = 1.0f;
         protected float elapsedTimeSinceLastAttack = 0;
+		protected Vector2 lastPos;
 		public Unit(ContentManager Content) : base(Content)
         {
             alpha = 1.0f;
@@ -62,7 +63,7 @@ namespace Remnants
         public override void Update(GameTime gameTime, Level level)
         {
             float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 lastPos = position;
+            lastPos = position;
             unitUpdate(gameTime, level);
             if (!level.isPositionValid(position))
             {
