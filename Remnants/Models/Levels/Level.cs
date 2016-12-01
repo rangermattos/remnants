@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Collections.Generic;
 using System;
-using System.Reflection;
 using Remnants.Models;
 
 internal class tileCoords
@@ -53,8 +52,8 @@ namespace Remnants
         Color placementMask;
         float placementAlpha = 0.65f;
         Building tempBuilding;
-        double UnitSpawnTime = 45;
-        double timePassed = 40;
+        double UnitSpawnTime = 60;
+        double timePassed = 0;
         int spawnIterations = 0;
 
         public Level()
@@ -154,7 +153,9 @@ namespace Remnants
             if (!paused)
             {
                 timePassed += deltaT;
-                if (timePassed >= UnitSpawnTime)
+
+                //if (timePassed >= UnitSpawnTime)
+                if (InputManager.Instance.PressRelease(Keys.U))
                 {
                     spawnUnits(Content);
                 }
@@ -165,6 +166,16 @@ namespace Remnants
                 
                 UpdateUnits(gameTime, p);
             }
+
+            /*
+            if (InputManager.Instance.PressRelease(Keys.U))
+            {
+                DefaultAlien testAlien = new DefaultAlien(Content);
+                //testAlien.position = Vector2.Zero;
+                testAlien.position = p;
+                enemyUnits.Add(testAlien);
+            }
+            */
 
 			//SetResources();
 
@@ -203,7 +214,7 @@ namespace Remnants
             {
                 //unified update.... finally..... ...... ..... ......
                 Building b = buildings[i];
-				b.Update(gameTime, this);
+                b.Update(gameTime, this);
                 if(b.hp <= 0)
 				{
 					// set tiles to be buildable again
@@ -343,18 +354,32 @@ namespace Remnants
             spawnIterations++;
             for (int i = 0; i < spawnIterations * 15; i++)
             {
-                int x = r.Next(200);
-                int y = r.Next(200);
-                Vector2 va = new Vector2((float)x, (float)y);
+                int tblr = r.Next(4);
+                int x = r.Next((map.xTiles - 1) * 64);
+                int y = r.Next((map.yTiles - 1) * 64);
+                Vector2 va;
+                if (tblr == 0)
+                {
+                    va = new Vector2((float)x + 32f, 32f);
+                }
+                else if (tblr == 1)
+                {
+                    va = new Vector2(32f, (float)y + 32f);
+                }
+                else if (tblr == 2)
+                {
+                    va = new Vector2(((map.xTiles) * 64f) - 32f, (float)y + 32);
+                }
+                else
+                {
+                    va = new Vector2((float)x, ((map.yTiles) * 64f) - 32f);
+                }
+                //Vector2 va = new Vector2((float)x, (float)y);
                 if (isPositionValid(va)) {
                     DefaultAlien testAlien = new DefaultAlien(Content);
                     //testAlien.position = Vector2.Zero;
                     testAlien.position = va;
                     enemyUnits.Add(testAlien);
-                }
-                else
-                {
-                    i--;
                 }
             }
             timePassed = 0;

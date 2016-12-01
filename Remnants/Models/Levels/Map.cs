@@ -9,8 +9,8 @@ namespace Remnants
     public class Map
     {
         List<Tile> tileList = new List<Tile>();
-        int xTiles;
-        int yTiles;
+        public int xTiles;
+        public int yTiles;
         /*/
     float xOffset;
     float yOffset;
@@ -100,11 +100,20 @@ namespace Remnants
         {
             var r = new Random();
 
-            for(int i = 0; i < xTiles; i++)
+            for (int i = 0; i < xTiles; i++)
             {
                 tiles[i] = new Tile[yTiles];
-                for(int j = 0; j < yTiles; j++)
+                for (int j = 0; j < yTiles; j++)
                 {
+                    //make sure the outside edge is clear
+                    if(i == 0 || i == xTiles - 1 || j == 0 || j == yTiles - 1)
+                    {
+                        tiles[i][j] = new Grass(Content);
+                        tiles[i][j].Position = new Vector2((64f * i), (64f * j));
+                        LevelData.Instance.tileList.Add(new LevelData.tileData(i, j, tiles[i][j]));
+                        continue;
+                    }
+
                     int ind = r.Next(100);
 					if (ind < 3)
 						tiles[i][j] = new Ore(Content);
