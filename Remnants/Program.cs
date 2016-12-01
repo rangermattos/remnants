@@ -19,11 +19,14 @@ namespace Remnants
                     game.Run();
             }
 
+
             catch (Exception e)
             {
-				Console.Write(e.ToString());
+                Console.Write(e.ToString());
                 //System.Windows.Forms.MessageBox.Show(e.ToString());
             }
+            Console.Write("End of Program.Main()\n");
+            System.Environment.Exit(0);
         }
     }
 }
