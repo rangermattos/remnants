@@ -174,9 +174,9 @@ namespace Remnants
             //new Vector2(ConstructionMenu.Instance.maxWidth, 
             //ConstructionMenu.Instance.totHeight), Camera.Instance.viewportScale);
 
-            tempVect = new Vector2(0, viewport.Y - 32);
-            UIItemList[1].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
-            //UIItemList[1].position = tempVect;
+            tempVect = new Vector2(0, Camera.Instance.vp.ViewportHeight - 32);
+            //UIItemList[1].position = Vector2.Transform(tempVect, Camera.Instance.viewportScale);
+            UIItemList[1].position = tempVect;
             //float scale = Camera.Instance.viewportScale.Scale.X;
             //32 for icon width, 1 for spacing between, 128 for readout text width
             // - (32 * scale + 1 + 128 * scale) * 7

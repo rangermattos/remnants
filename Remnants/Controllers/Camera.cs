@@ -13,10 +13,12 @@ namespace Remnants
 
         public Camera2D cam;
         public Matrix viewportScale;
+        public ViewportAdapter vp;
 
         private Camera() { }
         private Camera(ViewportAdapter viewportAdapter)
         {
+            vp = viewportAdapter;
             cam = new Camera2D(viewportAdapter);
             viewportScale = viewportAdapter.GetScaleMatrix();
             cam.Zoom = 0.75f;
