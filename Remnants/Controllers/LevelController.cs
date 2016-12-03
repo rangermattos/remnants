@@ -115,7 +115,6 @@ namespace Remnants
                 MenuController.Instance.UnloadContent(Settings.Instance);
             }
             diff += LevelData.Instance.difficulty;
-            LoadContent(Content);
             //send viewport and mapsize to Camera.Instance.cam2d
             currentLevel = new Level();
             //set Camera.Instance.cam to center of map
@@ -137,7 +136,6 @@ namespace Remnants
             {
                 MenuController.Instance.UnloadContent(Settings.Instance);
             }
-            LoadContent(Content);
             //send viewport and mapsize to Camera.Instance.cam2d
             currentLevel = new Level(filename);
             //set Camera.Instance.cam to center of map

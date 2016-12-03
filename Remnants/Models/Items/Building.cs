@@ -160,7 +160,7 @@ namespace Remnants
                 for (int j = 0; j < tilesHigh; j++)
                 {
                     map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild = false;
-					//map.GetTile(position + new Vector2(i * 64, j * 64)).canWalk = false;
+                    //map.GetTile(position + new Vector2(i * 64, j * 64)).canWalk = false;
                 }
             }
             for (int i = 0; i < 8; i++)

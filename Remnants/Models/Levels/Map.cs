@@ -141,6 +141,8 @@ namespace Remnants
                 else if(tile.type == "Water")
                     tiles[tile.xPosition][tile.yPosition] = new Water(Content);
                 tiles[tile.xPosition][tile.yPosition].Position = new Vector2((64f * tile.xPosition), (64f * tile.yPosition));
+                tiles[tile.xPosition][tile.yPosition].canBuild = tile.canBuild;
+                tiles[tile.xPosition][tile.yPosition].canWalk = tile.canWalk;
             }
         }
 
@@ -151,6 +153,18 @@ namespace Remnants
                 return tiles[(int)(location.X / 64)][(int)(location.Y / 64)];
             }
             catch(Exception e) { return null; }
+        }
+
+        public void SaveTileData()
+        {
+            LevelData.Instance.tileList = new List<LevelData.tileData>();
+            for (int i = 0; i < xTiles; i++)
+            {
+                for (int j = 0; j < yTiles; j++)
+                {
+                    LevelData.Instance.tileList.Add(new LevelData.tileData(i, j, tiles[i][j]));
+                }
+            }
         }
     }
 }

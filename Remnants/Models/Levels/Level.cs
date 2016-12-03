@@ -97,11 +97,12 @@ namespace Remnants
             LoadGame(filename);
             map = new Map(LevelData.Instance.mapSize);
             Camera.Instance.cam.Position = LevelData.Instance.mapSize * 64 / 2;
+            UnitSpawnCount *= LevelData.Instance.difficulty;
+            UnitSpawnTime += 120 - 30 * LevelData.Instance.difficulty;
         }
 
         public void LoadContent(ContentManager Content)
         {
-            map.LoadContent(Content);
 
             UI.Create(Content);
             if (LevelData.Instance.buildingList.Count > 0)
@@ -113,6 +114,7 @@ namespace Remnants
             {
                 UI.Instance.buildingSelected = "LanderBase";
             }
+            map.LoadContent(Content);
             //UI.Instance.isActive = true;
         }
         
@@ -152,6 +154,7 @@ namespace Remnants
                     tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
                     tempBuilding.progressBar.progress = 1.0f;
                 }
+                //tempBuilding.Place(map);
                 buildings.Add(tempBuilding);
             }
         }
@@ -171,7 +174,7 @@ namespace Remnants
             Vector2 p = Camera.Instance.cam.ScreenToWorld(InputManager.Instance.MousePosition);
             if (!EscapeMenu.Instance.isActive)
             {
-                if (InputManager.Instance.PressRelease(Keys.Space))
+                if (landed && InputManager.Instance.PressRelease(Keys.Space))
                     paused = !paused;
                 if(!UI.Instance.MouseOverUI())
                     CheckBuilding(p, Content);
@@ -746,13 +749,14 @@ namespace Remnants
         public void SaveGame()
         {
             UI.Instance.EnqueueMessage("Saving Game");
-            LevelData.Instance.buildingList = new List<LevelData.buildingData>();
             LevelData.Instance.landed = landed;
+            LevelData.Instance.buildingList = new List<LevelData.buildingData>();
             foreach (Building b in buildings)
             {
                 LevelData.Instance.buildingList.Add(new LevelData.buildingData(b));
             }
             Console.WriteLine("saving " + LevelData.Instance.buildingList.Count + "buildings");
+            map.SaveTileData();
 
             for (int i = 0; i < 8; i++)
             {
