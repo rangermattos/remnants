@@ -121,7 +121,7 @@ namespace Remnants
 					if (LevelData.Instance.checkResources(resourceUsage))
 					{
 						//Console.Write("Sufficient resources, resuming operation\n");
-						enable(level);
+						enable();
 					}
 					elapsedProductionTime = 0;
 				}
@@ -216,18 +216,18 @@ namespace Remnants
 				//add buildings storage capacity to resource limits
 				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
 			}
-            if ((LevelData.Instance.resourceList[(int)resources.POP] - level.employedPopulation >= workersNeeded)){
-                enable(level);
+            if ((LevelData.Instance.resourceList[(int)resources.POP] - LevelData.Instance.EmployedPopulation >= workersNeeded)){
+                enable();
             }
 		}
 
-		public void enable(Level level)
+		public void enable()
 		{
 			if (isConstructing() || !isDisabled())
 			{
 				return;
 			}
-            if (!(LevelData.Instance.resourceList[(int)resources.POP] - level.employedPopulation >= workersNeeded))
+            if (!(LevelData.Instance.resourceList[(int)resources.POP] - LevelData.Instance.EmployedPopulation >= workersNeeded))
             {
                 UI.Instance.EnqueueMessage("You don't have any unemployed citizens to work at this building");
                 return;
@@ -242,10 +242,10 @@ namespace Remnants
 
 			mask = Color.White;
 			status = (int)buildingStates.OPERATIONAL;
-            level.employedPopulation += workersNeeded;
+            LevelData.Instance.EmployedPopulation += workersNeeded;
 		}
 
-		public void disable(Level level)
+		public void disable()
 		{
 			if (isConstructing() || !canDisable)
 			{
@@ -260,7 +260,7 @@ namespace Remnants
 
 			mask = Color.Red;
             if (status == (int)buildingStates.OPERATIONAL)
-                level.employedPopulation -= workersNeeded;
+                LevelData.Instance.EmployedPopulation -= workersNeeded;
 			status = (int)buildingStates.DISABLED;
 		}
 

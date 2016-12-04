@@ -59,7 +59,6 @@ namespace Remnants
         int difficulty;
         bool warned = false;
         bool landed = false;
-        public int employedPopulation = 0;
 
         public Level()
         {
@@ -179,6 +178,22 @@ namespace Remnants
                     paused = !paused;
                 if(!UI.Instance.MouseOverUI())
                     CheckBuilding(p, Content);
+
+                EnableOrDisableBuilding(p);
+
+                if (InputManager.Instance.PressRelease(Keys.X))
+                {
+                    foreach(Building b in buildings)
+                    {
+                        if(b.GetType().ToString() == "Remnants.ShockTrap")
+                        {
+                            if (b.isDisabled())
+                                b.enable();
+                            else
+                                b.disable();
+                        }
+                    }
+                }
             }
 
             if (!paused && landed)
@@ -199,8 +214,6 @@ namespace Remnants
                     spawnUnits(Content);
                     warned = false;
                 }
-
-                EnableOrDisableBuilding(p);
 
                 UpdateBuildings(gameTime, p);
 
@@ -680,11 +693,11 @@ namespace Remnants
 						{
 							if (building.isDisabled())
 							{
-								building.enable(this);
+								building.enable();
 							}
 							else
 							{
-								building.disable(this);
+								building.disable();
 							}
 						}
 					}
