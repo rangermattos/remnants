@@ -10,7 +10,8 @@ namespace Remnants
 		public SmallHouse(ContentManager Content, Vector2 pos) : base(Content)
         {
 			name = "Small House";
-			tilesWide = 1;
+            workersNeeded = 0;
+            tilesWide = 1;
 			tilesHigh = 1;
 			position = pos;
 			buildTime = 10f;
@@ -19,7 +20,7 @@ namespace Remnants
 			resourceCost[(int)resources.ENERGY] = 100;
 			//resourceCost[(int)resources.WOOD] = 100;
 			resourceCost[(int)resources.METAL] = 50;
-			resourceUsage[(int)resources.ENERGY] = 3;
+			resourceUsage[(int)resources.ENERGY] = 5;
 			resourceStorage[(int)resources.POP] = 2;
 			canDisable = false;
 
@@ -57,7 +58,8 @@ namespace Remnants
 		public MediumHouse(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			name = "Medium House";
-			tilesWide = 2;
+            workersNeeded = 0;
+            tilesWide = 2;
 			tilesHigh = 1;
 			position = pos;
 			buildTime = 10f;
@@ -103,7 +105,8 @@ namespace Remnants
 		public LargeHouse(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			name = "Large House";
-			tilesWide = 2;
+            workersNeeded = 0;
+            tilesWide = 2;
 			tilesHigh = 1;
 			position = pos;
 			buildTime = 10f;

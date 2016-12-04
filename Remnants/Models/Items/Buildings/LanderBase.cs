@@ -26,6 +26,7 @@ namespace Remnants
 		public LanderBase(ContentManager Content, Vector2 pos) : base(Content)
 		{
 			name = "Lander Base";
+            workersNeeded = 0;
 			tilesWide = 4;
 			tilesHigh = 4;
 			position = pos;

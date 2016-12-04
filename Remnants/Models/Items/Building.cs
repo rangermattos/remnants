@@ -12,6 +12,7 @@ namespace Remnants
         public int tilesWide;
         public int tilesHigh;
         public int populationHousing = 0;
+        public int workersNeeded = 1;
         public int[] resourceCost;
         public int[] resourceStorage;
         public int[] resourceGain;
@@ -79,7 +80,7 @@ namespace Remnants
 				if (alpha > 1f) // construction complete
 				{
 					alpha = 1f;
-					completeConstruction(); // should trigger just once
+					completeConstruction(level); // should trigger just once
 				}
 				progressBar.progress += deltaT / buildTime;
 				if (progressBar.progress > 1f)
@@ -87,6 +88,7 @@ namespace Remnants
 				progressBar.barScale.X = progressBar.progress * 32;
 				break;
 			case ((int)buildingStates.OPERATIONAL):
+                    mask = Color.White;
 				// calculate production/cost
 				elapsedProductionTime += deltaT;
 				if (elapsedProductionTime >= 1f)
@@ -119,13 +121,13 @@ namespace Remnants
 					if (LevelData.Instance.checkResources(resourceUsage))
 					{
 						//Console.Write("Sufficient resources, resuming operation\n");
-						enable();
+						enable(level);
 					}
 					elapsedProductionTime = 0;
 				}
 				break;
 			case ((int)buildingStates.DISABLED):
-
+                    mask = Color.Red;
 				break;
 			}
 			base.Update(gameTime, level);
@@ -154,15 +156,7 @@ namespace Remnants
                 return false;
             }
             //if they can, set all of these tiles canBuild and canWalk variable to false so we can't overlap buildings
-
-            for (int i = 0; i < tilesWide; i++)
-            {
-                for (int j = 0; j < tilesHigh; j++)
-                {
-                    map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild = false;
-                    //map.GetTile(position + new Vector2(i * 64, j * 64)).canWalk = false;
-                }
-            }
+            SwapTileBools(map);
             for (int i = 0; i < 8; i++)
             {
                 //subtract resource cost from available resources
@@ -192,46 +186,66 @@ namespace Remnants
             return true;
         }
 
-        void SwapTileWalkBool(Map map)
+        void SwapTileBools(Map map)
         {
             for (int i = 0; i < tilesWide; i++)
             {
                 for (int j = 0; j < tilesHigh; j++)
                 {
-                    map.tiles[i][j].canWalk = !map.tiles[i][j].canWalk;
+                    map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild = !map.GetTile(position + new Vector2(i * 64, j * 64)).canBuild;
+                    //map.GetTile(position + new Vector2(i * 64, j * 64)).canWalk = !map.GetTile(position + new Vector2(i * 64, j * 64)).canWalk;
+                    //map.tiles[i][j].canBuild = !map.tiles[i][j].canBuild;
+                    //map.tiles[i][j].canWalk = !map.tiles[i][j].canWalk;
                 }
             }
         }
 
-		void completeConstruction()
+		void completeConstruction(Level level)
 		{
 			UI.Instance.EnqueueMessage("Construction completed");
-			for (int i = 0; i < 8; i++)
+
+            if(canDisable)
+                status = (int)buildingStates.DISABLED;
+            else
+            {
+                status = (int)buildingStates.OPERATIONAL;
+            }
+
+            for (int i = 0; i < 8; i++)
 			{
 				//add buildings storage capacity to resource limits
 				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
 			}
-			status = (int)buildingStates.OPERATIONAL;
+            if ((LevelData.Instance.resourceList[(int)resources.POP] - level.employedPopulation >= workersNeeded)){
+                enable(level);
+            }
 		}
 
-		public void enable()
+		public void enable(Level level)
 		{
-			if (isConstructing() || !canDisable)
+			if (isConstructing() || !isDisabled())
 			{
 				return;
 			}
+            if (!(LevelData.Instance.resourceList[(int)resources.POP] - level.employedPopulation >= workersNeeded))
+            {
+                UI.Instance.EnqueueMessage("You don't have any unemployed citizens to work at this building");
+                return;
+            }
 
-			// enable storage
-			for (int i = 0; i < 7; i++) // exclude pop
+
+                // enable storage
+            for (int i = 0; i < 7; i++) // exclude pop
 			{
 				LevelData.Instance.resourceLimits[i] += resourceStorage[i];
 			}
 
 			mask = Color.White;
 			status = (int)buildingStates.OPERATIONAL;
+            level.employedPopulation += workersNeeded;
 		}
 
-		public void disable()
+		public void disable(Level level)
 		{
 			if (isConstructing() || !canDisable)
 			{
@@ -245,6 +259,8 @@ namespace Remnants
 			}
 
 			mask = Color.Red;
+            if (status == (int)buildingStates.OPERATIONAL)
+                level.employedPopulation -= workersNeeded;
 			status = (int)buildingStates.DISABLED;
 		}
 

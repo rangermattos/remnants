@@ -59,6 +59,7 @@ namespace Remnants
         int difficulty;
         bool warned = false;
         bool landed = false;
+        public int employedPopulation = 0;
 
         public Level()
         {
@@ -340,32 +341,38 @@ namespace Remnants
                 tempBuilding = null;
                 newTempBuilding(p, Content);
 
+                if (tempBuilding.Place(map))
+                {
+                    tempBuilding.status = (int)Building.buildingStates.CONSTRUCTING;
+                    var prog = new Vector2(tempBuilding.position.X + tempBuilding.tilesWide * 32, tempBuilding.position.Y);
+                    tempBuilding.progressBar = new ProgressBar(Content, prog, prog);
+                    tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
+
+
+                    if (tempBuilding.GetType().ToString() == "Remnants.LanderBase")
+                    {
+                        processLanding();
+                    }
+
+                    buildings.Add(tempBuilding);
+
+                    LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
+                    tempBuilding = null;
+                }
+                else
+                {
+                    UI.Instance.EnqueueMessage("Cannot construct building on that location");
+                }
+                /*/
                 if (buildings.Count < (LevelData.Instance.resourceList[(int)resources.POP] * LevelData.Instance.BUILDINGS_PER_POP)
 					|| tempBuilding is SmallHouse || tempBuilding is MediumHouse || tempBuilding is LargeHouse || tempBuilding is LanderBase)
 				{
-	                if (tempBuilding.Place(map))
-                    {
-                        tempBuilding.status = (int)Building.buildingStates.CONSTRUCTING;
-                        var prog = new Vector2(tempBuilding.position.X + tempBuilding.tilesWide * 32, tempBuilding.position.Y);
-                        tempBuilding.progressBar = new ProgressBar(Content, prog, prog);
-                        tempBuilding.progressBar.position = new Vector2(tempBuilding.progressBar.position.X - tempBuilding.progressBar.container.Width / 2, tempBuilding.progressBar.position.Y);
-                        buildings.Add(tempBuilding);
-                        LevelData.Instance.buildingList.Add(new LevelData.buildingData(tempBuilding));
-                        if (tempBuilding.GetType().ToString() == "Remnants.LanderBase")
-                        {
-                            processLanding();
-                        }
-                        tempBuilding = null;
-                    }
-                    else
-                    {
-                        UI.Instance.EnqueueMessage("Cannot construct building on that location");
-                    }
 				}
 				else
 				{
 					UI.Instance.EnqueueMessage("Insufficient population to support new building, try building some housing");
 				}
+                /*/
             }
             if (InputManager.Instance.RightPressRelease() && buildingString != "LanderBase")
             {
@@ -673,11 +680,11 @@ namespace Remnants
 						{
 							if (building.isDisabled())
 							{
-								building.enable();
+								building.enable(this);
 							}
 							else
 							{
-								building.disable();
+								building.disable(this);
 							}
 						}
 					}
